@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react'
-import React, { useState, ComponentProps } from 'react'
+import { useState, ComponentProps } from 'react'
 import { Dropdown } from '../../../core/src/components/Dropdown'
 
 const meta: Meta<typeof Dropdown> = {

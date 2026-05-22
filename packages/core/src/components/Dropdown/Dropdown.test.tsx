@@ -22,20 +22,20 @@ const renderWithTheme = (ui: React.ReactElement) => {
 
 beforeAll(() => {
   // Mock ResizeObserver
-  global.ResizeObserver = class ResizeObserver {
+  globalThis.ResizeObserver = class ResizeObserver {
     observe() {}
     unobserve() {}
     disconnect() {}
   }
 
   // Mock PointerEvent (required by Radix UI Select in jsdom)
-  if (!global.PointerEvent) {
+  if (!globalThis.PointerEvent) {
     class MockPointerEvent extends MouseEvent {
       constructor(type: string, props: PointerEventInit = {}) {
         super(type, props)
       }
     }
-    global.PointerEvent = MockPointerEvent as unknown as typeof PointerEvent
+    globalThis.PointerEvent = MockPointerEvent as unknown as typeof PointerEvent
   }
 
   // Mock scrollIntoView and PointerCapture methods

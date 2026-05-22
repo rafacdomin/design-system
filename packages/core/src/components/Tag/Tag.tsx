@@ -31,7 +31,7 @@ export const tagVariants = cva(styles.tag, {
 
 export interface TagProps
   extends
-    Omit<React.HTMLAttributes<HTMLSpanElement>, 'onClick'>,
+    Omit<React.HTMLAttributes<HTMLSpanElement>, 'onClick' | 'color'>,
     VariantProps<typeof tagVariants> {
   /** Callback acionado ao clicar no botão de remoção */
   onRemove?: () => void
@@ -82,11 +82,12 @@ const TagComponent = React.forwardRef<HTMLSpanElement, TagProps>(
 
     // Caso 1: Interativo E Removível (evita botões aninhados)
     if (isInteractive && hasRemove) {
-      const colorClass = styles[`${color}Color`]
+      const colorClass = color ? styles[`${color}Color`] : undefined
+      const sizeClass = size ? styles[size] : undefined
       return (
         <span
           ref={ref}
-          className={clsx(styles.tagGroup, styles[size], colorClass, className)}
+          className={clsx(styles.tagGroup, sizeClass, colorClass, className)}
           data-testid="tag-group"
         >
           <button

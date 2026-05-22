@@ -1,5 +1,4 @@
 import type { Meta, StoryObj } from '@storybook/react'
-import React from 'react'
 import { Carousel } from '@ds/carousel'
 import { Card } from '@ds/core'
 

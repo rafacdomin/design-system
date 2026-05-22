@@ -4,7 +4,7 @@ import userEvent from '@testing-library/user-event'
 import { axe } from 'jest-axe'
 import { Carousel } from './Carousel'
 import { ThemeProvider } from '@ds/core'
-import { type EmblaCarouselType } from 'embla-carousel-react'
+import { type EmblaCarouselType } from 'embla-carousel'
 import { vi } from 'vitest'
 
 let registeredCallbacks: Record<string, (api: EmblaCarouselType) => void> = {}

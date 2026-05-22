@@ -6,10 +6,8 @@ import React, {
   useCallback,
   useId,
 } from 'react'
-import useEmblaCarousel, {
-  type EmblaCarouselType,
-  type EmblaOptionsType,
-} from 'embla-carousel-react'
+import useEmblaCarousel from 'embla-carousel-react'
+import type { EmblaCarouselType, EmblaOptionsType } from 'embla-carousel'
 import { withTheme } from '@ds/core'
 import { clsx } from 'clsx'
 import styles from './Carousel.module.scss'
