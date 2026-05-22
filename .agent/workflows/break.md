@@ -20,19 +20,25 @@ Leia o arquivo `SPEC.md` e crie issues dentro de `.epic/issues/`.
 # [ID] — Nome da Issue
 
 ## Objetivo
+
 O que será entregue ao final desta issue.
 
 ## Critérios de Aceite
+
 - [ ] Critério 1
 
 ## Cenários de Teste
+
 ### Happy Path / Edge Cases / Estados de Erro
 
 ## Arquivos a Criar/Modificar
+
 - `path/to/file.tsx` — descrição
 
 ## Dependências Externas
+
 ## Dependências de Issues
+
 ## Estimativa P / M / G
 
 Crie também `.epic/EPIC_DESIGN_SYSTEM.md` com a lista de todas as issues e ordem de execução.

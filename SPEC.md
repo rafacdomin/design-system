@@ -6,7 +6,7 @@ Este documento atua como a única fonte da verdade para o escopo, arquitetura, d
 
 ## 1. Visão Geral
 
-Este projeto consiste em um **Mini Design System** altamente otimizado para portfólios pessoais e profissionais. O objetivo é fornecer componentes de UI consistentes, acessíveis (WCAG 2.1 AA) e com uma estética premium e minimalista (baseada em uma paleta monocromática de alto contraste). 
+Este projeto consiste em um **Mini Design System** altamente otimizado para portfólios pessoais e profissionais. O objetivo é fornecer componentes de UI consistentes, acessíveis (WCAG 2.1 AA) e com uma estética premium e minimalista (baseada em uma paleta monocromática de alto contraste).
 
 O sistema é construído como um **Monorepo** usando Turborepo, facilitando o isolamento de pacotes principais (`@ds/core`), pacotes com dependências pesadas (`@ds/carousel`) e documentação em Storybook (`@ds/docs`).
 
@@ -16,15 +16,15 @@ O sistema é construído como um **Monorepo** usando Turborepo, facilitando o is
 
 Abaixo estão as definições de tecnologia e as justificativas arquiteturais do projeto:
 
-*   **Framework Principal:** React 18 + TypeScript 5 (Strict Mode).
-*   **Gerenciador de Pacotes:** `pnpm` Workspaces (velocidade, eficiência de disco e suporte nativo a monorepos).
-*   **Monorepo Tooling:** Turborepo (para cache de builds, pipelines eficientes de lint/teste/build).
-*   **Estilização:** SCSS Modules. Não será utilizado CSS-in-JS nem Tailwind CSS. Toda a estilização deve ser feita através de classes CSS scoped e utilizando variáveis CSS globais fornecidas pelos Design Tokens.
-*   **Documentação e Sandbox:** Storybook 8 (instalado no pacote `@ds/docs`).
-*   **Testes Unitários/Integração:** Vitest + React Testing Library (TDD é obrigatório: os testes devem ser escritos antes da implementação).
-*   **Acessibilidade:** `jest-axe` nos testes de unidade para validação WCAG 2.1 AA. Primitivos da `@radix-ui` para garantir navegação por teclado e semântica ARIA adequadas em componentes complexos.
-*   **Qualidade e Linter:** ESLint (Flat Config), Prettier, Husky + lint-staged (impedindo commits fora de conformidade).
-*   **Regressão Visual:** Playwright rodando testes locais de regressão a partir dos Stories do Storybook, estruturado de forma a suportar execução remota no Browserstack via variáveis de ambiente `BROWSERSTACK_USERNAME` e `BROWSERSTACK_ACCESS_KEY`.
+- **Framework Principal:** React 18 + TypeScript 5 (Strict Mode).
+- **Gerenciador de Pacotes:** `pnpm` Workspaces (velocidade, eficiência de disco e suporte nativo a monorepos).
+- **Monorepo Tooling:** Turborepo (para cache de builds, pipelines eficientes de lint/teste/build).
+- **Estilização:** SCSS Modules. Não será utilizado CSS-in-JS nem Tailwind CSS. Toda a estilização deve ser feita através de classes CSS scoped e utilizando variáveis CSS globais fornecidas pelos Design Tokens.
+- **Documentação e Sandbox:** Storybook 8 (instalado no pacote `@ds/docs`).
+- **Testes Unitários/Integração:** Vitest + React Testing Library (TDD é obrigatório: os testes devem ser escritos antes da implementação).
+- **Acessibilidade:** `jest-axe` nos testes de unidade para validação WCAG 2.1 AA. Primitivos da `@radix-ui` para garantir navegação por teclado e semântica ARIA adequadas em componentes complexos.
+- **Qualidade e Linter:** ESLint (Flat Config), Prettier, Husky + lint-staged (impedindo commits fora de conformidade).
+- **Regressão Visual:** Playwright rodando testes locais de regressão a partir dos Stories do Storybook, estruturado de forma a suportar execução remota no Browserstack via variáveis de ambiente `BROWSERSTACK_USERNAME` e `BROWSERSTACK_ACCESS_KEY`.
 
 ---
 
@@ -64,18 +64,18 @@ design-system/
 
 Os design tokens serão definidos como variáveis CSS customizadas (`--ds-*`) vinculadas aos temas do sistema. A escala de tokens inclui:
 
-*   **Fontes:**
-    *   `--ds-font-family-sans`: `'Inter', -apple-system, BlinkMacSystemFont, sans-serif` (padrão de interface/corpo de texto).
-    *   `--ds-font-family-heading`: `'Poppins', 'Inter', sans-serif` (destaque, títulos, seções).
-*   **Cores (Escala Monocromática):**
-    *   Cores neutras de cinza premium (do branco `--ds-color-neutral-0` ao preto puro `--ds-color-neutral-1000`).
-    *   Variantes de marca e acento de alto contraste para estados interativos e focos.
-*   **Espaçamento:** Escala baseada em múltiplos de `4px` (`4px`, `8px`, `12px`, `16px`, `24px`, `32px`, `48px`, `64px`).
-*   **Bordas:** Espessuras de borda e raios (`--ds-border-radius-sm`, `--ds-border-radius-md`, `--ds-border-radius-lg`).
-*   **Sombras:** Sombras leves e premium para elevação de cards/modais (`--ds-shadow-sm`, `--ds-shadow-md`, `--ds-shadow-lg`).
-*   **Breakpoints:** Escala responsiva padrão (`sm: 640px`, `md: 768px`, `lg: 1024px`, `xl: 1280px`).
+- **Fontes:**
+  - `--ds-font-family-sans`: `'Inter', -apple-system, BlinkMacSystemFont, sans-serif` (padrão de interface/corpo de texto).
+  - `--ds-font-family-heading`: `'Poppins', 'Inter', sans-serif` (destaque, títulos, seções).
+- **Cores (Escala Monocromática):**
+  - Cores neutras de cinza premium (do branco `--ds-color-neutral-0` ao preto puro `--ds-color-neutral-1000`).
+  - Variantes de marca e acento de alto contraste para estados interativos e focos.
+- **Espaçamento:** Escala baseada em múltiplos de `4px` (`4px`, `8px`, `12px`, `16px`, `24px`, `32px`, `48px`, `64px`).
+- **Bordas:** Espessuras de borda e raios (`--ds-border-radius-sm`, `--ds-border-radius-md`, `--ds-border-radius-lg`).
+- **Sombras:** Sombras leves e premium para elevação de cards/modais (`--ds-shadow-sm`, `--ds-shadow-md`, `--ds-shadow-lg`).
+- **Breakpoints:** Escala responsiva padrão (`sm: 640px`, `md: 768px`, `lg: 1024px`, `xl: 1280px`).
 
-*Nota: As definições completas estão em [DESIGN_TOKENS.md](file:///home/rafacdomin/projetos/design-system/references/DESIGN_TOKENS.md).*
+_Nota: As definições completas estão em [DESIGN_TOKENS.md](file:///home/rafacdomin/projetos/design-system/references/DESIGN_TOKENS.md)._
 
 ---
 
@@ -93,7 +93,7 @@ Abaixo, a lista de componentes que serão desenvolvidos. Todos os componentes de
 8.  **Avatar:** Representação visual de usuário/autor com fallback para iniciais do nome.
 9.  **Carousel:** Carrossel para imagens de projetos de portfólio, isolado em `@ds/carousel` devido à dependência do `embla-carousel-react`.
 
-*Nota: A especificação detalhada de props e comportamento de cada componente está em [COMPONENT_SPEC.md](file:///home/rafacdomin/projetos/design-system/references/COMPONENT_SPEC.md).*
+_Nota: A especificação detalhada de props e comportamento de cada componente está em [COMPONENT_SPEC.md](file:///home/rafacdomin/projetos/design-system/references/COMPONENT_SPEC.md)._
 
 ---
 
@@ -110,7 +110,7 @@ O tema padrão será `light`, com opção para alternar para `dark`.
 </div>
 ```
 
-*Nota: Os detalhes de implementação do HOC e tokens por tema estão em [THEMING.md](file:///home/rafacdomin/projetos/design-system/references/THEMING.md).*
+_Nota: Os detalhes de implementação do HOC e tokens por tema estão em [THEMING.md](file:///home/rafacdomin/projetos/design-system/references/THEMING.md)._
 
 ---
 
@@ -129,11 +129,11 @@ Os testes são parte central da qualidade do repositório, organizados conforme 
 Um componente é considerado **Concluído (Done)** apenas se satisfizer os seguintes critérios sem exceções:
 
 1.  **Arquitetura de Arquivos Completa:**
-    *   `ComponentName.tsx` (código limpo, tipado com interfaces, displayName setado, refs encaminhadas via `forwardRef`).
-    *   `ComponentName.module.scss` (sem valores literais, usando exclusivamente tokens).
-    *   `ComponentName.test.tsx` (testes RTL cobrindo rendering, interações, a11y com jest-axe e edge cases).
-    *   `ComponentName.stories.tsx` (Stories cobrindo todas as variações e estados).
-    *   `index.ts` (exportação limpa do componente).
+    - `ComponentName.tsx` (código limpo, tipado com interfaces, displayName setado, refs encaminhadas via `forwardRef`).
+    - `ComponentName.module.scss` (sem valores literais, usando exclusivamente tokens).
+    - `ComponentName.test.tsx` (testes RTL cobrindo rendering, interações, a11y com jest-axe e edge cases).
+    - `ComponentName.stories.tsx` (Stories cobrindo todas as variações e estados).
+    - `index.ts` (exportação limpa do componente).
 2.  **Build & Tipagem:** Sem erros no compilador do TypeScript (`tsc --noEmit`).
 3.  **Qualidade do Código:** ESLint e Prettier executados e sem erros.
 4.  **Cobertura de Testes:** Atende ou supera os mínimos definidos na Estratégia de Testes.

@@ -1,12 +1,15 @@
 # #003 — Sistema de Temas (ThemeProvider & HOC)
 
 ## Status
-`[ ] A Fazer`  `[ ] Em progresso`  `[ ] Concluído`
+
+`[ ] A Fazer` `[ ] Em progresso` `[ ] Concluído`
 
 ## Objetivo
+
 Criar o provedor de tema (`ThemeProvider`) e o Higher-Order Component (`withTheme`) no pacote `@ds/core`, gerenciando a aplicação e alternância do atributo `data-theme` no DOM de forma tipada e reativa.
 
 ## Critérios de Aceite
+
 - [ ] Criar o contexto do React (`ThemeContext`) que mantém o estado do tema (`'light' | 'dark'`) e uma função para alternar o tema (`setTheme`).
 - [ ] Criar o componente `ThemeProvider` que injeta o `ThemeContext.Provider` e renderiza um elemento container contendo o atributo `data-theme={theme}`.
 - [ ] Criar o hook personalizado `useTheme` para consumir o tema atual e a função de atualização em componentes internos.
@@ -16,10 +19,12 @@ Criar o provedor de tema (`ThemeProvider`) e o Higher-Order Component (`withThem
 - [ ] Exportar `ThemeProvider`, `withTheme` e `useTheme` no `index.ts` do `@ds/core`.
 
 ## Cenários de Validação
+
 - [ ] Fazer render de um elemento envolvido no `ThemeProvider` no RTL e validar se o container pai tem `data-theme="light"`.
 - [ ] Invocar a função para alterar para `dark` e validar que o container muda para `data-theme="dark"`.
 
 ## Arquivos a Criar/Modificar
+
 - `packages/core/src/themes/ThemeContext.ts` (Criar)
 - `packages/core/src/themes/ThemeProvider.tsx` (Criar)
 - `packages/core/src/themes/withTheme.tsx` (Criar)
@@ -28,10 +33,13 @@ Criar o provedor de tema (`ThemeProvider`) e o Higher-Order Component (`withThem
 - `packages/core/src/index.ts` (Modificar para exportar hooks, provider e HOC)
 
 ## Dependências Externas
+
 - `react`, `react-dom`
 
 ## Dependências de Issues
+
 #001 (Monorepo), #002 (Tokens)
 
 ## Estimativa
+
 P

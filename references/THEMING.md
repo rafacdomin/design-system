@@ -3,12 +3,12 @@
 ## Estratégia: CSS Custom Properties + HOC
 
 ```scss
-[data-theme="light"] {
+[data-theme='light'] {
   --ds-color-bg-primary: #ffffff;
   --ds-color-text-primary: #1a1a1a;
   --ds-color-brand-primary: #0066ff;
 }
-[data-theme="dark"] {
+[data-theme='dark'] {
   --ds-color-bg-primary: #0f0f0f;
   --ds-color-text-primary: #f5f5f5;
   --ds-color-brand-primary: #4d94ff;
@@ -16,6 +16,7 @@
 ```
 
 ## HOC withTheme
+
 ```typescript
 export const ThemeProvider: React.FC<{
   defaultTheme?: 'light' | 'dark'

@@ -20,3 +20,10 @@ Você é um engenheiro sênior refinando a issue $ARGUMENTS antes da implementa�
    - `## Checklist de Implementação` — granular, com 15-20 itens
 
 Não implemente ainda — apenas planeje.
+
+Use a ferramenta `resolve-library-id` do Context7 para buscar documentação atualizada de:
+
+- radix-ui/{componente}
+- shadcn/ui
+- storybookjs/storybook
+- testing-library/react

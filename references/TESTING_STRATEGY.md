@@ -1,14 +1,17 @@
 # Estratégia de Testes
 
 ## Pirâmide
+
 1. Unitários (Vitest + RTL) — 80%
 2. Integration (Vitest + RTL) — 15%
 3. Visual Regression (Playwright + Browserstack) — 5%
 
 ## Cobertura mínima
+
 Statements: 90% / Branches: 85% / Functions: 90%
 
 ## Template
+
 ```typescript
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
@@ -32,6 +35,7 @@ describe('<ComponentName />', () => {
 ```
 
 ## Visual Regression
+
 - Rodado em CI via Browserstack
 - Baseline gerada a partir dos stories do Storybook
 - Threshold: 0.1% de diferença aceito

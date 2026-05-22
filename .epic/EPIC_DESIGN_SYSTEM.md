@@ -6,21 +6,21 @@ Este documento descreve o progresso global da implementação do mini design sys
 
 ## Tabela de Issues e Progresso
 
-| ID | Issue | Dependências | Estimativa | Status |
-| :--- | :--- | :--- | :--- | :--- |
-| **#001** | [Setup do Monorepo & Tooling](file:///home/rafacdomin/projetos/design-system/.epic/issues/001_monorepo_setup.md) | Nenhuma | M | `[ ] A Fazer` |
-| **#002** | [Configuração dos Design Tokens](file:///home/rafacdomin/projetos/design-system/.epic/issues/002_design_tokens.md) | #001 | P | `[ ] A Fazer` |
-| **#003** | [Sistema de Temas (ThemeProvider / HOC)](file:///home/rafacdomin/projetos/design-system/.epic/issues/003_theme_system.md) | #001, #002 | P | `[ ] A Fazer` |
-| **#004** | [Configuração do Storybook 8](file:///home/rafacdomin/projetos/design-system/.epic/issues/004_storybook_setup.md) | #001 | M | `[ ] A Fazer` |
-| **#005** | [Componente: Button](file:///home/rafacdomin/projetos/design-system/.epic/issues/005_button_component.md) | #001, #002, #003, #004 | M | `[ ] A Fazer` |
-| **#006** | [Componente: Input](file:///home/rafacdomin/projetos/design-system/.epic/issues/006_input_component.md) | #001, #002, #003, #005 | M | `[ ] A Fazer` |
-| **#007** | [Componente: Textarea](file:///home/rafacdomin/projetos/design-system/.epic/issues/007_textarea_component.md) | #001, #002, #003, #006 | P | `[ ] A Fazer` |
-| **#008** | [Componente: Dropdown (Radix Select)](file:///home/rafacdomin/projetos/design-system/.epic/issues/008_dropdown_component.md) | #001, #002, #003 | M | `[ ] A Fazer` |
-| **#009** | [Componente: Modal (Radix Dialog)](file:///home/rafacdomin/projetos/design-system/.epic/issues/009_modal_component.md) | #001, #002, #003 | M | `[ ] A Fazer` |
-| **#010** | [Componente: Card](file:///home/rafacdomin/projetos/design-system/.epic/issues/010_card_component.md) | #001, #002, #003 | P | `[ ] A Fazer` |
-| **#011** | [Componente: Tag](file:///home/rafacdomin/projetos/design-system/.epic/issues/011_tag_component.md) | #001, #002, #003 | P | `[ ] A Fazer` |
-| **#012** | [Componente: Avatar](file:///home/rafacdomin/projetos/design-system/.epic/issues/012_avatar_component.md) | #001, #002, #003 | P | `[ ] A Fazer` |
-| **#013** | [Componente: Carousel (Embla Carousel)](file:///home/rafacdomin/projetos/design-system/.epic/issues/013_carousel_component.md) | #001, #002, #003, #004 | G | `[ ] A Fazer` |
+| ID       | Issue                                                                                                                          | Dependências           | Estimativa | Status          |
+| :------- | :----------------------------------------------------------------------------------------------------------------------------- | :--------------------- | :--------- | :-------------- |
+| **#001** | [Setup do Monorepo & Tooling](file:///home/rafacdomin/projetos/design-system/.epic/issues/001_monorepo_setup.md)               | Nenhuma                | M          | `[x] Concluído` |
+| **#002** | [Configuração dos Design Tokens](file:///home/rafacdomin/projetos/design-system/.epic/issues/002_design_tokens.md)             | #001                   | P          | `[ ] A Fazer`   |
+| **#003** | [Sistema de Temas (ThemeProvider / HOC)](file:///home/rafacdomin/projetos/design-system/.epic/issues/003_theme_system.md)      | #001, #002             | P          | `[ ] A Fazer`   |
+| **#004** | [Configuração do Storybook 8](file:///home/rafacdomin/projetos/design-system/.epic/issues/004_storybook_setup.md)              | #001                   | M          | `[ ] A Fazer`   |
+| **#005** | [Componente: Button](file:///home/rafacdomin/projetos/design-system/.epic/issues/005_button_component.md)                      | #001, #002, #003, #004 | M          | `[ ] A Fazer`   |
+| **#006** | [Componente: Input](file:///home/rafacdomin/projetos/design-system/.epic/issues/006_input_component.md)                        | #001, #002, #003, #005 | M          | `[ ] A Fazer`   |
+| **#007** | [Componente: Textarea](file:///home/rafacdomin/projetos/design-system/.epic/issues/007_textarea_component.md)                  | #001, #002, #003, #006 | P          | `[ ] A Fazer`   |
+| **#008** | [Componente: Dropdown (Radix Select)](file:///home/rafacdomin/projetos/design-system/.epic/issues/008_dropdown_component.md)   | #001, #002, #003       | M          | `[ ] A Fazer`   |
+| **#009** | [Componente: Modal (Radix Dialog)](file:///home/rafacdomin/projetos/design-system/.epic/issues/009_modal_component.md)         | #001, #002, #003       | M          | `[ ] A Fazer`   |
+| **#010** | [Componente: Card](file:///home/rafacdomin/projetos/design-system/.epic/issues/010_card_component.md)                          | #001, #002, #003       | P          | `[ ] A Fazer`   |
+| **#011** | [Componente: Tag](file:///home/rafacdomin/projetos/design-system/.epic/issues/011_tag_component.md)                            | #001, #002, #003       | P          | `[ ] A Fazer`   |
+| **#012** | [Componente: Avatar](file:///home/rafacdomin/projetos/design-system/.epic/issues/012_avatar_component.md)                      | #001, #002, #003       | P          | `[ ] A Fazer`   |
+| **#013** | [Componente: Carousel (Embla Carousel)](file:///home/rafacdomin/projetos/design-system/.epic/issues/013_carousel_component.md) | #001, #002, #003, #004 | G          | `[ ] A Fazer`   |
 
 ---
 

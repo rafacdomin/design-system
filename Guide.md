@@ -102,33 +102,33 @@ my-design-system/
 
 ### Prioridade 1 — Antes de qualquer código
 
-| Arquivo | Quando criar | Responsabilidade |
-|---|---|---|
-| `AGENTS.md` | Antes de tudo | Contexto global do Antigravity CLI |
-| `SPEC.md` | Fase /spec | Visão geral do projeto |
-| `references/ARCHITECTURE.md` | Fase /spec | Regras técnicas imutáveis |
-| `references/DESIGN_TOKENS.md` | Fase /spec | Tokens de design |
-| `references/COMPONENT_SPEC.md` | Fase /spec | Spec visual e comportamental |
+| Arquivo                        | Quando criar  | Responsabilidade                   |
+| ------------------------------ | ------------- | ---------------------------------- |
+| `AGENTS.md`                    | Antes de tudo | Contexto global do Antigravity CLI |
+| `SPEC.md`                      | Fase /spec    | Visão geral do projeto             |
+| `references/ARCHITECTURE.md`   | Fase /spec    | Regras técnicas imutáveis          |
+| `references/DESIGN_TOKENS.md`  | Fase /spec    | Tokens de design                   |
+| `references/COMPONENT_SPEC.md` | Fase /spec    | Spec visual e comportamental       |
 
 ### Prioridade 2 — Antes de implementar
 
-| Arquivo | Quando criar | Responsabilidade |
-|---|---|---|
-| `.epic/EPIC_DESIGN_SYSTEM.md` | Fase /break | Épico principal |
-| `.epic/issues/XXX_component.md` | Fase /break | Issue por componente |
-| `references/TESTING_STRATEGY.md` | Antes do /execute | Como testar |
-| `references/THEMING.md` | Antes do /execute | HOCs de tema |
+| Arquivo                          | Quando criar      | Responsabilidade     |
+| -------------------------------- | ----------------- | -------------------- |
+| `.epic/EPIC_DESIGN_SYSTEM.md`    | Fase /break       | Épico principal      |
+| `.epic/issues/XXX_component.md`  | Fase /break       | Issue por componente |
+| `references/TESTING_STRATEGY.md` | Antes do /execute | Como testar          |
+| `references/THEMING.md`          | Antes do /execute | HOCs de tema         |
 
 ### Prioridade 3 — Workflows e Skills
 
-| Arquivo | Descrição |
-|---|---|
-| `.agent/workflows/spec.md` | Comando /spec |
-| `.agent/workflows/break.md` | Comando /break |
-| `.agent/workflows/plan.md` | Comando /plan |
-| `.agent/workflows/execute.md` | Comando /execute |
+| Arquivo                                    | Descrição                               |
+| ------------------------------------------ | --------------------------------------- |
+| `.agent/workflows/spec.md`                 | Comando /spec                           |
+| `.agent/workflows/break.md`                | Comando /break                          |
+| `.agent/workflows/plan.md`                 | Comando /plan                           |
+| `.agent/workflows/execute.md`              | Comando /execute                        |
 | `.agent/skills/component-builder/SKILL.md` | Skill auto-ativada ao criar componentes |
-| `.agent/skills/test-writer/SKILL.md` | Skill auto-ativada ao escrever testes |
+| `.agent/skills/test-writer/SKILL.md`       | Skill auto-ativada ao escrever testes   |
 
 ---
 
@@ -144,11 +144,13 @@ No Antigravity CLI, o arquivo `AGENTS.md` na raiz é lido automaticamente em tod
 # Design System — Contexto para Antigravity CLI
 
 ## O que é este projeto
+
 Mini design system de portfólio, inspirado na estrutura do PagBank.
 Monorepo com Turborepo. Pacotes: `core` (componentes sem deps externas) e pacotes extras
 por dependência pesada (ex: carousel com Embla).
 
 ## Stack obrigatória
+
 - React 18 + TypeScript 5 (strict mode)
 - SCSS Modules (sem CSS-in-JS, sem Tailwind)
 - Storybook 8
@@ -158,6 +160,7 @@ por dependência pesada (ex: carousel com Embla).
 - Turborepo para monorepo
 
 ## Regras absolutas (nunca violar)
+
 1. Todo componente DEVE ter: `.tsx`, `.stories.tsx`, `.test.tsx`, `.module.scss`, `index.ts`
 2. Testes vêm ANTES da implementação (TDD)
 3. Acessibilidade WCAG 2.1 AA é requisito, não feature
@@ -168,6 +171,7 @@ por dependência pesada (ex: carousel com Embla).
 8. SCSS: usar apenas CSS custom properties dos tokens, nunca valores literais
 
 ## Onde encontrar as regras
+
 - Arquitetura: `references/ARCHITECTURE.md`
 - Tokens de design: `references/DESIGN_TOKENS.md`
 - Spec dos componentes: `references/COMPONENT_SPEC.md`
@@ -175,9 +179,11 @@ por dependência pesada (ex: carousel com Embla).
 - Temas: `references/THEMING.md`
 
 ## Fluxo de desenvolvimento
+
 Spec → Break → Plan → Execute (ver `references/WORKFLOW.md`)
 
 ## Comandos disponíveis
+
 - `/spec` — criar/atualizar SPEC.md
 - `/break` — quebrar SPEC em issues em `.epic/issues/`
 - `/plan` — refinar uma issue (ex: `/plan 004`)
@@ -187,6 +193,7 @@ Spec → Break → Plan → Execute (ver `references/WORKFLOW.md`)
 - `/review` — revisar código contra as references
 
 ## Não faça sem perguntar
+
 - Mudar o bundler
 - Adicionar CSS-in-JS
 - Criar abstrações não documentadas em references/
@@ -254,19 +261,25 @@ Leia o arquivo `SPEC.md` e crie issues dentro de `.epic/issues/`.
 # [ID] — Nome da Issue
 
 ## Objetivo
+
 O que será entregue ao final desta issue.
 
 ## Critérios de Aceite
+
 - [ ] Critério 1
 
 ## Cenários de Teste
+
 ### Happy Path / Edge Cases / Estados de Erro
 
 ## Arquivos a Criar/Modificar
+
 - `path/to/file.tsx` — descrição
 
 ## Dependências Externas
+
 ## Dependências de Issues
+
 ## Estimativa P / M / G
 
 Crie também `.epic/EPIC_DESIGN_SYSTEM.md` com a lista de todas as issues e ordem de execução.
@@ -322,6 +335,7 @@ Você é um engenheiro de Design Systems implementando a issue $ARGUMENTS.
    f. Export no `index.ts`
 
 ## Regras de implementação
+
 - Zero `any`
 - `forwardRef` quando relevante
 - `displayName` definido em todo componente
@@ -331,6 +345,7 @@ Você é um engenheiro de Design Systems implementando a issue $ARGUMENTS.
 - `data-testid` em elementos interativos
 
 ## Ao finalizar
+
 - Rode: `pnpm test --filter=core`
 - Atualize o checklist da issue
 - Liste arquivos criados/modificados
@@ -348,11 +363,11 @@ Gere testes completos para o componente $ARGUMENTS seguindo `references/TESTING_
 ## Estrutura obrigatória
 
 describe('<ComponentName />', () => {
-  describe('Rendering', () => { })
-  describe('Behavior', () => { })
-  describe('Accessibility', () => { /* jest-axe */ })
-  describe('Props', () => { })
-  describe('Edge Cases', () => { })
+describe('Rendering', () => { })
+describe('Behavior', () => { })
+describe('Accessibility', () => { /_ jest-axe _/ })
+describe('Props', () => { })
+describe('Edge Cases', () => { })
 })
 
 Ferramentas: @testing-library/react, @testing-library/user-event, vitest, jest-axe.
@@ -369,7 +384,7 @@ Use para padrões que devem ser seguidos sempre, sem precisar lembrar de invocar
 
 ### `.agent/skills/component-builder/SKILL.md`
 
-```markdown
+````markdown
 ---
 name: component-builder
 description: Criar componentes React para o Design System seguindo a estrutura padrão do projeto
@@ -378,9 +393,11 @@ description: Criar componentes React para o Design System seguindo a estrutura p
 Ao criar qualquer componente React neste design system, siga OBRIGATORIAMENTE:
 
 ## Estrutura de arquivos
+
 Crie sempre os 5 arquivos: `.tsx`, `.test.tsx`, `.stories.tsx`, `.module.scss`, `index.ts`
 
 ## Template de componente
+
 ```typescript
 interface ComponentNameProps {
   /** Descrição para Storybook ArgTable */
@@ -403,12 +420,15 @@ export const ComponentName = React.forwardRef<HTMLElement, ComponentNameProps>(
 )
 ComponentName.displayName = 'ComponentName'
 ```
+````
 
 ## Regras de SCSS
+
 - Apenas CSS custom properties: `var(--ds-color-primary-500)`
 - Variantes via data attributes: `[data-variant="secondary"] { }`
 - Sem valores literais de cor, espaçamento ou fonte
-```
+
+````
 
 ### `.agent/skills/test-writer/SKILL.md`
 
@@ -426,7 +446,7 @@ Ao escrever testes de componentes:
 4. Estruture com: Rendering → Behavior → Accessibility → Props → Edge Cases
 5. Prefira queries por role/label (acessíveis) sobre `getByTestId`
 6. `data-testid` apenas como último recurso
-```
+````
 
 ---
 
@@ -460,6 +480,7 @@ agy  # ou abrir o Antigravity desktop e apontar para a pasta
 ```
 /spec
 ```
+
 O agente lê as `references/`, faz perguntas sobre o que estiver faltando e gera o `SPEC.md`.
 Revise, ajuste tokens e props, confirme.
 
@@ -468,6 +489,7 @@ Revise, ajuste tokens e props, confirme.
 ```
 /break
 ```
+
 O agente lê o `SPEC.md` e gera todos os arquivos em `.epic/issues/`. Revise a ordem das issues — setup e tokens devem vir antes de qualquer componente.
 
 ### Fase 3 — /plan [número]
@@ -475,6 +497,7 @@ O agente lê o `SPEC.md` e gera todos os arquivos em `.epic/issues/`. Revise a o
 ```
 /plan 004
 ```
+
 O agente pesquisa na web (Radix UI, shadcn, WAI-ARIA), lê a issue, e a atualiza com
 plano detalhado, decisões técnicas e checklist. **Sempre faça isso antes do /execute.**
 
@@ -483,6 +506,7 @@ plano detalhado, decisões técnicas e checklist. **Sempre faça isso antes do /
 ```
 /execute 004
 ```
+
 O agente implementa na ordem TDD: test → types → component → scss → stories → export.
 
 ---
@@ -495,10 +519,12 @@ O agente implementa na ordem TDD: test → types → component → scss → stor
 # Arquitetura do Design System
 
 ## Monorepo
+
 - Turborepo + pnpm workspaces
 - Pacotes: `@ds/core`, `@ds/carousel`, `@ds/docs`
 
 ## Estrutura de um componente
+
 packages/core/src/components/ComponentName/
 ├── ComponentName.tsx
 ├── ComponentName.test.tsx
@@ -507,31 +533,36 @@ packages/core/src/components/ComponentName/
 └── index.ts
 
 ## Dependências externas permitidas
-- @radix-ui/* — primitivos acessíveis
+
+- @radix-ui/\* — primitivos acessíveis
 - @radix-ui/react-slot — pattern asChild
 - class-variance-authority (cva) — variantes type-safe
 - clsx — composição de classNames
 - embla-carousel-react — apenas no pacote @ds/carousel
 
 ## Quando separar em pacote próprio
+
 Dependência > ~10kb gzipped = pacote separado.
 Embla (~15kb), Recharts (~300kb) = pacotes próprios.
 ```
 
 ### `references/TESTING_STRATEGY.md`
 
-```markdown
+````markdown
 # Estratégia de Testes
 
 ## Pirâmide
+
 1. Unitários (Vitest + RTL) — 80%
 2. Integration (Vitest + RTL) — 15%
 3. Visual Regression (Playwright + Browserstack) — 5%
 
 ## Cobertura mínima
+
 Statements: 90% / Branches: 85% / Functions: 90%
 
 ## Template
+
 ```typescript
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
@@ -553,13 +584,16 @@ describe('<ComponentName />', () => {
   })
 })
 ```
+````
 
 ## Visual Regression
+
 - Rodado em CI via Browserstack
 - Baseline gerada a partir dos stories do Storybook
 - Threshold: 0.1% de diferença aceito
 - Stories com estado isolado (sem animações, sem timers)
-```
+
+````
 
 ### `references/THEMING.md`
 
@@ -579,9 +613,10 @@ describe('<ComponentName />', () => {
   --ds-color-text-primary: #f5f5f5;
   --ds-color-brand-primary: #4d94ff;
 }
-```
+````
 
 ## HOC withTheme
+
 ```typescript
 export const ThemeProvider: React.FC<{
   defaultTheme?: 'light' | 'dark'
@@ -604,7 +639,8 @@ export function withTheme<P extends object>(Component: React.ComponentType<P>) {
   return WithTheme
 }
 ```
-```
+
+````
 
 ---
 
@@ -616,12 +652,13 @@ agy mcp add context7 -- npx -y @upstash/context7-mcp
 
 # GitHub MCP — criar issues, PRs, gerenciar branches
 agy mcp add github
-```
+````
 
 No `.agent/workflows/plan.md`, instrua o agente a usar o Context7:
 
 ```markdown
 Use a ferramenta `resolve-library-id` do Context7 para buscar documentação atualizada de:
+
 - radix-ui/{componente}
 - shadcn/ui
 - storybookjs/storybook
@@ -648,11 +685,11 @@ Use a ferramenta `resolve-library-id` do Context7 para buscar documentação atu
 
 ### Pacotes e quando separar
 
-| Pacote | Conteúdo | Motivo |
-|---|---|---|
-| `@ds/core` | Button, Input, Tag, Avatar, Card, Modal | Base sem deps pesadas |
-| `@ds/carousel` | Carousel (Embla) | Embla ~15kb — opcional |
-| `@ds/docs` | Storybook | Nunca publicado como pacote |
+| Pacote         | Conteúdo                                | Motivo                      |
+| -------------- | --------------------------------------- | --------------------------- |
+| `@ds/core`     | Button, Input, Tag, Avatar, Card, Modal | Base sem deps pesadas       |
+| `@ds/carousel` | Carousel (Embla)                        | Embla ~15kb — opcional      |
+| `@ds/docs`     | Storybook                               | Nunca publicado como pacote |
 
 ---
 
@@ -698,12 +735,15 @@ Semana 5 — Qualidade
 # 004 — Button Component
 
 ## Status
-[ ] Planejada  [ ] Em desenvolvimento  [ ] Concluída
+
+[ ] Planejada [ ] Em desenvolvimento [ ] Concluída
 
 ## Objetivo
+
 Implementar o componente `Button` com variantes, tamanhos, estados e pattern `asChild`.
 
 ## Critérios de Aceite
+
 - [ ] Variantes: primary, secondary, ghost, danger
 - [ ] Tamanhos: sm, md, lg
 - [ ] Estados: default, hover, focus, active, disabled, loading
@@ -715,15 +755,17 @@ Implementar o componente `Button` com variantes, tamanhos, estados e pattern `as
 - [ ] Keyboard: Enter e Space ativam o botão
 
 ## Props
-| Prop | Tipo | Default | Descrição |
-|------|------|---------|-----------|
-| variant | 'primary' \| 'secondary' \| 'ghost' \| 'danger' | 'primary' | Variante visual |
-| size | 'sm' \| 'md' \| 'lg' | 'md' | Tamanho |
-| disabled | boolean | false | Estado desabilitado |
-| loading | boolean | false | Estado de carregamento |
-| asChild | boolean | false | Herda o elemento filho |
+
+| Prop     | Tipo                                            | Default   | Descrição              |
+| -------- | ----------------------------------------------- | --------- | ---------------------- |
+| variant  | 'primary' \| 'secondary' \| 'ghost' \| 'danger' | 'primary' | Variante visual        |
+| size     | 'sm' \| 'md' \| 'lg'                            | 'md'      | Tamanho                |
+| disabled | boolean                                         | false     | Estado desabilitado    |
+| loading  | boolean                                         | false     | Estado de carregamento |
+| asChild  | boolean                                         | false     | Herda o elemento filho |
 
 ## Arquivos a Criar
+
 - `packages/core/src/components/Button/Button.tsx`
 - `packages/core/src/components/Button/Button.test.tsx`
 - `packages/core/src/components/Button/Button.stories.tsx`
@@ -731,14 +773,17 @@ Implementar o componente `Button` com variantes, tamanhos, estados e pattern `as
 - `packages/core/src/components/Button/index.ts`
 
 ## Dependências Externas
+
 - `@radix-ui/react-slot`
 - `clsx`
 - `class-variance-authority`
 
 ## Depende de
+
 #001 (monorepo), #002 (tokens), #003 (themes)
 
 ## Estimativa
+
 M
 ```
 

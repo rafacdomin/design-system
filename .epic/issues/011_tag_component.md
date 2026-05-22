@@ -1,12 +1,15 @@
 # #011 — Componente: Tag
 
 ## Status
-`[ ] A Fazer`  `[ ] Em progresso`  `[ ] Concluído`
+
+`[ ] A Fazer` `[ ] Em progresso` `[ ] Concluído`
 
 ## Objetivo
+
 Implementar o componente `Tag` (Badge) para rotulagem de categorias ou tecnologias no portfólio. Deve suportar variantes visuais, tamanhos e opção para comportamento removível/interativo.
 
 ## Critérios de Aceite
+
 - [ ] Criar componente Tag como elemento `<span>` (ou `<button>` se for interativo).
 - [ ] Variantes estéticas: `neutral` (fundo cinza sutil, texto escuro), `outline` (borda fina sem fundo) e `interactive` (adiciona hover e comportamento clicável).
 - [ ] Tamanhos: `sm` (pequeno) e `md` (médio).
@@ -15,18 +18,21 @@ Implementar o componente `Tag` (Badge) para rotulagem de categorias ou tecnologi
 - [ ] Escrever testes unitários verificando a renderização, ativação do clique e a chamada do `onRemove`.
 
 ## Props
-| Prop | Tipo | Default | Descrição |
-|------|------|---------|-----------|
-| `variant` | `'neutral' \| 'outline' \| 'interactive'` | `'neutral'` | Variante visual estética |
-| `size` | `'sm' \| 'md'` | `'md'` | Tamanho da tag |
-| `onRemove` | `() => void` | - | Callback opcional para remoção da tag |
+
+| Prop       | Tipo                                      | Default     | Descrição                             |
+| ---------- | ----------------------------------------- | ----------- | ------------------------------------- |
+| `variant`  | `'neutral' \| 'outline' \| 'interactive'` | `'neutral'` | Variante visual estética              |
+| `size`     | `'sm' \| 'md'`                            | `'md'`      | Tamanho da tag                        |
+| `onRemove` | `() => void`                              | -           | Callback opcional para remoção da tag |
 
 ## Cenários de Teste
+
 - [ ] Renderiza texto corretamente.
 - [ ] Exibe botão de fechar quando `onRemove` for fornecido e dispara o callback ao clicar.
 - [ ] Acessibilidade e contraste em ambos os temas atendem WCAG 2.1 AA.
 
 ## Arquivos a Criar
+
 - `packages/core/src/components/Tag/Tag.tsx`
 - `packages/core/src/components/Tag/Tag.test.tsx`
 - `packages/core/src/components/Tag/Tag.stories.tsx`
@@ -34,7 +40,9 @@ Implementar o componente `Tag` (Badge) para rotulagem de categorias ou tecnologi
 - `packages/core/src/components/Tag/index.ts`
 
 ## Dependências de Issues
+
 #001 (Monorepo), #002 (Tokens), #003 (Themes)
 
 ## Estimativa
+
 P

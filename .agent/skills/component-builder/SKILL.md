@@ -6,9 +6,11 @@ description: Criar componentes React para o Design System seguindo a estrutura p
 Ao criar qualquer componente React neste design system, siga OBRIGATORIAMENTE:
 
 ## Estrutura de arquivos
+
 Crie sempre os 5 arquivos: `.tsx`, `.test.tsx`, `.stories.tsx`, `.module.scss`, `index.ts`
 
 ## Template de componente
+
 ```typescript
 interface ComponentNameProps {
   /** Descrição para Storybook ArgTable */
@@ -33,6 +35,7 @@ ComponentName.displayName = 'ComponentName'
 ```
 
 ## Regras de SCSS
+
 - Apenas CSS custom properties: `var(--ds-color-primary-500)`
 - Variantes via data attributes: `[data-variant="secondary"] { }`
 - Sem valores literais de cor, espaçamento ou fonte

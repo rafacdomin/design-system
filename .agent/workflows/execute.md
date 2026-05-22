@@ -18,6 +18,7 @@ Você é um engenheiro de Design Systems implementando a issue $ARGUMENTS.
    f. Export no `index.ts`
 
 ## Regras de implementação
+
 - Zero `any`
 - `forwardRef` quando relevante
 - `displayName` definido em todo componente
@@ -27,6 +28,7 @@ Você é um engenheiro de Design Systems implementando a issue $ARGUMENTS.
 - `data-testid` em elementos interativos
 
 ## Ao finalizar
+
 - Rode: `pnpm test --filter=core`
 - Atualize o checklist da issue
 - Liste arquivos criados/modificados
