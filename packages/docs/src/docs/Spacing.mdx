@@ -1,0 +1,137 @@
+import { Meta } from '@storybook/blocks';
+import { DocsThemeWrapper } from '../components/DocsThemeWrapper';
+
+<Meta title="Tokens/Spacing" />
+
+<DocsThemeWrapper>
+# Espaçamento
+
+O design system utiliza uma escala de espaçamento linear baseada em incrementos de `4px` (grid base). Essa escala garante consistência perfeita de alinhamento vertical e horizontal em todos os componentes e layouts.
+
+---
+
+## 📏 Escala de Espaçamento (Spacing Scale)
+
+A listagem abaixo exibe a relação dos tokens de espaçamento, seus valores e uma régua representativa em tempo real.
+
+<div style={{ display: 'flex', flexDirection: 'column', gap: '1px', margin: '24px 0', background: 'var(--ds-color-neutral-200)', borderRadius: '8px', overflow: 'hidden', border: '1px solid var(--ds-color-neutral-200)' }}>
+  {/* Header */}
+  <div style={{ display: 'grid', gridTemplateColumns: '1.5fr 1fr 1fr 1fr 2.5fr', gap: '16px', padding: '12px 16px', background: 'var(--ds-color-neutral-50)', fontWeight: 'bold', color: 'var(--ds-color-neutral-1000)', fontFamily: 'var(--ds-font-family-sans)' }}>
+    <div>Token</div>
+    <div>Multiplicador</div>
+    <div>Valor (rem)</div>
+    <div>Valor (px)</div>
+    <div>Régua Visual</div>
+  </div>
+
+  {/* Row 1 */}
+  <div style={{ display: 'grid', gridTemplateColumns: '1.5fr 1fr 1fr 1fr 2.5fr', gap: '16px', padding: '12px 16px', background: 'var(--ds-color-neutral-0)', color: 'var(--ds-color-neutral-1000)', alignItems: 'center', fontFamily: 'var(--ds-font-family-sans)', fontSize: '14px' }}>
+    <div><code>--ds-spacing-1</code></div>
+    <div>1x</div>
+    <div><code>0.25rem</code></div>
+    <div>4px</div>
+    <div>
+      <div style={{ height: '8px', background: 'var(--ds-color-neutral-1000)', width: 'var(--ds-spacing-1)', borderRadius: '2px' }} />
+    </div>
+  </div>
+
+  {/* Row 2 */}
+  <div style={{ display: 'grid', gridTemplateColumns: '1.5fr 1fr 1fr 1fr 2.5fr', gap: '16px', padding: '12px 16px', background: 'var(--ds-color-neutral-0)', color: 'var(--ds-color-neutral-1000)', alignItems: 'center', fontFamily: 'var(--ds-font-family-sans)', fontSize: '14px' }}>
+    <div><code>--ds-spacing-2</code></div>
+    <div>2x</div>
+    <div><code>0.5rem</code></div>
+    <div>8px</div>
+    <div>
+      <div style={{ height: '8px', background: 'var(--ds-color-neutral-1000)', width: 'var(--ds-spacing-2)', borderRadius: '2px' }} />
+    </div>
+  </div>
+
+  {/* Row 3 */}
+  <div style={{ display: 'grid', gridTemplateColumns: '1.5fr 1fr 1fr 1fr 2.5fr', gap: '16px', padding: '12px 16px', background: 'var(--ds-color-neutral-0)', color: 'var(--ds-color-neutral-1000)', alignItems: 'center', fontFamily: 'var(--ds-font-family-sans)', fontSize: '14px' }}>
+    <div><code>--ds-spacing-3</code></div>
+    <div>3x</div>
+    <div><code>0.75rem</code></div>
+    <div>12px</div>
+    <div>
+      <div style={{ height: '8px', background: 'var(--ds-color-neutral-1000)', width: 'var(--ds-spacing-3)', borderRadius: '2px' }} />
+    </div>
+  </div>
+
+  {/* Row 4 */}
+  <div style={{ display: 'grid', gridTemplateColumns: '1.5fr 1fr 1fr 1fr 2.5fr', gap: '16px', padding: '12px 16px', background: 'var(--ds-color-neutral-0)', color: 'var(--ds-color-neutral-1000)', alignItems: 'center', fontFamily: 'var(--ds-font-family-sans)', fontSize: '14px' }}>
+    <div><code>--ds-spacing-4</code></div>
+    <div>4x</div>
+    <div><code>1rem</code></div>
+    <div>16px</div>
+    <div>
+      <div style={{ height: '8px', background: 'var(--ds-color-neutral-1000)', width: 'var(--ds-spacing-4)', borderRadius: '2px' }} />
+    </div>
+  </div>
+
+  {/* Row 5 */}
+  <div style={{ display: 'grid', gridTemplateColumns: '1.5fr 1fr 1fr 1fr 2.5fr', gap: '16px', padding: '12px 16px', background: 'var(--ds-color-neutral-0)', color: 'var(--ds-color-neutral-1000)', alignItems: 'center', fontFamily: 'var(--ds-font-family-sans)', fontSize: '14px' }}>
+    <div><code>--ds-spacing-5</code></div>
+    <div>5x</div>
+    <div><code>1.25rem</code></div>
+    <div>20px</div>
+    <div>
+      <div style={{ height: '8px', background: 'var(--ds-color-neutral-1000)', width: 'var(--ds-spacing-5)', borderRadius: '2px' }} />
+    </div>
+  </div>
+
+  {/* Row 6 */}
+  <div style={{ display: 'grid', gridTemplateColumns: '1.5fr 1fr 1fr 1fr 2.5fr', gap: '16px', padding: '12px 16px', background: 'var(--ds-color-neutral-0)', color: 'var(--ds-color-neutral-1000)', alignItems: 'center', fontFamily: 'var(--ds-font-family-sans)', fontSize: '14px' }}>
+    <div><code>--ds-spacing-6</code></div>
+    <div>6x</div>
+    <div><code>1.5rem</code></div>
+    <div>24px</div>
+    <div>
+      <div style={{ height: '8px', background: 'var(--ds-color-neutral-1000)', width: 'var(--ds-spacing-6)', borderRadius: '2px' }} />
+    </div>
+  </div>
+
+  {/* Row 7 */}
+  <div style={{ display: 'grid', gridTemplateColumns: '1.5fr 1fr 1fr 1fr 2.5fr', gap: '16px', padding: '12px 16px', background: 'var(--ds-color-neutral-0)', color: 'var(--ds-color-neutral-1000)', alignItems: 'center', fontFamily: 'var(--ds-font-family-sans)', fontSize: '14px' }}>
+    <div><code>--ds-spacing-8</code></div>
+    <div>8x</div>
+    <div><code>2rem</code></div>
+    <div>32px</div>
+    <div>
+      <div style={{ height: '8px', background: 'var(--ds-color-neutral-1000)', width: 'var(--ds-spacing-8)', borderRadius: '2px' }} />
+    </div>
+  </div>
+
+  {/* Row 8 */}
+  <div style={{ display: 'grid', gridTemplateColumns: '1.5fr 1fr 1fr 1fr 2.5fr', gap: '16px', padding: '12px 16px', background: 'var(--ds-color-neutral-0)', color: 'var(--ds-color-neutral-1000)', alignItems: 'center', fontFamily: 'var(--ds-font-family-sans)', fontSize: '14px' }}>
+    <div><code>--ds-spacing-10</code></div>
+    <div>10x</div>
+    <div><code>2.5rem</code></div>
+    <div>40px</div>
+    <div>
+      <div style={{ height: '8px', background: 'var(--ds-color-neutral-1000)', width: 'var(--ds-spacing-10)', borderRadius: '2px' }} />
+    </div>
+  </div>
+
+  {/* Row 9 */}
+  <div style={{ display: 'grid', gridTemplateColumns: '1.5fr 1fr 1fr 1fr 2.5fr', gap: '16px', padding: '12px 16px', background: 'var(--ds-color-neutral-0)', color: 'var(--ds-color-neutral-1000)', alignItems: 'center', fontFamily: 'var(--ds-font-family-sans)', fontSize: '14px' }}>
+    <div><code>--ds-spacing-12</code></div>
+    <div>12x</div>
+    <div><code>3rem</code></div>
+    <div>48px</div>
+    <div>
+      <div style={{ height: '8px', background: 'var(--ds-color-neutral-1000)', width: 'var(--ds-spacing-12)', borderRadius: '2px' }} />
+    </div>
+  </div>
+
+  {/* Row 10 */}
+  <div style={{ display: 'grid', gridTemplateColumns: '1.5fr 1fr 1fr 1fr 2.5fr', gap: '16px', padding: '12px 16px', background: 'var(--ds-color-neutral-0)', color: 'var(--ds-color-neutral-1000)', alignItems: 'center', fontFamily: 'var(--ds-font-family-sans)', fontSize: '14px' }}>
+    <div><code>--ds-spacing-16</code></div>
+    <div>16x</div>
+    <div><code>4rem</code></div>
+    <div>64px</div>
+    <div>
+      <div style={{ height: '8px', background: 'var(--ds-color-neutral-1000)', width: 'var(--ds-spacing-16)', borderRadius: '2px' }} />
+    </div>
+  </div>
+</div>
+</DocsThemeWrapper>

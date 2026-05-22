@@ -1,6 +1,9 @@
 import type { Preview } from '@storybook/react'
 import React from 'react'
 import { ThemeProvider, useTheme, Theme } from '@ds/core'
+import { DocsContainer } from '@storybook/blocks'
+import { addons } from '@storybook/preview-api'
+import { GLOBALS_UPDATED } from '@storybook/core-events'
 import '@ds/core/src/tokens/index.scss'
 
 const ThemeSync = ({
@@ -17,6 +20,69 @@ const ThemeSync = ({
   return <>{children}</>
 }
 
+interface StorybookGlobals {
+  theme?: string
+  [key: string]: unknown
+}
+
+interface StorybookContextStore {
+  globals?: {
+    globals?: StorybookGlobals
+  }
+  userGlobals?: {
+    globals?: StorybookGlobals
+  }
+}
+
+interface StorybookContext {
+  globals?: StorybookGlobals
+  store?: StorybookContextStore
+}
+
+const DocsThemeContainer = ({
+  children,
+  context,
+}: {
+  children: React.ReactNode
+  context: React.ComponentProps<typeof DocsContainer>['context']
+}) => {
+  const [theme, setTheme] = React.useState<Theme>(() => {
+    const sbContext = context as unknown as StorybookContext
+    const contextGlobals =
+      sbContext?.globals ||
+      sbContext?.store?.globals?.globals ||
+      sbContext?.store?.userGlobals?.globals
+    const initialTheme = contextGlobals?.theme
+    return initialTheme === 'dark' ? 'dark' : 'light'
+  })
+
+  React.useEffect(() => {
+    const channel = addons.getChannel()
+    const handleGlobalsUpdated = (
+      event: { globals?: StorybookGlobals } & Record<string, unknown>
+    ) => {
+      const globals = event?.globals || event
+      const newTheme = globals?.theme
+      if (newTheme === 'light' || newTheme === 'dark') {
+        setTheme(newTheme)
+      }
+    }
+
+    channel.on(GLOBALS_UPDATED, handleGlobalsUpdated)
+    return () => {
+      channel.off(GLOBALS_UPDATED, handleGlobalsUpdated)
+    }
+  }, [])
+
+  return (
+    <ThemeProvider defaultTheme={theme}>
+      <ThemeSync theme={theme}>
+        <DocsContainer context={context}>{children}</DocsContainer>
+      </ThemeSync>
+    </ThemeProvider>
+  )
+}
+
 const preview: Preview = {
   parameters: {
     controls: {
@@ -24,6 +90,21 @@ const preview: Preview = {
         color: /(background|color)$/i,
         date: /Date$/i,
       },
+    },
+    options: {
+      storySort: {
+        order: [
+          'Getting Started',
+          ['Introduction'],
+          'Tokens',
+          ['Colors', 'Typography', 'Spacing', 'Borders', 'Shadows'],
+          'Components',
+          ['*'],
+        ],
+      },
+    },
+    docs: {
+      container: DocsThemeContainer,
     },
   },
   globalTypes: {

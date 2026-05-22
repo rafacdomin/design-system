@@ -15,6 +15,8 @@
     "@storybook/addon-essentials": "^8.6.14",
     "@storybook/addon-interactions": "^8.6.14",
     "@storybook/blocks": "^8.6.14",
+    "@storybook/core-events": "^8.6.14",
+    "@storybook/preview-api": "^8.6.18",
     "@storybook/react": "^8.6.14",
     "@storybook/react-vite": "^8.6.14",
     "@vitejs/plugin-react": "^6.0.2",

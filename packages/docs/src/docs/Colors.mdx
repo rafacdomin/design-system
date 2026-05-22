@@ -1,0 +1,112 @@
+import { Meta } from '@storybook/blocks';
+import { DocsThemeWrapper } from '../components/DocsThemeWrapper';
+
+<Meta title="Tokens/Colors" />
+
+<DocsThemeWrapper>
+# Cores
+
+A paleta de cores do design system é focada em uma escala monocromática premium de alto contraste, utilizando tons cinza neutro para suavizar e dar profundidade à interface, além de manter a acessibilidade visual e conformidade com WCAG 2.1 AA.
+
+Os valores de cor mudam dinamicamente dependendo do tema ativo (`light` ou `dark`). A documentação abaixo se adapta em tempo real quando você altera o tema no menu superior do Storybook.
+
+---
+
+## 🖤 Escala Neutra (Neutral Scale)
+
+Esta escala é usada para fundos, containers, divisores, bordas e níveis hierárquicos de texto.
+
+<div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: '16px', margin: '24px 0' }}>
+  <div style={{ border: '1px solid var(--ds-color-neutral-200)', borderRadius: '8px', padding: '16px', background: 'var(--ds-color-neutral-0)', color: 'var(--ds-color-neutral-1000)' }}>
+    <div style={{ height: '80px', borderRadius: '4px', background: 'var(--ds-color-neutral-0)', border: '1px solid var(--ds-color-neutral-200)', marginBottom: '12px' }} />
+    <strong style={{ display: 'block', fontFamily: 'var(--ds-font-family-heading)', fontSize: '14px' }}>--ds-color-neutral-0</strong>
+    <span style={{ fontSize: '12px', color: 'var(--ds-color-neutral-500)' }}>Fundo principal da página</span>
+  </div>
+
+  <div style={{ border: '1px solid var(--ds-color-neutral-200)', borderRadius: '8px', padding: '16px', background: 'var(--ds-color-neutral-0)', color: 'var(--ds-color-neutral-1000)' }}>
+    <div style={{ height: '80px', borderRadius: '4px', background: 'var(--ds-color-neutral-50)', border: '1px solid var(--ds-color-neutral-200)', marginBottom: '12px' }} />
+    <strong style={{ display: 'block', fontFamily: 'var(--ds-font-family-heading)', fontSize: '14px' }}>--ds-color-neutral-50</strong>
+    <span style={{ fontSize: '12px', color: 'var(--ds-color-neutral-500)' }}>Fundo secundário (ex: cards, painéis)</span>
+  </div>
+
+  <div style={{ border: '1px solid var(--ds-color-neutral-200)', borderRadius: '8px', padding: '16px', background: 'var(--ds-color-neutral-0)', color: 'var(--ds-color-neutral-1000)' }}>
+    <div style={{ height: '80px', borderRadius: '4px', background: 'var(--ds-color-neutral-100)', border: '1px solid var(--ds-color-neutral-200)', marginBottom: '12px' }} />
+    <strong style={{ display: 'block', fontFamily: 'var(--ds-font-family-heading)', fontSize: '14px' }}>--ds-color-neutral-100</strong>
+    <span style={{ fontSize: '12px', color: 'var(--ds-color-neutral-500)' }}>Hover de fundos secundários, bordas muito sutis</span>
+  </div>
+
+  <div style={{ border: '1px solid var(--ds-color-neutral-200)', borderRadius: '8px', padding: '16px', background: 'var(--ds-color-neutral-0)', color: 'var(--ds-color-neutral-1000)' }}>
+    <div style={{ height: '80px', borderRadius: '4px', background: 'var(--ds-color-neutral-200)', marginBottom: '12px' }} />
+    <strong style={{ display: 'block', fontFamily: 'var(--ds-font-family-heading)', fontSize: '14px' }}>--ds-color-neutral-200</strong>
+    <span style={{ fontSize: '12px', color: 'var(--ds-color-neutral-500)' }}>Bordas de input e divisores horizontais</span>
+  </div>
+
+  <div style={{ border: '1px solid var(--ds-color-neutral-200)', borderRadius: '8px', padding: '16px', background: 'var(--ds-color-neutral-0)', color: 'var(--ds-color-neutral-1000)' }}>
+    <div style={{ height: '80px', borderRadius: '4px', background: 'var(--ds-color-neutral-300)', marginBottom: '12px' }} />
+    <strong style={{ display: 'block', fontFamily: 'var(--ds-font-family-heading)', fontSize: '14px' }}>--ds-color-neutral-300</strong>
+    <span style={{ fontSize: '12px', color: 'var(--ds-color-neutral-500)' }}>Bordas em foco, estado desabilitado (fundo)</span>
+  </div>
+
+  <div style={{ border: '1px solid var(--ds-color-neutral-200)', borderRadius: '8px', padding: '16px', background: 'var(--ds-color-neutral-0)', color: 'var(--ds-color-neutral-1000)' }}>
+    <div style={{ height: '80px', borderRadius: '4px', background: 'var(--ds-color-neutral-400)', marginBottom: '12px' }} />
+    <strong style={{ display: 'block', fontFamily: 'var(--ds-font-family-heading)', fontSize: '14px' }}>--ds-color-neutral-400</strong>
+    <span style={{ fontSize: '12px', color: 'var(--ds-color-neutral-500)' }}>Texto de placeholder, bordas ativas</span>
+  </div>
+
+  <div style={{ border: '1px solid var(--ds-color-neutral-200)', borderRadius: '8px', padding: '16px', background: 'var(--ds-color-neutral-0)', color: 'var(--ds-color-neutral-1000)' }}>
+    <div style={{ height: '80px', borderRadius: '4px', background: 'var(--ds-color-neutral-500)', marginBottom: '12px' }} />
+    <strong style={{ display: 'block', fontFamily: 'var(--ds-font-family-heading)', fontSize: '14px' }}>--ds-color-neutral-500</strong>
+    <span style={{ fontSize: '12px', color: 'var(--ds-color-neutral-500)' }}>Texto secundário / auxiliar / desabilitado</span>
+  </div>
+
+  <div style={{ border: '1px solid var(--ds-color-neutral-200)', borderRadius: '8px', padding: '16px', background: 'var(--ds-color-neutral-0)', color: 'var(--ds-color-neutral-1000)' }}>
+    <div style={{ height: '80px', borderRadius: '4px', background: 'var(--ds-color-neutral-600)', marginBottom: '12px' }} />
+    <strong style={{ display: 'block', fontFamily: 'var(--ds-font-family-heading)', fontSize: '14px' }}>--ds-color-neutral-600</strong>
+    <span style={{ fontSize: '12px', color: 'var(--ds-color-neutral-500)' }}>Hover em textos secundários</span>
+  </div>
+
+  <div style={{ border: '1px solid var(--ds-color-neutral-200)', borderRadius: '8px', padding: '16px', background: 'var(--ds-color-neutral-0)', color: 'var(--ds-color-neutral-1000)' }}>
+    <div style={{ height: '80px', borderRadius: '4px', background: 'var(--ds-color-neutral-700)', marginBottom: '12px' }} />
+    <strong style={{ display: 'block', fontFamily: 'var(--ds-font-family-heading)', fontSize: '14px' }}>--ds-color-neutral-700</strong>
+    <span style={{ fontSize: '12px', color: 'var(--ds-color-neutral-500)' }}>Texto de leitura regular / body text</span>
+  </div>
+
+  <div style={{ border: '1px solid var(--ds-color-neutral-200)', borderRadius: '8px', padding: '16px', background: 'var(--ds-color-neutral-0)', color: 'var(--ds-color-neutral-1000)' }}>
+    <div style={{ height: '80px', borderRadius: '4px', background: 'var(--ds-color-neutral-800)', marginBottom: '12px' }} />
+    <strong style={{ display: 'block', fontFamily: 'var(--ds-font-family-heading)', fontSize: '14px' }}>--ds-color-neutral-800</strong>
+    <span style={{ fontSize: '12px', color: 'var(--ds-color-neutral-500)' }}>Títulos e textos de destaque médio</span>
+  </div>
+
+  <div style={{ border: '1px solid var(--ds-color-neutral-200)', borderRadius: '8px', padding: '16px', background: 'var(--ds-color-neutral-0)', color: 'var(--ds-color-neutral-1000)' }}>
+    <div style={{ height: '80px', borderRadius: '4px', background: 'var(--ds-color-neutral-900)', marginBottom: '12px' }} />
+    <strong style={{ display: 'block', fontFamily: 'var(--ds-font-family-heading)', fontSize: '14px' }}>--ds-color-neutral-900</strong>
+    <span style={{ fontSize: '12px', color: 'var(--ds-color-neutral-500)' }}>Texto principal / Títulos proeminentes</span>
+  </div>
+
+  <div style={{ border: '1px solid var(--ds-color-neutral-200)', borderRadius: '8px', padding: '16px', background: 'var(--ds-color-neutral-0)', color: 'var(--ds-color-neutral-1000)' }}>
+    <div style={{ height: '80px', borderRadius: '4px', background: 'var(--ds-color-neutral-1000)', border: '1px solid var(--ds-color-neutral-800)', marginBottom: '12px' }} />
+    <strong style={{ display: 'block', fontFamily: 'var(--ds-font-family-heading)', fontSize: '14px' }}>--ds-color-neutral-1000</strong>
+    <span style={{ fontSize: '12px', color: 'var(--ds-color-neutral-500)' }}>Fundo invertido (ex: botões primários solid)</span>
+  </div>
+</div>
+
+---
+
+## 🎨 Cores de Acento e Suporte (Accent & Feedback)
+
+Estas cores servem para chamar a atenção para estados interativos cruciais ou ações de feedback específicas.
+
+<div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: '16px', margin: '24px 0' }}>
+  <div style={{ border: '1px solid var(--ds-color-neutral-200)', borderRadius: '8px', padding: '16px', background: 'var(--ds-color-neutral-0)', color: 'var(--ds-color-neutral-1000)' }}>
+    <div style={{ height: '80px', borderRadius: '4px', background: 'var(--ds-color-focus-ring)', border: '1px solid var(--ds-color-neutral-500)', marginBottom: '12px' }} />
+    <strong style={{ display: 'block', fontFamily: 'var(--ds-font-family-heading)', fontSize: '14px' }}>--ds-color-focus-ring</strong>
+    <span style={{ fontSize: '12px', color: 'var(--ds-color-neutral-500)' }}>Indicador de foco (focus ring) de alta visibilidade</span>
+  </div>
+
+  <div style={{ border: '1px solid var(--ds-color-neutral-200)', borderRadius: '8px', padding: '16px', background: 'var(--ds-color-neutral-0)', color: 'var(--ds-color-neutral-1000)' }}>
+    <div style={{ height: '80px', borderRadius: '4px', background: 'var(--ds-color-danger)', marginBottom: '12px' }} />
+    <strong style={{ display: 'block', fontFamily: 'var(--ds-font-family-heading)', fontSize: '14px' }}>--ds-color-danger</strong>
+    <span style={{ fontSize: '12px', color: 'var(--ds-color-neutral-500)' }}>Ações destrutivas, mensagens de erro e estados críticos</span>
+  </div>
+</div>
+</DocsThemeWrapper>
