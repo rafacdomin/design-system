@@ -10,7 +10,7 @@ Este documento descreve o progresso global da implementação do mini design sys
 | :------- | :----------------------------------------------------------------------------------------------------------------------------- | :--------------------- | :--------- | :-------------- |
 | **#001** | [Setup do Monorepo & Tooling](file:///home/rafacdomin/projetos/design-system/.epic/issues/001_monorepo_setup.md)               | Nenhuma                | M          | `[x] Concluído` |
 | **#002** | [Configuração dos Design Tokens](file:///home/rafacdomin/projetos/design-system/.epic/issues/002_design_tokens.md)             | #001                   | P          | `[x] Concluído` |
-| **#003** | [Sistema de Temas (ThemeProvider / HOC)](file:///home/rafacdomin/projetos/design-system/.epic/issues/003_theme_system.md)      | #001, #002             | P          | `[ ] A Fazer`   |
+| **#003** | [Sistema de Temas (ThemeProvider / HOC)](file:///home/rafacdomin/projetos/design-system/.epic/issues/003_theme_system.md)      | #001, #002             | P          | `[x] Concluído` |
 | **#004** | [Configuração do Storybook 8](file:///home/rafacdomin/projetos/design-system/.epic/issues/004_storybook_setup.md)              | #001                   | M          | `[ ] A Fazer`   |
 | **#005** | [Componente: Button](file:///home/rafacdomin/projetos/design-system/.epic/issues/005_button_component.md)                      | #001, #002, #003, #004 | M          | `[ ] A Fazer`   |
 | **#006** | [Componente: Input](file:///home/rafacdomin/projetos/design-system/.epic/issues/006_input_component.md)                        | #001, #002, #003, #005 | M          | `[ ] A Fazer`   |
