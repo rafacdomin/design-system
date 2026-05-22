@@ -1,0 +1,198 @@
+@use '../../tokens/globals.scss';
+@use '../../tokens/theme-light.scss';
+@use '../../tokens/theme-dark.scss';
+
+.tag,
+.tagGroup {
+  --tag-bg: var(--ds-color-neutral-100);
+  --tag-color: var(--ds-color-neutral-900);
+  --tag-border: transparent;
+  --tag-hover-bg: var(--ds-color-neutral-200);
+  --tag-remove-color: var(--ds-color-neutral-500);
+  --tag-remove-hover-color: var(--ds-color-neutral-900);
+  --tag-separator: var(--ds-color-neutral-200);
+}
+
+.neutralColor {
+  // uses defaults
+}
+
+.primaryColor {
+  --tag-bg: var(--ds-color-neutral-1000);
+  --tag-color: var(--ds-color-neutral-0);
+  --tag-border: transparent;
+  --tag-hover-bg: var(--ds-color-neutral-800);
+  --tag-remove-color: var(--ds-color-neutral-400);
+  --tag-remove-hover-color: var(--ds-color-neutral-0);
+  --tag-separator: var(--ds-color-neutral-800);
+}
+
+.secondaryColor {
+  --tag-bg: var(--ds-color-neutral-200);
+  --tag-color: var(--ds-color-neutral-900);
+  --tag-border: transparent;
+  --tag-hover-bg: var(--ds-color-neutral-300);
+  --tag-remove-color: var(--ds-color-neutral-600);
+  --tag-remove-hover-color: var(--ds-color-neutral-900);
+  --tag-separator: var(--ds-color-neutral-300);
+}
+
+.dangerColor {
+  --tag-bg: var(--ds-color-danger);
+  --tag-color: var(--ds-color-neutral-0);
+  --tag-border: transparent;
+  --tag-hover-bg: var(--ds-color-danger);
+  --tag-remove-color: var(--ds-color-neutral-100);
+  --tag-remove-hover-color: var(--ds-color-neutral-0);
+  --tag-separator: hsla(0, 0%, 100%, 0.2);
+}
+
+.tag {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--ds-spacing-1);
+  font-family: var(--ds-font-family-sans);
+  font-weight: var(--ds-font-weight-medium);
+  border-radius: var(--ds-border-radius-sm);
+  border: var(--ds-border-width-sm) solid var(--tag-border);
+  box-sizing: border-box;
+  text-decoration: none;
+  white-space: nowrap;
+
+  background-color: var(--tag-bg);
+  color: var(--tag-color);
+}
+
+.neutral {
+  // uses --tag-bg, --tag-color, --tag-border directly
+}
+
+.outline {
+  background-color: transparent;
+  border-color: var(--tag-bg);
+  color: var(--tag-color);
+
+  &.neutralColor {
+    border-color: var(--ds-color-neutral-200);
+    color: var(--ds-color-neutral-800);
+  }
+  &.primaryColor {
+    border-color: var(--ds-color-neutral-1000);
+    color: var(--ds-color-neutral-1000);
+  }
+  &.secondaryColor {
+    border-color: var(--ds-color-neutral-400);
+    color: var(--ds-color-neutral-800);
+  }
+  &.dangerColor {
+    border-color: var(--ds-color-danger);
+    color: var(--ds-color-danger);
+  }
+}
+
+.interactive {
+  background-color: var(--tag-bg);
+  color: var(--tag-color);
+  cursor: pointer;
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease,
+    opacity 0.2s ease;
+
+  &:hover {
+    background-color: var(--tag-hover-bg);
+
+    &.dangerColor {
+      opacity: 0.9;
+    }
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--ds-color-focus-ring);
+    outline-offset: 2px;
+  }
+}
+
+.sm {
+  height: 1.5rem; // 24px
+  padding: 0 var(--ds-spacing-2);
+  font-size: var(--ds-font-size-xs);
+}
+
+.md {
+  height: 2rem; // 32px
+  padding: 0 var(--ds-spacing-3);
+  font-size: var(--ds-font-size-sm);
+}
+
+.removeButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  margin-left: var(--ds-spacing-1);
+  color: var(--tag-remove-color);
+  border-radius: var(--ds-border-radius-sm);
+  transition:
+    color 0.2s ease,
+    opacity 0.2s ease;
+
+  &:hover {
+    color: var(--tag-remove-hover-color);
+
+    .dangerColor & {
+      opacity: 0.9;
+    }
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--ds-color-focus-ring);
+    outline-offset: 1px;
+  }
+}
+
+.tagGroup {
+  display: inline-flex;
+  align-items: center;
+  border-radius: var(--ds-border-radius-sm);
+  overflow: hidden;
+  box-sizing: border-box;
+
+  &.sm {
+    height: 1.5rem;
+  }
+
+  &.md {
+    height: 2rem;
+  }
+
+  .mainButton {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+
+  .removeButton {
+    height: 100%;
+    margin-left: 0;
+    padding: 0 var(--ds-spacing-2);
+    border-left: 1px solid var(--tag-separator);
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    background-color: var(--tag-bg);
+    color: var(--tag-remove-color);
+
+    &:hover {
+      background-color: var(--tag-hover-bg);
+      color: var(--tag-remove-hover-color);
+
+      .dangerColor & {
+        opacity: 0.9;
+      }
+    }
+  }
+}
