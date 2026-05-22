@@ -8,3 +8,6 @@ export * from './themes/withTheme'
 // @ds/core entry point
 export const version = '1.0.0'
 export * from './components/Button'
+export * from './components/Input'
+export * from './components/Textarea'
+export * from './components/Dropdown'
