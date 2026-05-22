@@ -1,2 +1,1 @@
-// @ds/carousel entry point
-export const carousel = true
+export * from './components/Carousel'

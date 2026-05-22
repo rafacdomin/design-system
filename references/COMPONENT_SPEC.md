@@ -219,24 +219,68 @@ export interface AvatarProps extends React.HTMLAttributes<HTMLDivElement> {
 
 ## 9. Carousel
 
-Carrossel responsivo para imagens de projetos. Baseado em `@ds/carousel` utilizando `embla-carousel-react`.
+Carrossel responsivo para slides de conteúdo ou imagens de projetos, isolado sob o pacote `@ds/carousel` devido à dependência externa do `embla-carousel-react`.
 
-### 9.1 Props
+### 9.1 Props e Subcomponentes
 
 ```typescript
-export interface CarouselProps {
-  /** Array de elementos ou slides a serem exibidos */
+export interface CarouselProps extends React.HTMLAttributes<HTMLDivElement> {
+  /** Array de elementos/slides a serem exibidos */
   children: React.ReactNode[]
-  /** Exibe setas de navegação anteriores/próximos */
+  /** Exibe setas de navegação anteriores/próximos (Padrão: true) */
   showArrows?: boolean
-  /** Exibe indicadores de dots no rodapé */
+  /** Exibe indicadores de dots no rodapé (Padrão: true) */
   showDots?: boolean
-  /** Iniciar em modo de reprodução automática */
+  /** Iniciar em modo de reprodução automática (Padrão: false) */
   autoplay?: boolean
-  className?: string
+  /** Intervalo em milissegundos para o autoplay (Padrão: 4000) */
+  autoplayInterval?: number
+  /** Habilita rotação cíclica infinita (Padrão: false) */
+  loop?: boolean
+  /**
+   * Define o número máximo de slides exibidos simultaneamente.
+   * Pode ser um número ou um objeto contendo os breakpoints para mobile, tablet e desktop.
+   * Limites de segurança impostos: máximo de 1 em mobile, 2 em tablet e 3 em desktop.
+   */
+  slidesPerView?:
+    | number
+    | { mobile?: number; tablet?: number; desktop?: number }
 }
+
+export interface CarouselContentProps extends React.HTMLAttributes<HTMLDivElement> {}
+
+export interface CarouselItemProps extends React.HTMLAttributes<HTMLDivElement> {
+  /** Índice do slide corrente (0-indexed) */
+  index: number
+}
+
+export interface CarouselPreviousProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {}
+export interface CarouselNextProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {}
+export interface CarouselDotsProps extends React.HTMLAttributes<HTMLDivElement> {}
 ```
+
+#### Arquitetura Compound
+
+O componente expõe subcomponentes sob o namespace `Carousel` via `Object.assign`. O componente raiz `<Carousel>` provê o contexto implicitamente:
+
+- `Carousel.Content`: Container viewport do Embla.
+- `Carousel.Item`: Item individual que envelopa cada slide, controlando visibilidade e atributos de acessibilidade.
+- `Carousel.Previous`: Botão de navegação para retornar ao slide anterior.
+- `Carousel.Next`: Botão de navegação para avançar para o próximo slide.
+- `Carousel.Dots`: Dots de navegação rápida/paginação.
+
+Também é exportado o hook helper `useCarousel` para acessar dados do contexto interno do carrossel em implementações customizadas.
 
 ### 9.2 Comportamentos e Estados
 
-- **Acessibilidade:** Teclas de setas esquerda/direita navegam entre slides quando o carrossel está focado. Atributos `aria-roledescription="carousel"`, `role="group"`, e `aria-label` para slides individuais.
+- **Slides por View e Responsividade:** A prop `slidesPerView` permite limitar a quantidade de slides exibidos por viewport. Por padrão (e como valor máximo permitido), é exibido 1 slide em mobile (<768px), 2 em tablet (768px - 1023px) e 3 em desktop (>=1024px). Caso valores inferiores sejam passados, a quantidade solicitada é exibida.
+- **Autoplay Reativo:** O carrossel avança automaticamente no intervalo definido por `autoplayInterval`. O ciclo pausa temporariamente quando o mouse entra no carrossel (`mouseenter`) ou quando este recebe foco (`focus`), e retoma de onde parou ao sair (`mouseleave`/`blur`).
+- **Navegação por Teclado:** Quando focado, o carrossel intercepta as teclas `ArrowLeft` e `ArrowRight` para rolar os slides para a esquerda ou direita, respectivamente.
+
+### 9.3 Acessibilidade (WAI-ARIA Pattern)
+
+- **Container Principal:** Possui `role="region"`, `aria-roledescription="carousel"` e recebe foco via teclado (`tabIndex={0}`).
+- **Container Viewport:** Atribuído com um `id` dinâmico único e associado aos botões e dots controladores via `aria-controls`.
+- **Slides (Carousel.Item):** Possui `role="group"`, `aria-roledescription="slide"`, `aria-label="Slide X de Y"` (facilitando leitura por leitores de tela) e `aria-hidden="true"` quando fora do viewport visível atual.
+- **Botões Controladores:** Possuem `aria-label` descritivos ("Slide anterior", "Próximo slide"), estado desabilitado dinâmico baseado na possibilidade de rolar (`disabled`) e referência via `aria-controls`.
+- **Dots de Paginação:** Calculados dinamicamente com base nos snaps ativos do carrossel (sincronizados dinamicamente se a quantidade de slides mudar). O dot selecionado recebe `aria-current="true"`.
