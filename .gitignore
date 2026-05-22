@@ -41,3 +41,7 @@ pnpm-debug.log*
 
 # Turborepo cache
 .turbo/
+
+# Playwright
+playwright-report/
+test-results/

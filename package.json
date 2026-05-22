@@ -9,6 +9,8 @@
     "dev": "turbo dev",
     "build": "turbo build",
     "test": "turbo test",
+    "test:visual": "turbo test:visual",
+    "test:visual:update": "pnpm --filter @ds/docs test:visual:update",
     "lint": "turbo lint",
     "format": "prettier --write .",
     "format:check": "prettier --check .",

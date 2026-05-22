@@ -1,140 +1,159 @@
 # Especificação Geral — Design System de Portfólio (SPEC.md)
 
-Este documento atua como a única fonte da verdade para o escopo, arquitetura, design tokens e componentes deste mini design system de portfólio.
+Este documento atua como a única fonte da verdade para o escopo, arquitetura e especificações de testes de regressão visual com Playwright e Browserstack neste mini design system.
 
 ---
 
 ## 1. Visão Geral
 
-Este projeto consiste em um **Mini Design System** altamente otimizado para portfólios pessoais e profissionais. O objetivo é fornecer componentes de UI consistentes, acessíveis (WCAG 2.1 AA) e com uma estética premium e minimalista (baseada em uma paleta monocromática de alto contraste).
+Este projeto consiste em um **Mini Design System** de portfólio pessoal e profissional com estética premium minimalista.
 
-O sistema é construído como um **Monorepo** usando Turborepo, facilitando o isolamento de pacotes principais (`@ds/core`), pacotes com dependências pesadas (`@ds/carousel`) e documentação em Storybook (`@ds/docs`).
-
----
-
-## 2. Stack Técnica
-
-Abaixo estão as definições de tecnologia e as justificativas arquiteturais do projeto:
-
-- **Framework Principal:** React 18 + TypeScript 5 (Strict Mode).
-- **Gerenciador de Pacotes:** `pnpm` Workspaces (velocidade, eficiência de disco e suporte nativo a monorepos).
-- **Monorepo Tooling:** Turborepo (para cache de builds, pipelines eficientes de lint/teste/build).
-- **Estilização:** SCSS Modules. Não será utilizado CSS-in-JS nem Tailwind CSS. Toda a estilização deve ser feita através de classes CSS scoped e utilizando variáveis CSS globais fornecidas pelos Design Tokens.
-- **Documentação e Sandbox:** Storybook 8 (instalado no pacote `@ds/docs`).
-- **Testes Unitários/Integração:** Vitest + React Testing Library (TDD é obrigatório: os testes devem ser escritos antes da implementação).
-- **Acessibilidade:** `jest-axe` nos testes de unidade para validação WCAG 2.1 AA. Primitivos da `@radix-ui` para garantir navegação por teclado e semântica ARIA adequadas em componentes complexos.
-- **Qualidade e Linter:** ESLint (Flat Config), Prettier, Husky + lint-staged (impedindo commits fora de conformidade).
-- **Regressão Visual:** Playwright rodando testes locais de regressão a partir dos Stories do Storybook, estruturado de forma a suportar execução remota no Browserstack via variáveis de ambiente `BROWSERSTACK_USERNAME` e `BROWSERSTACK_ACCESS_KEY`.
+Toda a infraestrutura base, design tokens, sistema de temas (HOC `withTheme` e `ThemeProvider`) e a biblioteca de componentes principais já foram implementados com sucesso. O foco atual do projeto é a **especificação e implementação da suíte de Testes de Regressão Visual** com Playwright e integração com Browserstack.
 
 ---
 
-## 3. Estrutura do Monorepo
+## 2. Stack Técnica Atualizada
 
-O repositório é configurado com a seguinte estrutura de diretórios e pacotes:
+Abaixo estão as tecnologias adotadas para a infraestrutura geral e especificamente para a suíte de regressão visual:
+
+- **Core:** React 18 + TypeScript 5 (Strict Mode).
+- **Gerenciador de Pacotes:** `pnpm` Workspaces (v11.2.2).
+- **Monorepo Tooling:** Turborepo.
+- **Estilização:** SCSS Modules + CSS Custom Properties dos Design Tokens (sem CSS-in-JS, sem Tailwind).
+- **Sandbox e Documentação:** Storybook 8 (instalado em [packages/docs](file:///home/rafacdomin/projetos/design-system/packages/docs)).
+- **Testes Unitários e Acessibilidade:** Vitest + React Testing Library (RTL) + `jest-axe`.
+- **Suíte de Regressão Visual:** Playwright (instalado em [packages/docs](file:///home/rafacdomin/projetos/design-system/packages/docs)), rodando testes locais contra a build estática do Storybook, e configurado para execução remota no Browserstack.
+- **CI/CD Integration:** Browserstack Automate (utilizando variáveis de ambiente `BROWSERSTACK_USERNAME` e `BROWSERSTACK_ACCESS_KEY` para autenticação e túnel local seguro).
+
+---
+
+## 3. Estrutura do Monorepo (Foco em Testes Visuais)
+
+Abaixo está a estrutura do repositório, destacando onde a suíte de testes de regressão visual do Playwright ficará localizada:
 
 ```
 design-system/
-├── .agent/                      # Workflows e Skills do Agente
-├── .epic/                       # Planejamento de Issues e Épicos
-├── references/                  # Guias e Referências Técnicas
 ├── packages/
-│   ├── core/                    # Componentes base e sem dependências pesadas
-│   │   ├── src/
-│   │   │   ├── components/      # Button, Input, Textarea, Dropdown, Modal, Card, Tag, Avatar
-│   │   │   ├── tokens/          # Variáveis CSS e definições de tokens
-│   │   │   ├── themes/          # HOC withTheme e contextos de tema
-│   │   │   └── index.ts         # Ponto de entrada de exports
-│   │   └── package.json
-│   ├── carousel/                # Componente de Carrossel (com Embla Carousel)
-│   │   ├── src/
-│   │   └── package.json
-│   └── docs/                    # Storybook para documentar e visualizar componentes
-│       ├── .storybook/
+│   ├── core/                    # Componentes base, tokens e temas (Implementados)
+│   ├── carousel/                # Componente de carrossel (Implementado)
+│   └── docs/                    # Storybook + Suíte de Testes Visuais
+│       ├── .storybook/          # Configurações do Storybook 8
+│       ├── playwright.config.ts # Configuração do Playwright (Local e Browserstack)
+│       ├── src/
+│       │   ├── stories/         # Stories dos componentes (Button, Input, etc.)
+│       │   └── test-visual/     # Suíte de regressão visual
+│       │       ├── visual.spec.ts  # Teste automatizado de varredura dinâmica de stories
+│       │       └── snapshots/   # Imagens de referência locais (baselines)
 │       └── package.json
-├── package.json                 # Configuração de workspaces da raiz
+├── package.json                 # Scripts globais do monorepo
 ├── turbo.json                   # Configuração de pipelines do Turborepo
-├── tsconfig.json                # Configuração TypeScript global da raiz
-├── pnpm-workspace.yaml          # Configura workspaces do pnpm
-└── README.md
+└── SPEC.md                      # Esta especificação
 ```
 
 ---
 
-## 4. Design Tokens (Resumo)
+## 4. Escopo Implementado (Fase Anterior)
 
-Os design tokens serão definidos como variáveis CSS customizadas (`--ds-*`) vinculadas aos temas do sistema. A escala de tokens inclui:
+Os seguintes componentes e infraestrutura foram implementados e estão cobertos por testes unitários e de acessibilidade (Vitest + RTL + `jest-axe`):
 
-- **Fontes:**
-  - `--ds-font-family-sans`: `'Inter', -apple-system, BlinkMacSystemFont, sans-serif` (padrão de interface/corpo de texto).
-  - `--ds-font-family-heading`: `'Poppins', 'Inter', sans-serif` (destaque, títulos, seções).
-- **Cores (Escala Monocromática):**
-  - Cores neutras de cinza premium (do branco `--ds-color-neutral-0` ao preto puro `--ds-color-neutral-1000`).
-  - Variantes de marca e acento de alto contraste para estados interativos e focos.
-- **Espaçamento:** Escala baseada em múltiplos de `4px` (`4px`, `8px`, `12px`, `16px`, `24px`, `32px`, `48px`, `64px`).
-- **Bordas:** Espessuras de borda e raios (`--ds-border-radius-sm`, `--ds-border-radius-md`, `--ds-border-radius-lg`).
-- **Sombras:** Sombras leves e premium para elevação de cards/modais (`--ds-shadow-sm`, `--ds-shadow-md`, `--ds-shadow-lg`).
-- **Breakpoints:** Escala responsiva padrão (`sm: 640px`, `md: 768px`, `lg: 1024px`, `xl: 1280px`).
+1. **Fundação:** Setup do Monorepo, Design Tokens de cores, fontes, espaçamentos e bordas, e o Provedor de Temas (`ThemeProvider` + `withTheme`).
+2. **Componentes Fundamentais:** `Button` (variantes, tamanhos, estados de carregamento e desabilitado).
+3. **Componentes de Formulário:** `Input` (ícones, erros, labels), `Textarea` (redimensionamento dinâmico), e `Dropdown` (menu acessível com Radix UI).
+4. **Componentes de Layout/Apresentação:** `Modal` (diálogo acessível com Radix UI), `Card` (agrupamento de conteúdo), `Tag` (rótulos de tecnologia), e `Avatar` (iniciais e fallback).
+5. **Componente Complexo:** `Carousel` (carrossel de imagens com Embla Carousel).
 
-_Nota: As definições completas estão em [DESIGN_TOKENS.md](file:///home/rafacdomin/projetos/design-system/references/DESIGN_TOKENS.md)._
+As especificações detalhadas das APIs e comportamentos destes componentes podem ser consultadas em [COMPONENT_SPEC.md](file:///home/rafacdomin/projetos/design-system/references/COMPONENT_SPEC.md).
 
 ---
 
-## 5. Componentes e Escopo
+## 5. Especificação Técnica: Testes de Regressão Visual (Playwright + Browserstack)
 
-Abaixo, a lista de componentes que serão desenvolvidos. Todos os componentes devem ter suporte nativo a estados (`default`, `hover`, `focus`, `active`, `disabled`), tipagem estrita com `interface`, suporte a polimorfismo/custom node (`asChild`) e acessibilidade completa.
+Os testes de regressão visual servem para capturar desvios de layout, imperfeições visuais e quebras de CSS não detectáveis em testes unitários convencionais.
 
-1.  **Button:** Botão básico com variantes `primary`, `secondary`, `ghost`, `danger`, tamanhos `sm`/`md`/`lg` e estado `loading`.
-2.  **Input:** Entrada de texto padrão com suporte a ícones prefixo/sufixo, label flutuante ou helper text, e validação visual de erro.
-3.  **Textarea:** Caixa de texto multi-linha auto-redimensionável ou com altura fixa, com suporte a limites de caracteres.
-4.  **Dropdown:** Menu de seleção baseado no `@radix-ui/react-select`.
-5.  **Modal:** Janela de diálogo com overlay de fundo escurecido baseada no `@radix-ui/react-dialog`.
-6.  **Card:** Componente de container com variações de borda, sombra e preenchimento para agrupamento de conteúdo de portfólio.
-7.  **Tag:** Emblemas/Labels para categorias ou tags de tecnologias de projetos (ex: "React", "TypeScript").
-8.  **Avatar:** Representação visual de usuário/autor com fallback para iniciais do nome.
-9.  **Carousel:** Carrossel para imagens de projetos de portfólio, isolado em `@ds/carousel` devido à dependência do `embla-carousel-react`.
+### 5.1 Escopo de Execução
 
-_Nota: A especificação detalhada de props e comportamento de cada componente está em [COMPONENT_SPEC.md](file:///home/rafacdomin/projetos/design-system/references/COMPONENT_SPEC.md)._
+Os testes devem cobrir **todas as histórias (stories) ativas** do Storybook nos seguintes cenários:
+
+- **Temas:** Light (`data-theme="light"`) e Dark (`data-theme="dark"`).
+- **Viewports (Resoluções):**
+  - `mobile`: 375x812 (simulando iPhone 12/13/14)
+  - `tablet`: 768x1024 (simulando iPad Portrait)
+  - `desktop`: 1280x800 (resolução básica de laptop)
+- **Engines de Renderização (Browsers):** Chromium, Firefox, e WebKit (Safari).
+
+### 5.2 Mapeamento Dinâmico de Stories
+
+Para evitar a necessidade de atualizar scripts de teste manualmente a cada novo componente ou story, o arquivo [visual.spec.ts](file:///home/rafacdomin/projetos/design-system/packages/docs/src/test-visual/visual.spec.ts) deve ler dinamicamente o arquivo `packages/docs/storybook-static/index.json` gerado pelo comando `storybook build`.
+
+1. O script lê a lista de `entries`.
+2. Filtra entradas válidas do tipo `story` (ignorando páginas de documentação).
+3. Para cada story, gera casos de teste parametrizados que visitam a URL isolada do iframe do Storybook:
+   `http://localhost:6006/iframe.html?id=${storyId}&viewMode=story`
+4. Se uma story possuir a tag `'skip-visual'`, ela deve ser ignorada na suíte de testes.
+
+### 5.3 Mitigação de Flakiness (Instabilidades Visuais)
+
+Para garantir que os testes de imagem sejam consistentes e livres de falsos positivos devido a tempos de carregamento e animações:
+
+1. **Desativação global de animações e transições:**
+   O Playwright deve injetar um estilo CSS global na página antes de tirar o screenshot:
+   ```css
+   *,
+   *::before,
+   *::after {
+     transition: none !important;
+     animation: none !important;
+     transition-duration: 0s !important;
+     animation-duration: 0s !important;
+   }
+   ```
+2. **Ocultar Caret do Cursor:** Habilitar a opção `animations: 'disabled'` e `caret: 'initial'` no Playwright.
+3. **Aguardar carregamento completo:** O teste deve esperar até que o elemento raiz esteja montado e a rede esteja em repouso (`networkidle`).
+4. **Paralisação de timers:** stories com lógica de tempo (ex: `Carousel` com autoplay) devem ter opções que desativem interações automáticas, ou ter as animações/avanços desativados por padrão.
+5. **Threshold (Tolerância):** A comparação visual usará o limite estrito de `0.1%` de diferença tolerada de pixels (`maxDiffPixelRatio: 0.001` ou `threshold: 0.1` na função de comparação).
+
+### 5.4 Fluxo de Teste de Temas
+
+Para cada história e viewport, o teste realizará o seguinte ciclo:
+
+1. Visitar a URL da história no Storybook.
+2. Injetar o atributo `data-theme="light"` na tag `body` ou `html`.
+3. Tirar screenshot da história (seja o viewport completo ou apenas o elemento delimitador do componente) e comparar com o baseline Light correspondente.
+4. Alterar o atributo para `data-theme="dark"`.
+5. Tirar novo screenshot e comparar com o baseline Dark correspondente.
+
+### 5.5 Configuração do Playwright (`packages/docs/playwright.config.ts`)
+
+O arquivo de configuração do Playwright deve prever duas modalidades de execução:
+
+1. **Local (Default):**
+   - Utiliza browsers Chromium, Firefox e WebKit locais.
+   - Usa o `webServer` do Playwright para servir a pasta `storybook-static` na porta `6006` antes de iniciar os testes (ex: `http-server storybook-static -p 6006 --silent`).
+   - Salva snapshots em `src/test-visual/snapshots/local`.
+2. **Remote (Browserstack - CI/CD):**
+   - Ativado quando as variáveis de ambiente `BROWSERSTACK_ACCESS_KEY` e `BROWSERSTACK_USERNAME` estiverem definidas.
+   - Configura conexões WebSocket usando a URL do Browserstack:
+     `wss://cdp.browserstack.com/playwright?caps=${encodeURIComponent(JSON.stringify(caps))}`
+   - Executa os testes contra uma matriz de sistemas operacionais e browsers reais fornecida pelo Browserstack.
+   - Faz o upload dos resultados e logs para a plataforma.
+
+### 5.6 CLI e Scripts Disponíveis
+
+Abaixo estão os scripts a serem adicionados no `packages/docs/package.json`:
+
+- `"test:visual"`: Compila o Storybook em modo estático e roda os testes visuais do Playwright localmente.
+  `"build-storybook && playwright test --config=playwright.config.ts"`
+- `"test:visual:update"`: Atualiza os baselines visuais locais.
+  `"playwright test --config=playwright.config.ts --update-snapshots"`
+- `"test:visual:ci"`: Executa a suíte de testes contra a grade do Browserstack (utilizado no pipeline de CI).
 
 ---
 
-## 6. Sistema de Temas
+## 6. Critérios de Done para Regressão Visual
 
-O sistema usará temas baseados no atributo `data-theme` injetado no DOM. A alternância e a propagação de tema serão controladas por um provedor de contexto (`ThemeProvider`) e acessíveis a componentes através do HOC `withTheme`.
+Uma funcionalidade ou componente novo é considerado concluído se, além dos critérios anteriores, satisfizer os seguintes requisitos visuais:
 
-O tema padrão será `light`, com opção para alternar para `dark`.
-
-```typescript
-// Componentes serão encapsulados sob o data-theme
-<div data-theme="dark">
-  <Button variant="primary">Enviar</Button>
-</div>
-```
-
-_Nota: Os detalhes de implementação do HOC e tokens por tema estão em [THEMING.md](file:///home/rafacdomin/projetos/design-system/references/THEMING.md)._
-
----
-
-## 7. Estratégia de Testes
-
-Os testes são parte central da qualidade do repositório, organizados conforme as seguintes metas:
-
-1.  **Unitários & Integração (Vitest + RTL):** 95% do escopo do repositório. Cobertura mínima obrigatória: **90% de Statements**, **85% de Branches** e **90% de Functions**.
-2.  **Acessibilidade:** Uso obrigatório de `jest-axe` em cada arquivo `.test.tsx` para assegurar conformidade com WCAG 2.1 AA.
-3.  **Regressão Visual (Playwright):** Garantir que nenhuma alteração visual de CSS quebre o layout. O script gerará baselines locais para cada story no Storybook e as comparará a cada PR.
-
----
-
-## 8. Critérios de Done (Pronto)
-
-Um componente é considerado **Concluído (Done)** apenas se satisfizer os seguintes critérios sem exceções:
-
-1.  **Arquitetura de Arquivos Completa:**
-    - `ComponentName.tsx` (código limpo, tipado com interfaces, displayName setado, refs encaminhadas via `forwardRef`).
-    - `ComponentName.module.scss` (sem valores literais, usando exclusivamente tokens).
-    - `ComponentName.test.tsx` (testes RTL cobrindo rendering, interações, a11y com jest-axe e edge cases).
-    - `ComponentName.stories.tsx` (Stories cobrindo todas as variações e estados).
-    - `index.ts` (exportação limpa do componente).
-2.  **Build & Tipagem:** Sem erros no compilador do TypeScript (`tsc --noEmit`).
-3.  **Qualidade do Código:** ESLint e Prettier executados e sem erros.
-4.  **Cobertura de Testes:** Atende ou supera os mínimos definidos na Estratégia de Testes.
-5.  **Acessibilidade:** Zero violações no axe local e totalmente navegável via teclado (Focus Rings visíveis).
+1. **Stories Completos:** Contém stories no Storybook cobrindo todas as variantes críticas e estados interativos.
+2. **Geração de Baselines:** Novas histórias têm baselines válidas geradas localmente (`pnpm test:visual:update`) tanto para o tema `light` quanto para o `dark`.
+3. **Zero Regressões Visuais:** A suíte de testes de regressão visual local (`pnpm test:visual`) executa e passa com sucesso (0% de desvios visuais acima do limiar de `0.1%`).
+4. **Conformidade em CI:** Pipeline de CI executa e valida as imagens no Browserstack sem erros.
