@@ -21,11 +21,12 @@ por dependência pesada (ex: carousel com Embla).
 1. Todo componente DEVE ter: `.tsx`, `.test.tsx`, `.module.scss`, `index.ts`
 2. Testes vêm ANTES da implementação (TDD)
 3. Acessibilidade WCAG 2.1 AA é requisito, não feature
-4. Zero `any` no TypeScript
+4. Zero `any` no TypeScript (proibido usar `any` em assinaturas, variáveis, mocks, retornos ou asserções de tipo como `as any`; utilize tipos estritos ou `unknown` se necessário)
 5. Props tipadas com interface, nunca type alias para componentes
 6. Exports apenas pelo `index.ts` de cada componente
 7. Temas via HOC `withTheme`, nunca hardcoded
 8. SCSS: usar apenas CSS custom properties dos tokens, nunca valores literais
+9. Padrão Compound: Componentes compostos (ex: Dropdown e itens, Input e slots de ícone) DEVEM utilizar o Compound Component Pattern via `Object.assign`. Subcomponentes não devem ser exportados separadamente no `index.ts` de exportação e seus `displayName`s devem refletir a hierarquia do componente pai (ex: `'Dropdown.Item'`, `'Input.StartIcon'`).
 
 ## Onde encontrar as regras
 
