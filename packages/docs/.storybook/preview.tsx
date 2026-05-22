@@ -1,6 +1,21 @@
 import type { Preview } from '@storybook/react'
 import React from 'react'
+import { ThemeProvider, useTheme, Theme } from '@ds/core'
 import '@ds/core/src/tokens/index.scss'
+
+const ThemeSync = ({
+  theme,
+  children,
+}: {
+  theme: Theme
+  children: React.ReactNode
+}) => {
+  const { setTheme } = useTheme()
+  React.useEffect(() => {
+    setTheme(theme)
+  }, [theme, setTheme])
+  return <>{children}</>
+}
 
 const preview: Preview = {
   parameters: {
@@ -30,18 +45,21 @@ const preview: Preview = {
     (Story, context) => {
       const theme = context.globals.theme || 'light'
       return (
-        <div
-          data-theme={theme}
-          style={{
-            padding: '2rem',
-            minHeight: '100vh',
-            background: 'var(--ds-color-neutral-0)',
-            color: 'var(--ds-color-neutral-1000)',
-            transition: 'background-color 0.2s ease, color 0.2s ease',
-          }}
-        >
-          <Story />
-        </div>
+        <ThemeProvider defaultTheme={theme}>
+          <ThemeSync theme={theme}>
+            <div
+              style={{
+                padding: '2rem',
+                minHeight: '100vh',
+                background: 'var(--ds-color-neutral-0)',
+                color: 'var(--ds-color-neutral-1000)',
+                transition: 'background-color 0.2s ease, color 0.2s ease',
+              }}
+            >
+              <Story />
+            </div>
+          </ThemeSync>
+        </ThemeProvider>
       )
     },
   ],
