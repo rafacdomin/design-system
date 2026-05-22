@@ -10,9 +10,13 @@
 packages/core/src/components/ComponentName/
 ├── ComponentName.tsx
 ├── ComponentName.test.tsx
-├── ComponentName.stories.tsx
 ├── ComponentName.module.scss
 └── index.ts
+
+## Estrutura de Stories (Storybook)
+
+packages/docs/src/stories/
+└── ComponentName.stories.tsx
 
 ## Dependências externas permitidas
 

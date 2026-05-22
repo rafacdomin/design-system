@@ -10,12 +10,12 @@ Você é um engenheiro de Design Systems implementando a issue $ARGUMENTS.
 2. Confirme que as dependências de issues estão concluídas
 3. Siga estritamente o AGENTS.md e os arquivos em references/
 4. Implemente nesta ordem (TDD):
-   a. Testes unitários PRIMEIRO — arquivo `.test.tsx`
+   a. Testes unitários PRIMEIRO — arquivo `.test.tsx` na pasta do componente no pacote core
    b. Tipagem TypeScript — interfaces e types
    c. Implementação do componente — arquivo `.tsx`
    d. Estilos SCSS — arquivo `.module.scss` usando apenas tokens
-   e. Stories do Storybook — arquivo `.stories.tsx`
-   f. Export no `index.ts`
+   e. Export no `index.ts` do componente
+   f. Stories do Storybook — arquivo `packages/docs/src/stories/ComponentName.stories.tsx` no pacote docs
 
 ## Regras de implementação
 

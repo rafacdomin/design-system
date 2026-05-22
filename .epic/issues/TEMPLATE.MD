@@ -34,9 +34,9 @@ Implementar o componente `Button` com variantes, tamanhos, estados e pattern `as
 
 - `packages/core/src/components/Button/Button.tsx`
 - `packages/core/src/components/Button/Button.test.tsx`
-- `packages/core/src/components/Button/Button.stories.tsx`
 - `packages/core/src/components/Button/Button.module.scss`
 - `packages/core/src/components/Button/index.ts`
+- `packages/docs/src/stories/Button.stories.tsx`
 
 ## Dependências Externas
 

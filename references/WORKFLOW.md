@@ -67,12 +67,12 @@ graph TD
 2.  **O que o Agente faz:**
     - Segue estritamente as regras do `AGENTS.md`.
     - Foca em TDD, criando e implementando os arquivos na seguinte ordem padrão:
-      1.  **Testes unitários e a11y:** `ComponentName.test.tsx` (deve rodar e falhar inicialmente).
+      1.  **Testes unitários e a11y:** `ComponentName.test.tsx` no pacote `@ds/core` (deve rodar e falhar inicialmente).
       2.  **Tipagem TypeScript:** Definição da interface de props.
       3.  **Implementação do Componente:** `ComponentName.tsx` com `forwardRef` e `displayName`.
       4.  **Estilos SCSS Modules:** `ComponentName.module.scss` usando apenas tokens do design system.
-      5.  **Stories do Storybook:** `ComponentName.stories.tsx` cobrindo todas as variantes.
-      6.  **Export:** Inclusão no `index.ts`.
+      5.  **Export:** Inclusão no `index.ts` de exportação do componente.
+      6.  **Stories do Storybook:** `packages/docs/src/stories/ComponentName.stories.tsx` no pacote `@ds/docs`.
     - Executa os testes locais para validar a conclusão.
 3.  **Resultado Esperado:** Componente finalizado seguindo os Critérios de Done.
 

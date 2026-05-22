@@ -1,6 +1,5 @@
-import React from 'react'
 import type { Meta, StoryObj } from '@storybook/react'
-import { Button, ButtonProps } from './Button'
+import { Button, ButtonProps } from '@ds/core'
 
 const meta: Meta<typeof Button> = {
   title: 'Components/Button',

@@ -21,7 +21,7 @@ Gere o arquivo `.stories.tsx` para o componente $ARGUMENTS seguindo as diretrize
 ```typescript
 import type { Meta, StoryObj } from '@storybook/react'
 import React from 'react'
-import { ComponentName } from './ComponentName'
+import { ComponentName } from '@ds/core'
 
 const meta: Meta<typeof ComponentName> = {
   title: 'Components/ComponentName',

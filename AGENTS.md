@@ -18,7 +18,7 @@ por dependência pesada (ex: carousel com Embla).
 
 ## Regras absolutas (nunca violar)
 
-1. Todo componente DEVE ter: `.tsx`, `.stories.tsx`, `.test.tsx`, `.module.scss`, `index.ts`
+1. Todo componente DEVE ter: `.tsx`, `.test.tsx`, `.module.scss`, `index.ts`
 2. Testes vêm ANTES da implementação (TDD)
 3. Acessibilidade WCAG 2.1 AA é requisito, não feature
 4. Zero `any` no TypeScript
