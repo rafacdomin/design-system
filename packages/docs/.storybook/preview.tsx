@@ -44,13 +44,14 @@ const preview: Preview = {
   decorators: [
     (Story, context) => {
       const theme = context.globals.theme || 'light'
+      const isDocs = context.viewMode === 'docs'
       return (
         <ThemeProvider defaultTheme={theme}>
           <ThemeSync theme={theme}>
             <div
               style={{
-                padding: '2rem',
-                minHeight: '100vh',
+                padding: isDocs ? '1rem' : '2rem',
+                minHeight: isDocs ? 'auto' : '100vh',
                 background: 'var(--ds-color-neutral-0)',
                 color: 'var(--ds-color-neutral-1000)',
                 transition: 'background-color 0.2s ease, color 0.2s ease',

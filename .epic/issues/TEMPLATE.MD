@@ -16,7 +16,7 @@ Implementar o componente `Button` com variantes, tamanhos, estados e pattern `as
 - [ ] Pattern asChild via @radix-ui/react-slot
 - [ ] forwardRef implementado
 - [ ] Cobertura ≥ 90%
-- [ ] Story para cada variante e estado
+- [ ] Stories do Storybook: Story Playground principal com controls + stories de variações/estados secundários usando a tag `!dev` (ocultas do menu lateral)
 - [ ] Zero violações axe
 - [ ] Keyboard: Enter e Space ativam o botão
 

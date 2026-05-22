@@ -1,6 +1,6 @@
-import type { Meta, StoryObj } from '@storybook/react'
 import React from 'react'
-import { Button } from './Button'
+import type { Meta, StoryObj } from '@storybook/react'
+import { Button, ButtonProps } from './Button'
 
 const meta: Meta<typeof Button> = {
   title: 'Components/Button',
@@ -30,7 +30,18 @@ const meta: Meta<typeof Button> = {
 export default meta
 type Story = StoryObj<typeof Button>
 
+export const Playground: Story = {
+  args: {
+    variant: 'primary',
+    size: 'md',
+    children: 'Button',
+    disabled: false,
+    loading: false,
+  },
+}
+
 export const Primary: Story = {
+  tags: ['!dev'],
   args: {
     variant: 'primary',
     children: 'Primary Button',
@@ -38,6 +49,7 @@ export const Primary: Story = {
 }
 
 export const Secondary: Story = {
+  tags: ['!dev'],
   args: {
     variant: 'secondary',
     children: 'Secondary Button',
@@ -45,6 +57,7 @@ export const Secondary: Story = {
 }
 
 export const Ghost: Story = {
+  tags: ['!dev'],
   args: {
     variant: 'ghost',
     children: 'Ghost Button',
@@ -52,6 +65,7 @@ export const Ghost: Story = {
 }
 
 export const Danger: Story = {
+  tags: ['!dev'],
   args: {
     variant: 'danger',
     children: 'Danger Button',
@@ -59,6 +73,7 @@ export const Danger: Story = {
 }
 
 export const Small: Story = {
+  tags: ['!dev'],
   args: {
     size: 'sm',
     children: 'Small Button',
@@ -66,6 +81,7 @@ export const Small: Story = {
 }
 
 export const Medium: Story = {
+  tags: ['!dev'],
   args: {
     size: 'md',
     children: 'Medium Button',
@@ -73,6 +89,7 @@ export const Medium: Story = {
 }
 
 export const Large: Story = {
+  tags: ['!dev'],
   args: {
     size: 'lg',
     children: 'Large Button',
@@ -80,6 +97,7 @@ export const Large: Story = {
 }
 
 export const Disabled: Story = {
+  tags: ['!dev'],
   args: {
     disabled: true,
     children: 'Disabled Button',
@@ -87,6 +105,7 @@ export const Disabled: Story = {
 }
 
 export const Loading: Story = {
+  tags: ['!dev'],
   args: {
     loading: true,
     children: 'Loading Button',
@@ -94,7 +113,8 @@ export const Loading: Story = {
 }
 
 export const AsChild: Story = {
-  render: (args) => (
+  tags: ['!dev'],
+  render: (args: ButtonProps) => (
     <Button {...args} asChild>
       <a href="https://google.com" target="_blank" rel="noopener noreferrer">
         Link as Button
