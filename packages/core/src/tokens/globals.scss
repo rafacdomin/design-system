@@ -1,0 +1,66 @@
+:root {
+  // Font Families
+  --ds-font-family-sans:
+    'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --ds-font-family-heading:
+    'Poppins', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+
+  // Font Sizes (escala baseada em 16px = 1rem)
+  --ds-font-size-xs: 0.75rem; // 12px
+  --ds-font-size-sm: 0.875rem; // 14px
+  --ds-font-size-md: 1rem; // 16px
+  --ds-font-size-lg: 1.125rem; // 18px
+  --ds-font-size-xl: 1.25rem; // 20px
+  --ds-font-size-2xl: 1.5rem; // 24px
+  --ds-font-size-3xl: 1.875rem; // 30px
+  --ds-font-size-4xl: 2.25rem; // 36px
+
+  // Font Weights
+  --ds-font-weight-regular: 400;
+  --ds-font-weight-medium: 500;
+  --ds-font-weight-semibold: 600;
+  --ds-font-weight-bold: 700;
+
+  // Line Heights
+  --ds-line-height-none: 1;
+  --ds-line-height-tight: 1.25;
+  --ds-line-height-snug: 1.375;
+  --ds-line-height-normal: 1.5;
+  --ds-line-height-loose: 2;
+
+  // Spacing (escala baseada em múltiplos de 4px)
+  --ds-spacing-1: 0.25rem; // 4px
+  --ds-spacing-2: 0.5rem; // 8px
+  --ds-spacing-3: 0.75rem; // 12px
+  --ds-spacing-4: 1rem; // 16px
+  --ds-spacing-5: 1.25rem; // 20px
+  --ds-spacing-6: 1.5rem; // 24px
+  --ds-spacing-8: 2rem; // 32px
+  --ds-spacing-10: 2.5rem; // 40px
+  --ds-spacing-12: 3rem; // 48px
+  --ds-spacing-16: 4rem; // 64px
+
+  // Border Radius
+  --ds-border-radius-sm: 2px;
+  --ds-border-radius-md: 4px;
+  --ds-border-radius-lg: 8px;
+  --ds-border-radius-full: 9999px;
+
+  // Border Width
+  --ds-border-width-sm: 1px;
+  --ds-border-width-md: 2px;
+
+  // Shadows
+  --ds-shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --ds-shadow-md:
+    0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+  --ds-shadow-lg:
+    0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+
+  // Breakpoints
+  --ds-breakpoint-sm: 640px;
+  --ds-breakpoint-md: 768px;
+  --ds-breakpoint-lg: 1024px;
+  --ds-breakpoint-xl: 1280px;
+  --ds-breakpoint-2xl: 1536px;
+}

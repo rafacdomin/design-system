@@ -1,0 +1,19 @@
+[data-theme='dark'] {
+  // Neutral Scale (Escala Monocromática Premium Escuro)
+  --ds-color-neutral-0: hsl(0, 0%, 4%); // Quase preto (#0a0a0a)
+  --ds-color-neutral-50: hsl(0, 0%, 7%); // Cinza escuro (#121212)
+  --ds-color-neutral-100: hsl(0, 0%, 10%); // Cinza médio-escuro (#1a1a1a)
+  --ds-color-neutral-200: hsl(0, 0%, 15%); // Cinza (#262626)
+  --ds-color-neutral-300: hsl(0, 0%, 23%); // Cinza médio (#3a3a3a)
+  --ds-color-neutral-400: hsl(0, 0%, 32%); // Cinza médio-claro (#525252)
+  --ds-color-neutral-500: hsl(0, 0%, 45%); // Cinza neutro (#737373)
+  --ds-color-neutral-600: hsl(0, 0%, 64%); // Cinza claro-médio (#a3a3a3)
+  --ds-color-neutral-700: hsl(0, 0%, 83%); // Cinza claro (#d4d4d4)
+  --ds-color-neutral-800: hsl(0, 0%, 89%); // Cinza sutil (#e2e2e2)
+  --ds-color-neutral-900: hsl(0, 0%, 95%); // Cinza muito claro (#f1f1f1)
+  --ds-color-neutral-1000: hsl(0, 0%, 100%); // Branco (#ffffff)
+
+  // Interactive / Acento styles
+  --ds-color-focus-ring: hsl(0, 0%, 100%);
+  --ds-color-danger: hsl(0, 96%, 65%); // Vermelho erro / perigo vibrante
+}

@@ -9,7 +9,11 @@ Você é um engenheiro sênior refinando a issue $ARGUMENTS antes da implementa�
 1. Leia a issue em `.epic/issues/$ARGUMENTS*.md` (busque pelo número ou nome)
 2. Leia os arquivos relevantes em `references/`
 3. Busque no codebase por padrões reutilizáveis
-4. Pesquise na web por:
+4. Pesquise na web por ou Use a ferramenta `resolve-library-id` do Context7 para buscar documentação atualizada de:
+   - radix-ui/{componente}
+   - shadcn/ui
+   - storybookjs/storybook
+   - testing-library/react
    - Implementações de referência em Radix UI, Base UI, shadcn/ui
    - Documentação de acessibilidade (WAI-ARIA patterns)
    - Melhores práticas para o componente específico
@@ -20,10 +24,3 @@ Você é um engenheiro sênior refinando a issue $ARGUMENTS antes da implementa�
    - `## Checklist de Implementação` — granular, com 15-20 itens
 
 Não implemente ainda — apenas planeje.
-
-Use a ferramenta `resolve-library-id` do Context7 para buscar documentação atualizada de:
-
-- radix-ui/{componente}
-- shadcn/ui
-- storybookjs/storybook
-- testing-library/react
