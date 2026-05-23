@@ -26,15 +26,19 @@ O repositório é gerenciado através do Turborepo e dividido em workspaces no d
 
 ```
 design-system/
+├── .github/
+│   └── workflows/    # Workflows de CI/CD para release e deploy
 ├── packages/
 │   ├── core/         # Componentes core sem dependências pesadas, design tokens e temas
 │   ├── carousel/     # Componente complexo de Carrossel (separado por depender do Embla Carousel)
 │   └── docs/         # Sandbox do Storybook 8 e suíte de Testes de Regressão Visual do Playwright
 ├── .epic/            # Planejamento estratégico e issues de desenvolvimento (Spec-Driven Development)
-├── references/       # Diretrizes detalhadas de arquitetura, acessibilidade, testes e workflow
+├── references/       # Diretrizes detalhadas de arquitetura, acessibilidade, testes, publicação e workflow
 ├── package.json      # Atalhos globais e dependências de tooling da raiz
 ├── turbo.json        # Configuração de pipelines e cache de tarefas do Turborepo
+├── PUBLISHING.md     # Guia técnico detalhado de releases de pacotes e CI/CD
 └── SPEC.md           # Especificação técnica detalhada das APIs dos componentes
+
 ```
 
 - **Por que separar `@ds/carousel`?** Mantemos a regra de que qualquer componente com dependência pesada (>10kb gzipped) deve residir em seu próprio subpacote para otimizar o tamanho de bundle final da aplicação core.
@@ -126,6 +130,18 @@ Garantimos a confiabilidade dos componentes através de três camadas de testes 
 - **Cenários:** Executado sob as viewports de 375x812 (Mobile), 768x1024 (Tablet) e 1280x800 (Desktop) sob ambos os temas (Light e Dark).
 - **Estabilidade:** Injeção automática de CSS para remover animações, transições e piscar de cursores de texto durante as capturas para mitigar flakiness.
 - **BrowserStack Integration:** Ativado em ambiente de CI automaticamente via flags `BROWSERSTACK_USERNAME` e `BROWSERSTACK_ACCESS_KEY`, roteando os testes através de um túnel local seguro (`browserstack-local`) para validar em navegadores reais em Windows 11 e macOS.
+
+---
+
+## 🚀 CI/CD & Publicação
+
+Adotamos um design de **Multi-Pipelines** no GitHub Actions para testar, compilar e publicar pacotes e documentações de forma independente:
+
+- **Publicação de Pacotes:** Publicação manual de `@ds/core` e `@ds/carousel` no registro NPM via execuções manuais no GitHub Actions (com parâmetros para escolha de SemVer: `major`, `minor`, `patch`).
+- **Deploy do Storybook:** Build e deploy automático do Storybook estático no GitHub Pages após publicações bem-sucedidas das bibliotecas ou disparo manual.
+- **Notificações:** Envio automatizado do status dos deploys (sucesso/falha) para canais do Discord, Slack ou Microsoft Teams via webhooks configurados com `curl`.
+
+Para o passo a passo de como configurar credenciais, preparar builds locais e o formato dos webhooks, consulte o [Guia de Publicação & CI/CD (PUBLISHING.md)](https://github.com/rafacdomin/design-system/blob/main/PUBLISHING.md).
 
 ---
 

@@ -26,8 +26,8 @@ Este documento descreve o progresso global da implementação do mini design sys
 | **#016** | [Integração dos Testes Visuais com o Browserstack](file:///home/rafacdomin/projetos/design-system/.epic/issues/016_browserstack_integration.md)                  | #015                   | M          | `[x] Concluído` |
 | **#017** | [Pipelines de Release das Bibliotecas (@ds/core e @ds/carousel)](file:///home/rafacdomin/projetos/design-system/.epic/issues/017_libraries_release_pipelines.md) | #001, #013, #014       | M          | `[x] Concluído` |
 | **#018** | [Pipeline de Deploy do Storybook no GitHub Pages](file:///home/rafacdomin/projetos/design-system/.epic/issues/018_storybook_deploy_pipeline.md)                  | #004, #017             | M          | `[x] Concluído` |
-| **#019** | [Integração de Notificações via Webhook](file:///home/rafacdomin/projetos/design-system/.epic/issues/019_pipeline_notifications.md)                              | #017, #018             | P          | `[ ] A Fazer`   |
-| **#020** | [Documentação Completa de CI/CD e Publicação](file:///home/rafacdomin/projetos/design-system/.epic/issues/020_publishing_documentation.md)                       | #017, #018, #019       | P          | `[ ] A Fazer`   |
+| **#019** | [Integração de Notificações via Webhook](file:///home/rafacdomin/projetos/design-system/.epic/issues/019_pipeline_notifications.md)                              | #017, #018             | P          | `[x] Concluído` |
+| **#020** | [Documentação Completa de CI/CD e Publicação](file:///home/rafacdomin/projetos/design-system/.epic/issues/020_publishing_documentation.md)                       | #017, #018, #019       | P          | `[x] Concluído` |
 
 ---
 

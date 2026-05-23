@@ -107,6 +107,13 @@ export BROWSERSTACK_ACCESS_KEY="sua-chave-de-acesso"
 pnpm test:visual:ci
 ```
 
+### 7. Integração Contínua & Publicação
+
+O repositório é configurado com pipelines do GitHub Actions para verificações e entregas automatizadas.
+Pushes na branch `main` ou tags de release executarão lint, testes unitários e testes de regressão visual antes de publicar os pacotes no registro do NPM ou atualizar o Storybook no GitHub Pages.
+
+Para o passo a passo detalhado sobre configurações de workflows, geração de builds de pacotes e disparos de deploys manuais, consulte o [Guia de Publicação & CI/CD (PUBLISHING.md)](https://github.com/rafacdomin/design-system/blob/main/PUBLISHING.md).
+
 ---
 
 ## 📝 Padronização de Git & Commits

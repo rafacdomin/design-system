@@ -26,15 +26,19 @@ The repository is managed using Turborepo and divided into workspaces under the 
 
 ```
 design-system/
+├── .github/
+│   └── workflows/    # CI/CD workflows for release and deployment
 ├── packages/
 │   ├── core/         # Core components with no heavy dependencies, design tokens, and themes
 │   ├── carousel/     # Complex Carousel component (separated due to dependency on Embla Carousel)
 │   └── docs/         # Storybook 8 sandbox and Playwright Visual Regression test suite
 ├── .epic/            # Strategic planning and development issues (Spec-Driven Development)
-├── references/       # Detailed guidelines for architecture, accessibility, testing, and workflow
+├── references/       # Detailed guidelines for architecture, accessibility, testing, publishing, and workflow
 ├── package.json      # Global shortcuts and root tooling dependencies
 ├── turbo.json        # Turborepo pipeline configuration and task caching
+├── PUBLISHING.md     # Detailed technical guide for package release and CI/CD pipelines
 └── SPEC.md           # Detailed technical specification of component APIs
+
 ```
 
 - **Why separate `@ds/carousel`?** We maintain the rule that any component with a heavy dependency (>10kb gzipped) must reside in its own subpackage to optimize the final bundle size of the core application.
@@ -126,6 +130,18 @@ We guarantee component reliability through three layers of automated testing:
 - **Scenarios:** Run under 375x812 (Mobile), 768x1024 (Tablet), and 1280x800 (Desktop) viewports under both light and dark themes.
 - **Stability:** Automatic injection of CSS to remove animations, transitions, and text cursor blinking during captures to mitigate flakiness.
 - **BrowserStack Integration:** Automatically activated in CI environments via `BROWSERSTACK_USERNAME` and `BROWSERSTACK_ACCESS_KEY` flags, routing tests through a secure local tunnel (`browserstack-local`) to validate on real browsers on Windows 11 and macOS.
+
+---
+
+## 🚀 CI/CD & Publishing
+
+We adopt a **Multi-Pipeline** design on GitHub Actions to test, build, and publish packages and documentation independently:
+
+- **Package Releases:** Manual publishing of `@ds/core` and `@ds/carousel` to the NPM registry via workflow execution on GitHub Actions (with choice inputs for SemVer: `major`, `minor`, `patch`).
+- **Storybook Deployment:** The static Storybook documentation builds and deploys to GitHub Pages automatically upon successful library releases or manual dispatch.
+- **Notifications:** Simple webhooks built with `curl` report workflow status results to Discord, Slack, or Microsoft Teams.
+
+For step-by-step guides on preparing library bundles, configuring secrets, and webhook formats, see the [Publishing & CI/CD Guide (PUBLISHING.md)](https://github.com/rafacdomin/design-system/blob/main/PUBLISHING.md).
 
 ---
 

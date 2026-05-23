@@ -35,6 +35,7 @@ por dependência pesada (ex: carousel com Embla).
 - Spec dos componentes: `references/COMPONENT_SPEC.md`
 - Estratégia de testes: `references/TESTING_STRATEGY.md`
 - Temas: `references/THEMING.md`
+- Publicação e CI/CD: [PUBLISHING.md](https://github.com/rafacdomin/design-system/blob/main/PUBLISHING.md)
 
 ## Fluxo de desenvolvimento
 
@@ -52,7 +53,8 @@ Spec → Break → Plan → Execute (ver `references/WORKFLOW.md`)
 
 ## Não faça sem perguntar
 
-- Mudar o bundler
+- Mudar o bundler ou script de build de pacotes
+- Modificar pipelines do GitHub Actions ou configurações de CI/CD
 - Adicionar CSS-in-JS
 - Criar abstrações não documentadas em references/
 - Instalar dependências externas não listadas na issue
