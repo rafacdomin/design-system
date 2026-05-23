@@ -24,11 +24,11 @@ graph TD
 
 1. **Release Core (`release-core.yml`):**
    - **Gatilho:** Disparado manualmente via painel do GitHub Actions (`workflow_dispatch`).
-   - **Inputs:** Requer que o desenvolvedor informe o tipo de incremento de versão SemVer (`patch`, `minor` ou `major`).
+   - **Inputs:** Requer que o desenvolvedor informe o tipo de incremento de versão SemVer (`patch`, `minor` ou `major`). O workflow aplica o incremento no `package.json`, compila o pacote, publica no NPM e, após a publicação bem-sucedida, realiza o commit e push do novo incremento diretamente de volta para a branch de origem.
 
 2. **Release Carousel (`release-carousel.yml`):**
    - **Gatilho:** Disparado manualmente via painel do GitHub Actions (`workflow_dispatch`).
-   - **Inputs:** Requer que o desenvolvedor informe o tipo de incremento de versão SemVer (`patch`, `minor` ou `major`).
+   - **Inputs:** Requer que o desenvolvedor informe o tipo de incremento de versão SemVer (`patch`, `minor` ou `major`). O workflow aplica o incremento no `package.json`, compila o pacote, publica no NPM e, após a publicação bem-sucedida, realiza o commit e push do novo incremento diretamente de volta para a branch de origem.
 
 3. **Deploy Storybook (`deploy-storybook.yml`):**
    - **Gatilho Automático:** Conclusão bem-sucedida do workflow de qualquer um dos pacotes (`workflow_run` com conclusão `success`).

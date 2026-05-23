@@ -50,15 +50,16 @@ Responsável por validar e publicar o pacote `@ds/core`.
 - **Gatilhos (Triggers):**
   - **Apenas disparo manual (`workflow_dispatch`).**
   - **Inputs do Workflow:**
-    - `version_increment` (Choice: `patch`, `minor`, `major`, padrão: `patch`) - Define o tipo de incremento de versão semântica (SemVer) que será aplicado ao pacote antes da publicação.
+    - `version_increment` (Choice: `patch`, `minor`, `major`, padrão: `patch`) - Define o tipo de incremento SemVer que será aplicado ao pacote.
 - **Etapas da Pipeline:**
   1. **Install:** Checkout do código, configuração do Node.js (versão 18), cache de dependências e `pnpm install --frozen-lockfile`.
   2. **Test:** Execução dos testes unitários e de acessibilidade via `pnpm --filter @ds/core test` e `pnpm --filter @ds/core lint`.
   3. **Visual Regression Test:** Build estática do Storybook e execução dos testes do Playwright (`pnpm --filter @ds/docs test:visual`, que roda no Browserstack se as credenciais estiverem configuradas nos segredos do repositório, ou localmente caso contrário).
-  4. **Bump Version:** Incrementa a versão do pacote no `package.json` de acordo com a seleção do usuário (ex: `pnpm --filter @ds/core version ${{ github.event.inputs.version_increment }} --no-git-tag-version`).
+  4. **Bump Version:** Incrementa a versão do pacote no `package.json` de acordo com a seleção (ex: `pnpm --filter @ds/core version ${{ github.event.inputs.version_increment }} --no-git-tag-version`).
   5. **Build:** Compilação dos componentes do `@ds/core` para distribuição pública (ESM/CJS).
-  6. **Publication:** Publicação no NPM (`pnpm --filter @ds/core publish --no-git-checks --access public`) autenticada por meio da variável `NPM_TOKEN` (segredo do repositório).
-  7. **Notification:** Envio de payload via webhook informando o status final da execução.
+  6. **Publication:** Publicação no NPM (`pnpm --filter @ds/core publish --no-git-checks --access public`) autenticada por meio da variável `NPM_TOKEN`.
+  7. **Commit & Push:** Realiza commit e push automático do novo incremento de versão de volta para o repositório.
+  8. **Notification:** Envio de payload via webhook informando o status final da execução.
 
 ### 4.2 Release Carousel (`.github/workflows/release-carousel.yml`)
 
@@ -67,15 +68,16 @@ Responsável por validar e publicar o pacote `@ds/carousel`.
 - **Gatilhos (Triggers):**
   - **Apenas disparo manual (`workflow_dispatch`).**
   - **Inputs do Workflow:**
-    - `version_increment` (Choice: `patch`, `minor`, `major`, padrão: `patch`) - Define o tipo de incremento de versão semântica (SemVer) que será aplicado ao pacote antes da publicação.
+    - `version_increment` (Choice: `patch`, `minor`, `major`, padrão: `patch`) - Define o tipo de incremento SemVer que será aplicado ao pacote.
 - **Etapas da Pipeline:**
   1. **Install:** Instalação das dependências com cache.
   2. **Test:** Execução de testes unitários do `@ds/carousel` e linter.
   3. **Visual Regression Test:** Execução dos testes visuais do Playwright para os stories do carrossel.
   4. **Bump Version:** Incrementa a versão do pacote no `package.json` de acordo com a seleção (ex: `pnpm --filter @ds/carousel version ${{ github.event.inputs.version_increment }} --no-git-tag-version`).
-  5. **Build:** Compilação da build de distribuição do `@ds/carousel` (que resolve automaticamente a build de `@ds/core` usando dependências do Turborepo).
+  5. **Build:** Compilação da build de distribuição do `@ds/carousel`.
   6. **Publication:** Publicação no NPM usando o segredo `NPM_TOKEN`.
-  7. **Notification:** Notificação de status final.
+  7. **Commit & Push:** Realiza commit e push automático do novo incremento de versão de volta para o repositório.
+  8. **Notification:** Notificação de status final.
 
 ### 4.3 Deploy Storybook (`.github/workflows/deploy-storybook.yml`)
 
