@@ -109,10 +109,10 @@ pnpm test:visual
 
 ### 7. Integração Contínua & Publicação
 
-O repositório é configurado com pipelines do GitHub Actions para verificações e entregas automatizadas.
-Pushes na branch `main` ou tags de release executarão lint, testes unitários e testes de regressão visual antes de publicar os pacotes no registro do NPM ou atualizar o Storybook no GitHub Pages.
+O repositório utiliza pipelines do GitHub Actions para verificações e entregas.
+Neste contexto, os workflows disponíveis neste PR são acionados manualmente via `workflow_dispatch`. O deploy do Storybook ocorre por encadeamento de workflow (`workflow_run`) e/ou acionamento manual, conforme a configuração vigente.
 
-Para o passo a passo detalhado sobre configurações de workflows, geração de builds de pacotes e disparos de deploys manuais, consulte o [Guia de Publicação & CI/CD (PUBLISHING.md)](https://github.com/rafacdomin/design-system/blob/main/PUBLISHING.md).
+Para o passo a passo detalhado sobre configurações de workflows, gatilhos atuais, geração de builds de pacotes e disparos de deploy, consulte o [Guia de Publicação & CI/CD (PUBLISHING.md)](https://github.com/rafacdomin/design-system/blob/main/PUBLISHING.md).
 
 ---
 
