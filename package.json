@@ -11,6 +11,7 @@
     "test": "turbo test",
     "test:visual": "turbo test:visual",
     "test:visual:update": "pnpm --filter @ds/docs test:visual:update",
+    "test:visual:ci": "turbo test:visual:ci",
     "lint": "turbo lint",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
