@@ -52,7 +52,7 @@ Responsável por validar e publicar o pacote `@ds/core`.
   - **Inputs do Workflow:**
     - `version_increment` (Choice: `patch`, `minor`, `major`, padrão: `patch`) - Define o tipo de incremento SemVer que será aplicado ao pacote.
 - **Etapas da Pipeline:**
-  1. **Install:** Checkout do código, configuração do Node.js (versão 18), cache de dependências e `pnpm install --frozen-lockfile`.
+  1. **Install:** Checkout do código, configuração do Node.js (versão versão 20.19.0), cache de dependências e `pnpm install --frozen-lockfile`.
   2. **Test:** Execução dos testes unitários e de acessibilidade via `pnpm --filter @ds/core test` e `pnpm --filter @ds/core lint`.
   3. **Visual Regression Test:** Build estática do Storybook e execução dos testes do Playwright (`pnpm --filter @ds/docs test:visual`, que roda no Browserstack se as credenciais estiverem configuradas nos segredos do repositório, ou localmente caso contrário).
   4. **Bump Version:** Incrementa a versão do pacote no `package.json` de acordo com a seleção (ex: `pnpm --filter @ds/core version ${{ github.event.inputs.version_increment }} --no-git-tag-version`).

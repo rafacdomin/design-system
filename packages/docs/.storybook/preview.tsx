@@ -5,6 +5,7 @@ import { DocsContainer } from '@storybook/blocks'
 import { addons } from '@storybook/preview-api'
 import { GLOBALS_UPDATED } from '@storybook/core-events'
 import '@ds/core/dist/index.css'
+import '@ds/carousel/dist/index.css'
 
 const ThemeSync = ({
   theme,
