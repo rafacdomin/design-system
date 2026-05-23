@@ -109,8 +109,8 @@ pnpm test:visual
 
 ### 7. Continuous Integration & Publishing
 
-The repository is configured with GitHub Actions pipelines for automated checks and deliveries.
-Pushes to the `main` branch or release tags will run lint, tests, and visual regression suites before publishing packages to NPM or updating the Storybook on GitHub Pages.
+The repository is configured with GitHub Actions pipelines for checks and deliveries.
+The workflows added in this project are triggered manually through `workflow_dispatch`, and the Storybook deployment runs via `workflow_run` and/or manual execution rather than automatically on pushes to `main` or release tags.
 
 For detailed steps on workflow configurations, package builds, and manual execution triggers, refer to the [Publishing & CI/CD Guide (PUBLISHING.md)](https://github.com/rafacdomin/design-system/blob/main/PUBLISHING.md).
 
