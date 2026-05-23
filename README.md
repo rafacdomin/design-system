@@ -1,145 +1,147 @@
 # Design System 🖤
 
-Este é o **Design System**, uma biblioteca de componentes React minimalista baseada em uma escala monocromática de alto contraste. Projetado para aplicações web de portfólio pessoal e profissional, o sistema preza pela performance, acessibilidade estrita (WCAG 2.1 AA) e estabilidade visual garantida por testes automatizados locais e na nuvem.
+> [Ir para documentação em PT-BR](https://github.com/rafacdomin/design-system/blob/main/README_PT-BR.md)
+
+This is the **Design System**, a minimalist React component library based on a high-contrast monochromatic scale. Designed for personal and professional web portfolio applications, the system prioritizes performance, strict accessibility (WCAG 2.1 AA), and visual stability guaranteed by automated testing locally and in the cloud.
 
 ---
 
-## 🚀 Stack Técnica
+## 🚀 Technical Stack
 
-O projeto é estruturado utilizando práticas modernas de monorepo e testes automatizados:
+The project is structured using modern monorepo and automated testing practices:
 
 - **Core & Runtime:** React 18 + TypeScript 5 (Strict Mode)
-- **Estilização:** SCSS Modules + CSS Custom Properties (zero CSS-in-JS, zero Tailwind)
+- **Styling:** SCSS Modules + CSS Custom Properties (zero CSS-in-JS, zero Tailwind)
 - **Monorepo Tooling:** Turborepo + `pnpm` workspaces
-- **Sandbox & Documentação:** Storybook 8
-- **Testes de Unidade & Acessibilidade:** Vitest + React Testing Library + `jest-axe`
-- **Testes de Regressão Visual:** Playwright + BrowserStack Automate (WebSocket CDP + Túnel Local)
-- **Qualidade de Código:** ESLint (flat config), Prettier, Husky + lint-staged
+- **Sandbox & Documentation:** Storybook 8
+- **Unit & Accessibility Testing:** Vitest + React Testing Library + `jest-axe`
+- **Visual Regression Testing:** Playwright + BrowserStack Automate (WebSocket CDP + Local Tunnel)
+- **Code Quality:** ESLint (flat config), Prettier, Husky + lint-staged
 
 ---
 
-## 📦 Estrutura do Monorepo
+## 📦 Monorepo Structure
 
-O repositório é gerenciado através do Turborepo e dividido em workspaces no diretório `packages/`:
+The repository is managed using Turborepo and divided into workspaces under the `packages/` directory:
 
 ```
 design-system/
 ├── packages/
-│   ├── core/         # Componentes core sem dependências pesadas, design tokens e temas
-│   ├── carousel/     # Componente complexo de Carrossel (separado por depender do Embla Carousel)
-│   └── docs/         # Sandbox do Storybook 8 e suíte de Testes de Regressão Visual do Playwright
-├── .epic/            # Planejamento estratégico e issues de desenvolvimento (Spec-Driven Development)
-├── references/       # Diretrizes detalhadas de arquitetura, acessibilidade, testes e workflow
-├── package.json      # Atalhos globais e dependências de tooling da raiz
-├── turbo.json        # Configuração de pipelines e cache de tarefas do Turborepo
-└── SPEC.md           # Especificação técnica detalhada das APIs dos componentes
+│   ├── core/         # Core components with no heavy dependencies, design tokens, and themes
+│   ├── carousel/     # Complex Carousel component (separated due to dependency on Embla Carousel)
+│   └── docs/         # Storybook 8 sandbox and Playwright Visual Regression test suite
+├── .epic/            # Strategic planning and development issues (Spec-Driven Development)
+├── references/       # Detailed guidelines for architecture, accessibility, testing, and workflow
+├── package.json      # Global shortcuts and root tooling dependencies
+├── turbo.json        # Turborepo pipeline configuration and task caching
+└── SPEC.md           # Detailed technical specification of component APIs
 ```
 
-- **Por que separar `@ds/carousel`?** Mantemos a regra de que qualquer componente com dependência pesada (>10kb gzipped) deve residir em seu próprio subpacote para otimizar o tamanho de bundle final da aplicação core.
+- **Why separate `@ds/carousel`?** We maintain the rule that any component with a heavy dependency (>10kb gzipped) must reside in its own subpackage to optimize the final bundle size of the core application.
 
 ---
 
 ## 🎨 Design Tokens
 
-Todos os design tokens estão declarados como propriedades customizadas de CSS sob o prefixo `--ds-` e mudam dinamicamente dependendo do tema ativo.
+All design tokens are declared as CSS custom properties under the `--ds-` prefix and change dynamically depending on the active theme.
 
-### 1. Cores (Escala Monocromática Premium)
+### 1. Colors (Premium Monochromatic Scale)
 
-| Token                     | Light Theme Value (HEX / HSL) | Dark Theme Value (HEX / HSL) | Uso Sugerido                             |
-| :------------------------ | :---------------------------- | :--------------------------- | :--------------------------------------- |
-| `--ds-color-neutral-0`    | `#ffffff` (hsl(0, 0%, 100%))  | `#0a0a0a` (hsl(0, 0%, 4%))   | Fundo principal da página                |
-| `--ds-color-neutral-50`   | `#f9f9f9` (hsl(0, 0%, 98%))   | `#121212` (hsl(0, 0%, 7%))   | Fundo secundário (ex: cards)             |
-| `--ds-color-neutral-100`  | `#f1f1f1` (hsl(0, 0%, 95%))   | `#1a1a1a` (hsl(0, 0%, 10%))  | Hover de fundos sutis                    |
-| `--ds-color-neutral-200`  | `#e2e2e2` (hsl(0, 0%, 89%))   | `#262626` (hsl(0, 0%, 15%))  | Bordas de input e divisores              |
-| `--ds-color-neutral-300`  | `#d4d4d4` (hsl(0, 0%, 83%))   | `#3a3a3a` (hsl(0, 0%, 23%))  | Bordas focadas, background disabled      |
-| `--ds-color-neutral-400`  | `#a3a3a3` (hsl(0, 0%, 64%))   | `#525252` (hsl(0, 0%, 32%))  | Placeholders e bordas ativas             |
-| `--ds-color-neutral-500`  | `#737373` (hsl(0, 0%, 45%))   | `#737373` (hsl(0, 0%, 45%))  | Texto secundário / auxiliar              |
-| `--ds-color-neutral-600`  | `#525252` (hsl(0, 0%, 32%))   | `#a3a3a3` (hsl(0, 0%, 64%))  | Hover em textos secundários              |
-| `--ds-color-neutral-700`  | `#404040` (hsl(0, 0%, 25%))   | `#d4d4d4` (hsl(0, 0%, 83%))  | Texto de leitura regular (Body)          |
-| `--ds-color-neutral-800`  | `#262626` (hsl(0, 0%, 15%))   | `#e2e2e2` (hsl(0, 0%, 89%))  | Títulos e textos de destaque médio       |
-| `--ds-color-neutral-900`  | `#171717` (hsl(0, 0%, 9%))    | `#f1f1f1` (hsl(0, 0%, 95%))  | Títulos proeminentes                     |
-| `--ds-color-neutral-1000` | `#0a0a0a` (hsl(0, 0%, 4%))    | `#ffffff` (hsl(0, 0%, 100%)) | Fundo de botões primários e chips        |
-| `--ds-color-focus-ring`   | `hsl(0, 0%, 0%)`              | `hsl(0, 0%, 100%)`           | Anel visual de foco (`:focus-visible`)   |
-| `--ds-color-danger`       | `hsl(0, 84%, 48%)`            | `hsl(0, 96%, 65%)`           | Cores de feedback de erro ou destrutivas |
+| Token                     | Light Theme Value (HEX / HSL) | Dark Theme Value (HEX / HSL) | Suggested Usage                      |
+| :------------------------ | :---------------------------- | :--------------------------- | :----------------------------------- |
+| `--ds-color-neutral-0`    | `#ffffff` (hsl(0, 0%, 100%))  | `#0a0a0a` (hsl(0, 0%, 4%))   | Main page background                 |
+| `--ds-color-neutral-50`   | `#f9f9f9` (hsl(0, 0%, 98%))   | `#121212` (hsl(0, 0%, 7%))   | Secondary background (e.g., cards)   |
+| `--ds-color-neutral-100`  | `#f1f1f1` (hsl(0, 0%, 95%))   | `#1a1a1a` (hsl(0, 0%, 10%))  | Subtle background hover              |
+| `--ds-color-neutral-200`  | `#e2e2e2` (hsl(0, 0%, 89%))   | `#262626` (hsl(0, 0%, 15%))  | Input borders and dividers           |
+| `--ds-color-neutral-300`  | `#d4d4d4` (hsl(0, 0%, 83%))   | `#3a3a3a` (hsl(0, 0%, 23%))  | Focused borders, disabled background |
+| `--ds-color-neutral-400`  | `#a3a3a3` (hsl(0, 0%, 64%))   | `#525252` (hsl(0, 0%, 32%))  | Placeholders and active borders      |
+| `--ds-color-neutral-500`  | `#737373` (hsl(0, 0%, 45%))   | `#737373` (hsl(0, 0%, 45%))  | Secondary / helper text              |
+| `--ds-color-neutral-600`  | `#525252` (hsl(0, 0%, 32%))   | `#a3a3a3` (hsl(0, 0%, 64%))  | Hover on secondary texts             |
+| `--ds-color-neutral-700`  | `#404040` (hsl(0, 0%, 25%))   | `#d4d4d4` (hsl(0, 0%, 83%))  | Regular body text                    |
+| `--ds-color-neutral-800`  | `#262626` (hsl(0, 0%, 15%))   | `#e2e2e2` (hsl(0, 0%, 89%))  | Titles and medium-emphasis texts     |
+| `--ds-color-neutral-900`  | `#171717` (hsl(0, 0%, 9%))    | `#f1f1f1` (hsl(0, 0%, 95%))  | Prominent titles                     |
+| `--ds-color-neutral-1000` | `#0a0a0a` (hsl(0, 0%, 4%))    | `#ffffff` (hsl(0, 0%, 100%)) | Primary button and chip background   |
+| `--ds-color-focus-ring`   | `hsl(0, 0%, 0%)`              | `hsl(0, 0%, 100%)`           | Visual focus ring (`:focus-visible`) |
+| `--ds-color-danger`       | `hsl(0, 84%, 48%)`            | `hsl(0, 96%, 65%)`           | Error feedback or destructive colors |
 
-### 2. Tipografia
+### 2. Typography
 
-- **Escala de Tamanhos:** Baseada em `rem` (xs: `0.75rem`, sm: `0.875rem`, md: `1rem`, lg: `1.125rem`, xl: `1.25rem`, 2xl: `1.5rem`, 3xl: `1.875rem`, 4xl: `2.25rem`).
-- **Famílias:** Interface/Sans-serif (`--ds-font-family-sans` com `Inter`) e Títulos/Destaques (`--ds-font-family-heading` com `Poppins`).
-- **Pesos:** Regular (`400`), Medium (`500` / `505`), Semibold (`600`), Bold (`700`).
+- **Size Scale:** Based on `rem` (xs: `0.75rem`, sm: `0.875rem`, md: `1rem`, lg: `1.125rem`, xl: `1.25rem`, 2xl: `1.5rem`, 3xl: `1.875rem`, 4xl: `2.25rem`).
+- **Families:** Interface/Sans-serif (`--ds-font-family-sans` with `Inter`) and Titles/Accents (`--ds-font-family-heading` with `Poppins`).
+- **Weights:** Regular (`400`), Medium (`500` / `505`), Semibold (`600`), Bold (`700`).
 
-### 3. Outros Tokens
+### 3. Other Tokens
 
-- **Espaçamento:** Escala base linear de `4px` (`--ds-spacing-1` de `4px` a `--ds-spacing-16` de `64px`).
-- **Bordas:** Arredondamento moderno e sutil (sm: `2px`, md: `4px`, lg: `8px`, full: `9999px`) e espessuras (sm: `1px`, md: `2px`).
-- **Sombras:** Três elevações translúcidas (`--ds-shadow-sm`, `--ds-shadow-md`, `--ds-shadow-lg`).
-- **Breakpoints:** Media-queries padronizadas (sm: `640px`, md: `768px`, lg: `1024px`, xl: `1280px`, 2xl: `1536px`).
-
----
-
-## 🌗 Sistema de Temas
-
-O design system utiliza variáveis de ambiente de CSS (Custom Properties) encapsuladas em atributos HTML para alternar os temas instantaneamente sem re-renderizar a árvore de componentes:
-
-- **Provider:** `<ThemeProvider defaultTheme="light">` gerencia o estado do tema e aplica o atributo `data-theme` na tag de wrapper.
-- **HOC `withTheme`**: Injeta a propriedade `data-theme` e sincroniza o contexto para componentes individuais quando necessário.
-- **Utilização no SCSS**: Todos os estilos SCSS referenciam apenas as propriedades do tema (ex: `background-color: var(--ds-color-neutral-0)`), nunca valores hex/rgb literais.
+- **Spacing:** Linear base scale of `4px` (`--ds-spacing-1` of `4px` to `--ds-spacing-16` of `64px`).
+- **Borders:** Modern and subtle rounding (sm: `2px`, md: `4px`, lg: `8px`, full: `9999px`) and thicknesses (sm: `1px`, md: `2px`).
+- **Shadows:** Three translucent elevations (`--ds-shadow-sm`, `--ds-shadow-md`, `--ds-shadow-lg`).
+- **Breakpoints:** Standardized media-queries (sm: `640px`, md: `768px`, lg: `1024px`, xl: `1280px`, 2xl: `1536px`).
 
 ---
 
-## 🧩 Arquitetura de Componentes
+## 🌗 Theming System
 
-Seguimos regras estritas de componentização para manter a base de código escalável:
+The design system uses CSS environment variables (Custom Properties) encapsulated in HTML attributes to switch themes instantly without re-rendering the component tree:
 
-1. **Assinaturas forwardRef e forwardProps**: Todos os componentes expõem referências de DOM nativas completas e tipadas.
-2. **Propriedades Tipadas**: Interfaces TypeScript declaradas explicitamente (ex: `interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement>`). Nunca utilizar aliases de tipo (`type`).
-3. **Compound Component Pattern**: Para componentes compostos como `Dropdown` (com Radix UI) e `Input` (com slots de ícone), os subcomponentes são agregados diretamente na raiz do componente principal usando `Object.assign`:
+- **Provider:** `<ThemeProvider defaultTheme="light">` manages the theme state and applies the `data-theme` attribute to the wrapper tag.
+- **HOC `withTheme`**: Injects the `data-theme` property and synchronizes the context for individual components when necessary.
+- **Usage in SCSS**: All SCSS styles reference only the theme properties (e.g., `background-color: var(--ds-color-neutral-0)`), never literal hex/rgb values.
+
+---
+
+## 🧩 Component Architecture
+
+We follow strict componentization rules to keep the codebase scalable:
+
+1. **forwardRef and forwardProps Signatures**: All components expose complete, typed native DOM references.
+2. **Typed Properties**: TypeScript interfaces explicitly declared (e.g., `interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement>`). Never use type aliases (`type`).
+3. **Compound Component Pattern**: For compound components like `Dropdown` (with Radix UI) and `Input` (with icon slots), subcomponents are aggregated directly onto the main component root using `Object.assign`:
    ```tsx
    export const Dropdown = Object.assign(ThemedDropdownComponent, {
      Item: DropdownItemComponent,
      Trigger: DropdownTriggerComponent,
    })
    ```
-   Os subcomponentes não são exportados individualmente no `index.ts` principal e seus `displayName`s refletem a hierarquia (ex: `Dropdown.Item`).
+   Subcomponents are not individually exported in the main `index.ts`, and their `displayName`s reflect the hierarchy (e.g., `Dropdown.Item`).
 
 ---
 
-## 🧪 Estratégia de Testes
+## 🧪 Testing Strategy
 
-Garantimos a confiabilidade dos componentes através de três camadas de testes automatizados:
+We guarantee component reliability through three layers of automated testing:
 
-### 1. Testes Unitários e Integração (Vitest + React Testing Library)
+### 1. Unit and Integration Testing (Vitest + React Testing Library)
 
-- Cobertura de comportamento, disparo de eventos, ciclos de vida de estado e chamadas de API.
-- Cobertura mínima: **90% de Statements**, **85% de Branches** e **90% de Funções**.
+- Coverage of behavior, event firing, state lifecycles, and API calls.
+- Minimum coverage: **90% Statements**, **85% Branches**, and **90% Functions**.
 
-### 2. Acessibilidade (WCAG 2.1 AA via `jest-axe`)
+### 2. Accessibility (WCAG 2.1 AA via `jest-axe`)
 
-- Cada componente possui uma suíte dedicada para verificar erros de estrutura HTML, contraste de cores inicial, hierarquia ARIA e conformidade geral.
-- Gerenciamento de foco do teclado estrito, incluindo focus traps em modais e navegação por setas em dropdowns.
+- Each component has a dedicated suite to verify HTML structure errors, initial color contrast, ARIA hierarchy, and general compliance.
+- Strict keyboard focus management, including focus traps in modals and arrow navigation in dropdowns.
 
-### 3. Regressão Visual (Playwright + BrowserStack)
+### 3. Visual Regression (Playwright + BrowserStack)
 
-- **Varredura Dinâmica:** O runner [visual.spec.ts](https://github.com/rafacdomin/design-system/blob/main/packages/docs/src/test-visual/visual.spec.ts) lê dinamicamente as histórias ativas do Storybook em `storybook-static/index.json`.
-- **Cenários:** Executado sob as viewports de 375x812 (Mobile), 768x1024 (Tablet) e 1280x800 (Desktop) sob ambos os temas (Light e Dark).
-- **Estabilidade:** Injeção automática de CSS para remover animações, transições e piscar de cursores de texto durante as capturas para mitigar flakiness.
-- **BrowserStack Integration:** Ativado em ambiente de CI automaticamente via flags `BROWSERSTACK_USERNAME` e `BROWSERSTACK_ACCESS_KEY`, roteando os testes através de um túnel local seguro (`browserstack-local`) para validar em navegadores reais em Windows 11 e macOS.
+- **Dynamic Scanning:** The runner [visual.spec.ts](https://github.com/rafacdomin/design-system/blob/main/packages/docs/src/test-visual/visual.spec.ts) dynamically reads active Storybook stories from `storybook-static/index.json`.
+- **Scenarios:** Run under 375x812 (Mobile), 768x1024 (Tablet), and 1280x800 (Desktop) viewports under both light and dark themes.
+- **Stability:** Automatic injection of CSS to remove animations, transitions, and text cursor blinking during captures to mitigate flakiness.
+- **BrowserStack Integration:** Automatically activated in CI environments via `BROWSERSTACK_USERNAME` and `BROWSERSTACK_ACCESS_KEY` flags, routing tests through a secure local tunnel (`browserstack-local`) to validate on real browsers on Windows 11 and macOS.
 
 ---
 
-## 🛠️ Scripts Disponíveis
+## 🛠️ Available Scripts
 
-Comandos executáveis a partir do diretório raiz:
+Executable commands from the root directory:
 
-| Comando                   | Descrição                                                                        |
-| :------------------------ | :------------------------------------------------------------------------------- |
-| `pnpm dev`                | Inicia o pipeline de desenvolvimento do Turborepo em paralelo                    |
-| `pnpm build`              | Compila todos os pacotes e gera a build estática do Storybook                    |
-| `pnpm lint`               | Roda as verificações de código do ESLint em todos os workspaces                  |
-| `pnpm format`             | Formata todo o código do repositório utilizando Prettier                         |
-| `pnpm test`               | Executa todos os testes de unidade e acessibilidade com Vitest                   |
-| `pnpm test:visual`        | Executa a suíte de testes de regressão visual localmente contra a build estática |
-| `pnpm test:visual:update` | Atualiza as imagens de referência (snapshots) locais dos testes visuais          |
-| `pnpm storybook`          | Inicia o servidor local do Storybook para desenvolvimento na porta `6006`        |
+| Command                   | Description                                                            |
+| :------------------------ | :--------------------------------------------------------------------- |
+| `pnpm dev`                | Starts the Turborepo development pipeline in parallel                  |
+| `pnpm build`              | Compiles all packages and generates the Storybook static build         |
+| `pnpm lint`               | Runs ESLint checks across all workspaces                               |
+| `pnpm format`             | Formats all repository code using Prettier                             |
+| `pnpm test`               | Runs all unit and accessibility tests with Vitest                      |
+| `pnpm test:visual`        | Runs the visual regression test suite locally against the static build |
+| `pnpm test:visual:update` | Updates the local reference images (snapshots) for visual tests        |
+| `pnpm storybook`          | Starts the local Storybook development server on port `6006`           |
 
-Para mais detalhes sobre como contribuir, regras de desenvolvimento de componentes e padronização de commits, consulte o [Guia de Contribuição (CONTRIBUTING.md)](https://github.com/rafacdomin/design-system/blob/main/CONTRIBUTING.md).
+For more details on how to contribute, component development rules, and commit standardization, see the [Contribution Guide (CONTRIBUTING.md)](https://github.com/rafacdomin/design-system/blob/main/CONTRIBUTING.md).

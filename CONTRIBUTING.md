@@ -1,130 +1,132 @@
-# Guia de Contribuição 🤝
+# Contributing Guide 🤝
 
-Seja bem-vindo ao projeto do **Design System**. Para manter a integridade, consistência e conformidade técnica de toda a base de código, todos os contribuidores (desenvolvedores e agentes de IA) devem seguir rigorosamente as diretrizes e regras absolutas descritas abaixo.
+> [Ir para documentação de contributing em PT-BR](https://github.com/rafacdomin/design-system/blob/main/CONTRIBUTING_PT-BR.md)
+
+Welcome to the **Design System** project. To maintain the integrity, consistency, and technical compliance of the entire codebase, all contributors (developers and AI agents) must strictly follow the guidelines and absolute rules described below.
 
 ---
 
-## 🔄 Fluxo de Trabalho (Spec-Driven Development)
+## 🔄 Workflow (Spec-Driven Development)
 
-Adotamos a metodologia **Spec-Driven Development** para guiar a evolução do design system através de 5 fases obrigatórias e sequenciais:
+We adopt the **Spec-Driven Development** methodology to guide the evolution of the design system through 5 mandatory and sequential phases:
 
 ```mermaid
 graph TD
-    A[Fase 1: /spec] --> B[Fase 2: /break]
-    B --> C[Fase 3: /plan ID]
-    C --> D[Fase 4: /execute ID]
-    D --> E[Fase 5: /review]
+    A[Phase 1: /spec] --> B[Phase 2: /break]
+    B --> C[Phase 3: /plan ID]
+    C --> D[Phase 4: /execute ID]
+    D --> E[Phase 5: /review]
 ```
 
-1. **Fase 1: Especificação (`/spec`)**
-   - Criação ou atualização do arquivo `SPEC.md` consolidando todas as especificações das APIs dos componentes, comportamento dinâmico e regras de design.
-2. **Fase 2: Decomposição (`/break`)**
-   - Quebra das especificações do `SPEC.md` em tarefas granulares (issues executáveis) salvas individualmente na pasta `.epic/issues/` e controle no roadmap central `.epic/EPIC_DESIGN_SYSTEM.md`.
-3. **Fase 3: Refinamento e Pesquisa (`/plan [ID]`)**
-   - Pesquisa de referências e acessibilidade ARIA para a issue específica. Geração de um checklist de implementação detalhado de 15 a 20 itens atualizado diretamente no arquivo markdown da issue.
-4. **Fase 4: Implementação (`/execute [ID]`)**
-   - Escrita de código propriamente dita, aplicando estritamente as regras de desenvolvimento e focando no ciclo de TDD.
-5. **Fase 5: Revisão (`/review`)**
-   - Auditoria estrita do código finalizado contra as diretrizes gerais, garantindo que não ocorram regressões de conformidade técnica.
+1. **Phase 1: Specification (`/spec`)**
+   - Creation or update of the `SPEC.md` file, consolidating all component API specifications, dynamic behavior, and design rules.
+2. **Phase 2: Decomposition (`/break`)**
+   - Breaking down the specifications of `SPEC.md` into granular tasks (executable issues) saved individually in the `.epic/issues/` folder and tracked in the central roadmap `.epic/EPIC_DESIGN_SYSTEM.md`.
+3. **Phase 3: Refinement and Research (`/plan [ID]`)**
+   - Researching references and ARIA accessibility for the specific issue. Generation of a detailed implementation checklist of 15 to 20 items, updated directly in the issue's markdown file.
+4. **Phase 4: Implementation (`/execute [ID]`)**
+   - Writing the actual code, strictly applying the development rules and focusing on the TDD cycle.
+5. **Phase 5: Review (`/review`)**
+   - Strict audit of the completed code against the general guidelines, ensuring that no technical compliance regressions occur.
 
 ---
 
-## 🚫 Regras Absolutas (Nunca Violar)
+## 🚫 Absolute Rules (Never Violate)
 
-Para que qualquer modificação ou componente seja aceito no repositório, ele **deve** atender a estas 9 regras sem exceção:
+For any modification or component to be accepted into the repository, it **must** meet these 9 rules without exception:
 
-1. **Estrutura Padrão de Arquivos:** Todo componente criado sob o pacote `@ds/core` deve possuir exatamente os seguintes arquivos em sua pasta:
-   - `ComponentName.tsx` (Implementação com forwardRef)
-   - `ComponentName.test.tsx` (Testes unitários e de acessibilidade)
-   - `ComponentName.module.scss` (Estilos isolados)
-   - `index.ts` (Export unificado)
-2. **Testes Antes da Implementação (TDD):** Os testes unitários e de acessibilidade (`.test.tsx`) devem ser escritos **antes** do código de implementação do componente. Eles devem rodar e falhar inicialmente.
-3. **Acessibilidade WCAG 2.1 AA Integrada:** Todo componente deve passar sem nenhuma violação nos testes automatizados do `jest-axe` e possuir suporte total a teclado e leitores de tela (ARIA).
-4. **Zero `any` no TypeScript:** É estritamente proibido o uso da tipagem `any` em variáveis, assinaturas, mocks ou asserções. Use tipos explícitos rígidos ou `unknown` para tipagens dinâmicas.
-5. **Tipagem Exclusiva via Interface:** Props de componentes e interfaces públicas devem usar `interface`, nunca `type` alias.
-6. **Exportações Unificadas:** Elementos internos e componentes secundários não devem ser expostos diretamente. O `index.ts` do componente deve exportar apenas a API pública principal.
-7. **Temas via Contexto:** Cores e estilos devem responder ao tema através do HOC `withTheme` ou de CSS Custom Properties. É proibido fixar valores/hexadecimais hardcoded.
-8. **SCSS Sem Literais:** Arquivos `.module.scss` devem consumir exclusivamente as Custom Properties declaradas nos tokens (ex: `var(--ds-color-neutral-0)`).
-9. **Compound Component Pattern via `Object.assign`:** Subcomponentes acoplados devem ser definidos internamente e indexados na raiz do componente principal (ex: `Dropdown.Item = DropdownItemComponent`). O `displayName` de cada subcomponente deve seguir exatamente o formato de namespace hierarchico (ex: `'Dropdown.Item'`).
+1. **Standard File Structure:** Every component created under the `@ds/core` package must have exactly the following files in its folder:
+   - `ComponentName.tsx` (Implementation with forwardRef)
+   - `ComponentName.test.tsx` (Unit and accessibility tests)
+   - `ComponentName.module.scss` (Isolated styles)
+   - `index.ts` (Unified export)
+2. **Testing Before Implementation (TDD):** Unit and accessibility tests (`.test.tsx`) must be written **before** the component implementation code. They must run and fail initially.
+3. **Integrated WCAG 2.1 AA Accessibility:** Every component must pass without any violations in automated `jest-axe` tests and have full keyboard and screen reader support (ARIA).
+4. **Zero `any` in TypeScript:** Using the `any` type in variables, signatures, mocks, or assertions is strictly prohibited. Use strict explicit types or `unknown` for dynamic typings.
+5. **Exclusive Typing via Interface:** Component props and public interfaces must use `interface`, never `type` alias.
+6. **Unified Exports:** Internal elements and secondary components must not be exposed directly. The component's `index.ts` must export only the main public API.
+7. **Theming via Context:** Colors and styles must respond to the theme through the `withTheme` HOC or CSS Custom Properties. Hardcoding colors/hexadecimal values is prohibited.
+8. **SCSS Without Literals:** `.module.scss` files must exclusively consume Custom Properties declared in the tokens (e.g., `var(--ds-color-neutral-0)`).
+9. **Compound Component Pattern via `Object.assign`:** Coupled subcomponents must be defined internally and indexed at the main component's root (e.g., `Dropdown.Item = DropdownItemComponent`). The `displayName` of each subcomponent must follow exactly the hierarchical namespace format (e.g., `'Dropdown.Item'`).
 
 ---
 
-## 🛠️ Guia de Desenvolvimento Passo a Passo
+## 🛠️ Step-by-Step Development Guide
 
-### 1. Preparação do Ambiente
+### 1. Environment Preparation
 
-Instale as dependências usando o `pnpm`:
+Install the dependencies using `pnpm`:
 
 ```bash
 pnpm install
 ```
 
-### 2. Sandbox de Desenvolvimento (Storybook)
+### 2. Development Sandbox (Storybook)
 
-Inicie o Storybook localmente para inspecionar componentes em tempo real:
+Start Storybook locally to inspect components in real time:
 
 ```bash
 pnpm storybook
 ```
 
-O servidor estará acessível em `http://localhost:6006`.
+The server will be accessible at `http://localhost:6006`.
 
-### 3. Rodando Testes Unitários e de Acessibilidade
+### 3. Running Unit and Accessibility Tests
 
-Execute a suíte de testes locais com Vitest:
+Run the local test suite with Vitest:
 
 ```bash
 pnpm test
 ```
 
-### 4. Executando Testes Visuais Localmente
+### 4. Running Visual Tests Locally
 
-Os testes visuais locais rodam contra a build estática do Storybook.
-Sempre que fizer alterações em componentes ou criar novas histórias, gere a build estática do Storybook e execute as validações de regressão visual:
+Local visual tests run against the static build of Storybook.
+Whenever you make changes to components or create new stories, generate the static build of Storybook and run the visual regression validations:
 
 ```bash
 pnpm build
 pnpm test:visual
 ```
 
-### 5. Atualizando Snapshots de Imagem (Baselines)
+### 5. Updating Image Snapshots (Baselines)
 
-Se as mudanças visuais forem intencionais e aprovadas, atualize as imagens de referência locais rodando:
+If the visual changes are intentional and approved, update the local reference images by running:
 
 ```bash
 pnpm test:visual:update
 ```
 
-### 6. Execução em CI (BrowserStack)
+### 6. Execution in CI (BrowserStack)
 
-Para validar os componentes em navegadores reais em ambiente remoto (Windows 11 e macOS), configure as credenciais de ambiente e execute:
+To validate components on real browsers in a remote environment (Windows 11 and macOS), configure the environment credentials and run:
 
 ```bash
-export BROWSERSTACK_USERNAME="seu-usuario"
-export BROWSERSTACK_ACCESS_KEY="sua-chave-de-acesso"
+export BROWSERSTACK_USERNAME="your-username"
+export BROWSERSTACK_ACCESS_KEY="your-access-key"
 pnpm test:visual:ci
 ```
 
 ---
 
-## 📝 Padronização de Git & Commits
+## 📝 Git & Commit Standardization
 
-Adotamos a especificação de **Commits Semânticos** (Conventional Commits):
+We adopt the **Conventional Commits** specification:
 
 - **Format:** `<type>(scope): <description>`
-- **Types comuns:**
-  - `feat`: Novo componente ou funcionalidade.
-  - `fix`: Correção de bug em estilo ou comportamento de componente.
-  - `docs`: Modificações em arquivos de documentação (como este arquivo).
-  - `style`: Formatação ou alterações estéticas de código (sem impacto lógico).
-  - `refactor`: Alteração que melhora o código sem alterar comportamento.
-  - `test`: Adição ou modificação de testes unitários/visuais.
-  - `chore`: Atualizações de dependências e tooling.
+- **Common types:**
+  - `feat`: New component or feature.
+  - `fix`: Bug fix in component style or behavior.
+  - `docs`: Modifications to documentation files (like this file).
+  - `style`: Formatting or cosmetic code changes (no logical impact).
+  - `refactor`: Changes that improve code structure without changing behavior.
+  - `test`: Addition or modification of unit/visual tests.
+  - `chore`: Updates to dependencies and tooling.
 
-### Validação Pré-Commit
+### Pre-Commit Validation
 
-O projeto utiliza o **Husky** juntamente com o **lint-staged**. A cada tentativa de commit:
+The project uses **Husky** along with **lint-staged**. On every commit attempt:
 
-1. O Prettier formata os arquivos modificados.
-2. O ESLint valida regras de qualidade do TypeScript.
-3. Se houver alguma falha ou warning de tipagem, o commit é automaticamente abortado.
+1. Prettier formats the modified files.
+2. ESLint validates TypeScript quality rules.
+3. If there is any compilation error or typing warning, the commit is automatically aborted.
