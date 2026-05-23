@@ -1,5 +1,5 @@
-import { Meta } from '@storybook/blocks';
-import { DocsThemeWrapper } from '../components/DocsThemeWrapper';
+import { Meta } from '@storybook/blocks'
+import { DocsThemeWrapper } from '../components/DocsThemeWrapper'
 
 <Meta title="Getting Started/Introduction" />
 
@@ -22,10 +22,11 @@ pnpm add @ds/core
 ```
 
 ### Importando os Estilos
+
 Adicione a importação dos tokens globais de estilo e temas no ponto de entrada da sua aplicação (ex: `main.tsx` ou `_app.tsx`):
 
 ```tsx
-import '@ds/core/src/tokens/index.scss';
+import '@ds/core/src/tokens/index.scss'
 ```
 
 ---
@@ -35,35 +36,35 @@ import '@ds/core/src/tokens/index.scss';
 O design system suporta alternância de temas nativamente por meio de variáveis de CSS customizadas (`CSS Custom Properties`) injetadas no DOM.
 
 ### 1. ThemeProvider
+
 Envolva a sua aplicação com o `ThemeProvider` para prover o contexto do tema. O provider injeta o atributo `data-theme` na div contêiner automática.
 
 ```tsx
-import React from 'react';
-import { ThemeProvider } from '@ds/core';
+import React from 'react'
+import { ThemeProvider } from '@ds/core'
 
 export function App() {
   return (
     <ThemeProvider defaultTheme="light">
-      <main>
-        {/* Conteúdo da aplicação */}
-      </main>
+      <main>{/* Conteúdo da aplicação */}</main>
     </ThemeProvider>
-  );
+  )
 }
 ```
 
 ### 2. useTheme
+
 Você pode utilizar o hook `useTheme` em qualquer componente sob o `ThemeProvider` para obter o tema atual e alterá-lo de forma programática.
 
 ```tsx
-import React from 'react';
-import { useTheme } from '@ds/core';
+import React from 'react'
+import { useTheme } from '@ds/core'
 
 export function ThemeSelector() {
-  const { theme, setTheme } = useTheme();
+  const { theme, setTheme } = useTheme()
 
   return (
-    <button 
+    <button
       onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}
       style={{
         padding: '8px 16px',
@@ -71,46 +72,52 @@ export function ThemeSelector() {
         background: 'var(--ds-color-neutral-1000)',
         color: 'var(--ds-color-neutral-0)',
         border: 'none',
-        borderRadius: 'var(--ds-border-radius-md)'
+        borderRadius: 'var(--ds-border-radius-md)',
       }}
     >
       Alternar para tema {theme === 'light' ? 'Escuro 🌙' : 'Claro ☀️'}
     </button>
-  );
+  )
 }
 ```
 
 ### 3. HOC `withTheme`
+
 Todos os componentes internos do design system são envelopados pelo High-Order Component (HOC) `withTheme`. Ele garante que o tema seja propagado de forma reativa para o DOM do componente.
 
 Se você estiver desenvolvendo componentes customizados na sua aplicação e deseja que eles consumam e reajam perfeitamente ao tema do design system, utilize o `withTheme`:
 
 ```tsx
-import React from 'react';
-import { withTheme } from '@ds/core';
+import React from 'react'
+import { withTheme } from '@ds/core'
 
 interface CustomBoxProps {
-  title: string;
-  children: React.ReactNode;
+  title: string
+  children: React.ReactNode
 }
 
 // O HOC preserva referências (refs) usando React.forwardRef
-const CustomBoxBase = React.forwardRef<HTMLDivElement, CustomBoxProps>((props, ref) => {
-  return (
-    <div ref={ref} className="custom-box">
-      <h3>{props.title}</h3>
-      <div>{props.children}</div>
-    </div>
-  );
-});
+const CustomBoxBase = React.forwardRef<HTMLDivElement, CustomBoxProps>(
+  (props, ref) => {
+    return (
+      <div ref={ref} className="custom-box">
+        <h3>{props.title}</h3>
+        <div>{props.children}</div>
+      </div>
+    )
+  }
+)
 
-CustomBoxBase.displayName = 'CustomBoxBase';
+CustomBoxBase.displayName = 'CustomBoxBase'
 
 // Componente envelopado
-export const CustomBox = withTheme<HTMLDivElement, CustomBoxProps>(CustomBoxBase);
+export const CustomBox = withTheme<HTMLDivElement, CustomBoxProps>(
+  CustomBoxBase
+)
 ```
 
 #### No arquivo de estilo (SCSS ou CSS):
+
 ```css
 /* O HOC withTheme injeta automaticamente o atributo [data-theme] no elemento raiz do componente.
    Você pode definir cores reativas usando apenas os tokens */
@@ -128,8 +135,9 @@ export const CustomBox = withTheme<HTMLDivElement, CustomBoxProps>(CustomBoxBase
 ## ♿ Acessibilidade (WCAG 2.1 AA)
 
 Todos os componentes são estruturados seguindo rigorosos padrões de acessibilidade:
-* **Navegação via Teclado**: Suporte completo a foco por tabulação e teclas específicas do padrão WAI-ARIA.
-* **Leitores de Tela**: Uso correto de papéis (`roles`), rótulos (`aria-label`, `aria-describedby`) e estados (`aria-expanded`, `aria-hidden`).
-* **Focus Indicator**: Indicador de foco de alto contraste (`--ds-color-focus-ring`) para navegação visível.
-* **Validação por Teste Automático**: Validados programaticamente com `jest-axe` contra violações comuns de acessibilidade.
-</DocsThemeWrapper>
+
+- **Navegação via Teclado**: Suporte completo a foco por tabulação e teclas específicas do padrão WAI-ARIA.
+- **Leitores de Tela**: Uso correto de papéis (`roles`), rótulos (`aria-label`, `aria-describedby`) e estados (`aria-expanded`, `aria-hidden`).
+- **Focus Indicator**: Indicador de foco de alto contraste (`--ds-color-focus-ring`) para navegação visível.
+- **Validação por Teste Automático**: Validados programaticamente com `jest-axe` contra violações comuns de acessibilidade.
+  </DocsThemeWrapper>
