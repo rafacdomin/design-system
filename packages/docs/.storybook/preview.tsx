@@ -4,7 +4,7 @@ import { ThemeProvider, useTheme, Theme } from '@ds/core'
 import { DocsContainer } from '@storybook/blocks'
 import { addons } from '@storybook/preview-api'
 import { GLOBALS_UPDATED } from '@storybook/core-events'
-import '@ds/core/src/tokens/index.scss'
+import '@ds/core/dist/index.css'
 
 const ThemeSync = ({
   theme,
