@@ -58,7 +58,7 @@ Os links para arquivos locais devem utilizar o endereço completo do repositóri
 
 ### 2. Contexto de IA no AGENTS.md
 
-O arquivo `AGENTS.md` funciona como barreira de segurança e contextualização para LLMs e agentes de codificação. Para evitar quebras nas esteiras de produção, os agentes devem ser eplícitamente instruídos a não modificar arquivos como `tsup.config.ts`, `.github/workflows/*.yml` ou propriedades críticas de empacotamento no `package.json` sem alinhamento prévio.
+O arquivo `AGENTS.md` funciona como barreira de segurança e contextualização para LLMs e agentes de codificação. Para evitar quebras nas esteiras de produção, os agentes devem ser explicitamente instruídos a não modificar arquivos como `tsup.config.ts`, `.github/workflows/*.yml` ou propriedades críticas de empacotamento no `package.json` sem alinhamento prévio.
 
 ---
 

@@ -101,7 +101,7 @@ permissions:
 
 ### 4.2 Ações Oficiais Utilizadas
 
-Para garantir consistência e evitar problemas de empacotamento com branchs adicionais (como criar uma branch `gh-pages` e forçar pushes), o deploy usa as actions oficiais recomendadas pelo GitHub:
+Para garantir consistência e evitar problemas de empacotamento com branches adicionais (como criar uma branch `gh-pages` e forçar pushes), o deploy usa as actions oficiais recomendadas pelo GitHub:
 
 1. `actions/configure-pages@v5` - Prepara o ambiente do GitHub Pages.
 2. `actions/upload-pages-artifact@v3` - Compacta a pasta de saída do build do Storybook (`packages/docs/storybook-static`).
