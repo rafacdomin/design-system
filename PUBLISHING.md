@@ -1,48 +1,72 @@
-# Guia de Publicação e CI/CD (PUBLISHING.md)
+# Publishing and CI/CD Guide
 
-Este documento descreve detalhadamente a arquitetura de Integração e Entrega Contínua (CI/CD) adotada neste design system, o fluxo de publicação dos pacotes `@ds/core` e `@ds/carousel` no NPM, o deploy da documentação (Storybook) no GitHub Pages e a configuração das integrações de notificações.
+This document describes in detail the Continuous Integration and Continuous Delivery (CI/CD) architecture adopted in this design system, the NPM publishing workflow for the `@ds/core` and `@ds/carousel` packages, the Storybook deployment to GitHub Pages, the integrated visual regression testing, and the messaging notifications setup.
 
 ---
 
-## 1. Arquitetura de Multi-Pipelines
+## 1. Multi-Pipeline Architecture
 
-Em vez de uma única pipeline monolítica, adotamos uma abordagem de **Multi-Pipelines** com múltiplos arquivos de workflow no GitHub Actions. Isso garante agilidade, resiliência e execuções otimizadas baseadas no Turborepo e no cache de dependências.
+Rather than a single monolithic pipeline, we adopt a **Multi-Pipeline** approach using multiple workflow files in GitHub Actions. This guarantees speed, resilience, and optimized executions based on Turborepo and dependency caching.
 
 ```mermaid
 graph TD
-    A["Disparo Manual (com escolha SemVer)"] --> B(Release Core Workflow)
-    C["Disparo Manual (com escolha SemVer)"] --> D(Release Carousel Workflow)
+    A["Manual Trigger (SemVer increment choice)"] --> B(Release Core Workflow)
+    C["Manual Trigger (SemVer increment choice)"] --> D(Release Carousel Workflow)
 
-    B -->|Sucesso| E{Gatilho Conclusão}
-    D -->|Sucesso| E
-    F[Execução Manual] -->|workflow_dispatch| E
+    B -->|Success| E{Completion Trigger}
+    D -->|Success| E
+    F[Manual Execution] -->|workflow_dispatch| E
 
     E --> G(Deploy Storybook Workflow)
 ```
 
-### 1.1 Disparadores (Triggers)
+### 1.1 Triggers and Workflow Behaviors
 
 1. **Release Core (`release-core.yml`):**
-   - **Gatilho:** Disparado manualmente via painel do GitHub Actions (`workflow_dispatch`).
-   - **Inputs:** Requer que o desenvolvedor informe o tipo de incremento de versão SemVer (`patch`, `minor` ou `major`). O workflow aplica o incremento no `package.json`, compila o pacote, publica no NPM e, após a publicação bem-sucedida, realiza o commit e push do novo incremento diretamente de volta para a branch de origem.
+   - **Trigger:** Manually triggered via the GitHub Actions dashboard (`workflow_dispatch`).
+   - **Parameters:** Requires choosing the SemVer increment type (`patch`, `minor`, `major`).
+   - **Flow:**
+     1. Installation and caching via `pnpm`.
+     2. Linting (`eslint`) and Unit & Accessibility tests (`vitest`).
+     3. Checks BrowserStack credentials. If present, runs Visual Regression Tests (`test:visual`) using Playwright.
+     4. Bumps the package version in `package.json` (`pnpm version --no-git-tag-version`).
+     5. Builds the package using `tsup`.
+     6. Publishes to NPM (if `NPM_TOKEN` is configured; otherwise, performs a dry-run).
+     7. If successfully published, commits and pushes the version bump directly back to the origin branch.
+     8. Notifies configured messaging platforms (Discord, Slack, Teams) of success or failure.
 
 2. **Release Carousel (`release-carousel.yml`):**
-   - **Gatilho:** Disparado manualmente via painel do GitHub Actions (`workflow_dispatch`).
-   - **Inputs:** Requer que o desenvolvedor informe o tipo de incremento de versão SemVer (`patch`, `minor` ou `major`). O workflow aplica o incremento no `package.json`, compila o pacote, publica no NPM e, após a publicação bem-sucedida, realiza o commit e push do novo incremento diretamente de volta para a branch de origem.
+   - **Trigger:** Manually triggered via the GitHub Actions dashboard (`workflow_dispatch`).
+   - **Parameters:** Requires choosing the SemVer increment type (`patch`, `minor`, `major`).
+   - **Flow:**
+     1. Installation and caching via `pnpm`.
+     2. Builds internal monorepo dependencies (e.g., `@ds/core`).
+     3. Linting (`eslint`) and Unit & Accessibility tests (`vitest`).
+     4. Checks BrowserStack credentials and runs Visual Regression Tests using Playwright.
+     5. Bumps the package version in `package.json`.
+     6. Builds the package using `tsup`.
+     7. Publishes to NPM (with dry-run fallback if `NPM_TOKEN` is missing).
+     8. Commits and pushes the version bump.
+     9. Status notifications.
 
 3. **Deploy Storybook (`deploy-storybook.yml`):**
-   - **Gatilho Automático:** Conclusão bem-sucedida do workflow de qualquer um dos pacotes (`workflow_run` com conclusão `success`).
-   - **Gatilho Manual:** Habilitado via `workflow_dispatch` permitindo atualizações de documentação a qualquer momento sem realizar novas releases de pacotes no NPM.
+   - **Automatic Trigger:** Triggered upon the successful completion of either release workflow above (`workflow_run` with a `success` conclusion).
+   - **Manual Trigger:** Enabled via `workflow_dispatch` for fast documentation-only updates.
+   - **Flow:**
+     1. Installs dependencies and builds the entire monorepo (`pnpm build`).
+     2. Builds the static Storybook site (`storybook-static`).
+     3. Deploys to GitHub Pages using official GitHub actions.
+     4. Sends notifications with a direct link to the published documentation environment.
 
 ---
 
-## 2. Estrutura de Build para Distribuição NPM
+## 2. Build Structure for NPM Distribution
 
-Antes de publicar no NPM, as bibliotecas devem ser empacotadas para que os consumidores finais possam utilizá-las tanto em ambientes que suportam ES Modules (ESM) quanto CommonJS (CJS).
+To allow packages to be imported in both modern ES Modules (ESM) environments and legacy CommonJS (CJS) setups, we use `tsup` as our bundler.
 
-### Configuração Necessária nos Pacotes
+### 2.1 `package.json` Configuration
 
-Para preparar o `@ds/core` e `@ds/carousel` para publicação, suas propriedades no `package.json` devem ser modificadas para:
+The `@ds/core` and `@ds/carousel` packages expose the following export fields:
 
 ```json
 {
@@ -51,46 +75,70 @@ Para preparar o `@ds/core` e `@ds/carousel` para publicação, suas propriedades
   "types": "./dist/index.d.ts",
   "files": ["dist"],
   "scripts": {
-    "build": "tsup src/index.ts --format cjs,esm --dts --clean"
+    "build": "tsup"
   }
 }
 ```
 
-- **`tsup`**: Recomendamos o uso da biblioteca `tsup` para empacotamento rápido, compilação de código TypeScript e geração de arquivos de declaração de tipos (`.d.ts`) com configuração mínima.
+### 2.2 `tsup.config.ts` Configuration
 
----
+Since we use **SCSS Modules** (without CSS-in-JS or TailwindCSS), it is crucial that the CSS processor generates the correct output files. Each package contains a `tsup.config.ts` file:
 
-## 3. Autenticação e Publicação Automatizada (NPM)
+```typescript
+import { defineConfig } from 'tsup'
+import { sassPlugin } from 'esbuild-sass-plugin'
 
-A publicação real no NPM depende de um token de automação seguro associado à conta do NPM correspondente.
-
-### 3.1 Configuração do Segredo
-
-1. Acesse sua conta no [npmjs.com](https://www.npmjs.com/).
-2. Gere um **Access Token** do tipo `Automation`.
-3. No painel do seu repositório no GitHub, acesse _Settings -> Secrets and variables -> Actions_.
-4. Crie um novo segredo (Secret) com o nome de `NPM_TOKEN` e cole o token gerado.
-
-### 3.2 O Comando de Publicação
-
-Nas pipelines de release, usamos o `pnpm` para publicar de forma isolada:
-
-```bash
-pnpm --filter <nome-do-pacote> publish --no-git-checks --access public
+export default defineConfig({
+  entry: ['src/index.ts'],
+  format: ['cjs', 'esm'],
+  dts: true,
+  clean: true,
+  esbuildPlugins: [
+    sassPlugin({
+      type: 'local-css',
+    }),
+  ],
+})
 ```
 
-- `--no-git-checks`: Evita validações de git locais que possam travar o terminal do runner de CI.
-- `--access public`: Necessário se o pacote estiver em um escopo público.
+> [!IMPORTANT]
+> The `esbuild-sass-plugin` with `type: 'local-css'` configuration is mandatory for `.module.scss` files to be correctly compiled as local CSS Modules and integrated into the final package build.
 
 ---
 
-## 4. Deploy da Documentação (Storybook) no GitHub Pages
+## 3. Authentication and Automated Publishing (NPM)
 
-O Storybook é construído como um aplicativo estático e hospedado gratuitamente via GitHub Pages.
+Actual publishing to NPM requires a secure automation token.
 
-### 4.1 Permissões de Workflow
+### 3.1 Secret Configuration
 
-O workflow do Storybook exige permissões explícitas para assinar e gravar páginas:
+1. On [npmjs.com](https://www.npmjs.com/), generate an **Access Token** of type `Automation`.
+2. In GitHub, navigate to _Settings -> Secrets and variables -> Actions_.
+3. Create a secret named `NPM_TOKEN` and paste the token value.
+
+### 3.2 The Publishing Command
+
+The pipeline publishes packages using the following command:
+
+```bash
+pnpm --filter <package-name> publish --no-git-checks --access public
+```
+
+- `--no-git-checks`: Avoids local git state validations that could block the non-interactive execution on the CI runner.
+- `--access public`: Required for scoped packages published publicly.
+
+> [!NOTE]
+> If the `NPM_TOKEN` secret is not configured or is missing, the pipeline will only run code linting, tests, and build steps (Dry-run), displaying a friendly warning without interrupting or failing the workflow.
+
+---
+
+## 4. Deploying Documentation (Storybook) to GitHub Pages
+
+Storybook is built statically and hosted directly on the GitHub Pages site associated with the repository.
+
+### 4.1 Workflow Permissions
+
+The deployment workflow requires explicit permissions to sign and write page artifacts:
 
 ```yaml
 permissions:
@@ -99,31 +147,43 @@ permissions:
   id-token: write
 ```
 
-### 4.2 Ações Oficiais Utilizadas
+### 4.2 Deployment Concurrency
 
-Para garantir consistência e evitar problemas de empacotamento com branches adicionais (como criar uma branch `gh-pages` e forçar pushes), o deploy usa as actions oficiais recomendadas pelo GitHub:
+To avoid race conditions on concurrent page updates, deployment concurrency is configured as:
 
-1. `actions/configure-pages@v5` - Prepara o ambiente do GitHub Pages.
-2. `actions/upload-pages-artifact@v3` - Compacta a pasta de saída do build do Storybook (`packages/docs/storybook-static`).
-3. `actions/deploy-pages@v4` - Realiza a entrega contínua do artefato no servidor do GitHub Pages do repositório.
+```yaml
+concurrency:
+  group: 'pages'
+  cancel-in-progress: false
+```
+
+### 4.3 Official GitHub Actions Used
+
+Rather than using legacy force-pushes to a target branch (e.g. `gh-pages`), the deployment utilizes official actions:
+
+1. `actions/configure-pages@v5`: Configures Pages on the runner.
+2. `actions/upload-pages-artifact@v3`: Archives the Storybook output directory (`packages/docs/storybook-static`).
+3. `actions/deploy-pages@v4`: Safely deploys the archived artifact to GitHub Pages servers.
 
 ---
 
-## 5. Webhooks de Notificações (Slack, Discord, MS Teams)
+## 5. Notification Webhooks (Slack, Discord, MS Teams)
 
-A última etapa de todas as pipelines é o envio do status de conclusão (sucesso ou falha). Isso é implementado usando o comando `curl` padrão do Linux enviando payloads JSON para URLs de webhook secretas.
+At the completion of any pipeline (whether a success or failure), notification payloads are sent via `curl` to the configured platforms.
 
-### Segredos do Repositório Aceitos
+### 5.1 Supported Webhook Secrets
 
-Você pode cadastrar as URLs de webhook conforme as plataformas que seu time utiliza:
+The repository supports the following secret variables for webhook notifications:
 
 - `SLACK_WEBHOOK_URL`
 - `DISCORD_WEBHOOK_URL`
 - `TEAMS_WEBHOOK_URL`
 
-Se o segredo não estiver configurado no GitHub, a pipeline detecta a ausência e pula a notificação de forma silenciosa e segura, sem falhar o deploy.
+If no webhook secrets are configured, the pipeline safely and silently skips the notification steps.
 
-### Estrutura de Payload do MS Teams
+### 5.2 MS Teams Adaptive Card Structure
+
+Microsoft Teams notifications utilize the **Adaptive Cards** format (v1.2) structured as shown in the example below:
 
 ```bash
 curl -H "Content-Type: application/json" \
@@ -134,8 +194,8 @@ curl -H "Content-Type: application/json" \
          "content": {
            "type": "AdaptiveCard",
            "body": [
-             {"type": "TextBlock", "text": "🚀 Deploy Concluído", "weight": "bolder", "size": "medium"},
-             {"type": "TextBlock", "text": "O pacote **'"$PACKAGE_NAME"'** foi publicado no NPM."}
+             {"type": "TextBlock", "text": "🚀 Deployment Completed", "weight": "bolder", "size": "medium"},
+             {"type": "TextBlock", "text": "The package **'"$PACKAGE_NAME"'** has been published to NPM."}
            ],
            "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
            "version": "1.2"
