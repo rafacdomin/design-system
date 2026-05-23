@@ -43,3 +43,90 @@ Nenhuma.
 ## Estimativa
 
 M
+
+---
+
+## Pesquisa
+
+### 1. Gatilho Dinâmico workflow_run
+
+O evento `workflow_run` é acionado sempre que um workflow do repositório especificado conclui sua execução. Para executar tarefas apenas quando esse workflow tem sucesso, validamos a conclusão no bloco condicional:
+
+```yaml
+on:
+  workflow_run:
+    workflows:
+      - 'Release Core Package'
+      - 'Release Carousel Package'
+    types:
+      - completed
+
+jobs:
+  deploy:
+    if: ${{ github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success' }}
+```
+
+### 2. Deploy Nativo sem Branch Auxiliar
+
+Tradicionalmente, deploys em GitHub Pages exigiam a criação e push em uma branch como `gh-pages`. Com as novas APIs de Gravação e Deploys de Páginas, o GitHubActions pode empacotar e fazer o deploy diretamente de um diretório usando OIDC e tokens de gravação de tempo de execução:
+
+```yaml
+permissions:
+  pages: write
+  id-token: write
+```
+
+---
+
+## Implementação Planejada
+
+### 1. Estrutura do Workflow
+
+O arquivo `.github/workflows/deploy-storybook.yml` definirá o job de deploy direcionado ao ambiente `github-pages`:
+
+- Executará a compilação do design system (`pnpm build`) para satisfazer as resoluções de pacotes locais.
+- Executará a build estática do docs (`pnpm --filter @ds/docs build-storybook`).
+- Fará o upload da pasta `packages/docs/storybook-static` e acionará o deploy.
+
+### 2. Tratamento de Concorrência
+
+Como deploys de site estático possuem filas únicas de entrega no servidor do GitHub, utilizaremos a cláusula `concurrency` para enfileirar as execuções de deploys caso duas releases ocorram muito próximas:
+
+```yaml
+concurrency:
+  group: 'pages'
+  cancel-in-progress: false
+```
+
+---
+
+## Decisões Técnicas
+
+- **Decisão: Separação em Workflow Independente do Release das Libs**
+  _Justificativa:_ Manter as esteiras desacopladas permite que alterações de documentação (como novos stories ou mudanças em páginas MDX no `@ds/docs`) sejam publicadas de forma manual a qualquer momento sem a necessidade de gerar novas versões das bibliotecas `@ds/core` e `@ds/carousel` no NPM.
+- **Decisão: Deploy via OIDC nativo**
+  _Justificativa:_ Segurança e performance. Não é necessário manter chaves de deploy (SSH deploy keys) ou tokens pessoais de acesso (PAT), e elimina-se a poluição do histórico do git com arquivos compilados.
+
+---
+
+## Checklist de Implementação
+
+- [x] Criar o arquivo `.github/workflows/deploy-storybook.yml`.
+- [x] Definir o nome do workflow como `Deploy Storybook Documentation`.
+- [x] Configurar trigger manual `workflow_dispatch`.
+- [x] Configurar trigger automático `workflow_run` vinculando os workflows `Release Core Package` e `Release Carousel Package` com tipo `completed`.
+- [x] Adicionar declaração global de `permissions` exigindo `pages: write`, `id-token: write` e `contents: read`.
+- [x] Configurar controle de concorrência com o grupo `"pages"` e `cancel-in-progress: false`.
+- [x] Criar o job `deploy-storybook` rodando em `ubuntu-latest`.
+- [x] Adicionar a validação condicional `if` para certificar execução apenas em disparos manuais ou em execuções concluídas com sucesso.
+- [x] Configurar o bloco `environment` definindo `name: github-pages` e `url: ${{ steps.deployment.outputs.page_url }}`.
+- [x] Configurar etapa de checkout do código (`actions/checkout@v4`).
+- [x] Configurar a action de setup do pnpm `pnpm/action-setup@v3` (v11.2.2).
+- [x] Configurar setup do Node.js v18 com cache de dependências de pnpm (`actions/setup-node@v4`).
+- [x] Instalar as dependências do monorepo usando `pnpm install --frozen-lockfile`.
+- [x] Executar build de produção geral do monorepo (`pnpm build`) para compilar dependências locais.
+- [x] Compilar Storybook de forma estática via `pnpm --filter @ds/docs build-storybook`.
+- [x] Adicionar a action de preparação de ambiente `actions/configure-pages@v5`.
+- [x] Adicionar a action de upload `actions/upload-pages-artifact@v3` apontando para o caminho `packages/docs/storybook-static`.
+- [x] Adicionar a action de deploy final `actions/deploy-pages@v4` com ID `deployment`.
+- [x] Configurar envio condicional de notificações de sucesso e erro (Slack/Discord/Teams).
