@@ -32,7 +32,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 20.19.0
+          node-version: 22.20.0
           cache: 'pnpm'
           registry-url: 'https://registry.npmjs.org'
 
@@ -51,10 +51,22 @@ jobs:
       - name: Build Packages
         run: pnpm turbo run build --filter=@ds/carousel...
 
+      - name: Check BrowserStack Credentials
+        id: check-secrets
+        run: |
+          if [ -z "${{ secrets.BROWSERSTACK_USERNAME }}" ] || [ -z "${{ secrets.BROWSERSTACK_ACCESS_KEY }}" ]; then
+            echo "::warning::BrowserStack secrets are missing. Skipping visual regression tests."
+            echo "has_secrets=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "has_secrets=true" >> "$GITHUB_OUTPUT"
+          fi
+
       - name: Build Storybook for Visual Testing
+        if: steps.check-secrets.outputs.has_secrets == 'true'
         run: pnpm --filter @ds/docs build-storybook
 
       - name: Run Visual Regression Tests (Playwright)
+        if: steps.check-secrets.outputs.has_secrets == 'true'
         env:
           BROWSERSTACK_USERNAME: ${{ secrets.BROWSERSTACK_USERNAME }}
           BROWSERSTACK_ACCESS_KEY: ${{ secrets.BROWSERSTACK_ACCESS_KEY }}

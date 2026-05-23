@@ -85,6 +85,7 @@ A escala tipográfica é baseada em `rem`, onde `1rem = 16px` por padrão.
 { token: '--ds-font-size-3xl', rem: '1.875rem', px: '30px', desc: 'Títulos médios de seções' },
 { token: '--ds-font-size-4xl', rem: '2.25rem', px: '36px', desc: 'Títulos grandes e de destaque principal (Hero)' },
 ].map((item) => (
+
 <div key={item.token} style={{ display: 'grid', gridTemplateColumns: '1.5fr 1fr 1fr 2.5fr', gap: '16px', padding: '16px', background: 'var(--ds-color-neutral-0)', color: 'var(--ds-color-neutral-1000)', alignItems: 'center', fontFamily: 'var(--ds-font-family-sans)', fontSize: '14px' }}>
 <div><code>{item.token}</code></div>
 <div style={{ color: 'var(--ds-color-neutral-700)' }}>{item.rem}</div>
@@ -113,6 +114,7 @@ A escala tipográfica é baseada em `rem`, onde `1rem = 16px` por padrão.
 { token: '--ds-font-weight-semibold', val: '600', desc: 'Subtítulos e ênfase média' },
 { token: '--ds-font-weight-bold', val: '700', desc: 'Títulos principais e forte ênfase visual' },
 ].map((item) => (
+
 <div key={item.token} style={{ display: 'grid', gridTemplateColumns: '1.5fr 1fr 3.5fr', gap: '16px', padding: '16px', background: 'var(--ds-color-neutral-0)', color: 'var(--ds-color-neutral-1000)', alignItems: 'center', fontFamily: 'var(--ds-font-family-sans)', fontSize: '14px' }}>
 <div><code>{item.token}</code></div>
 <div style={{ color: 'var(--ds-color-neutral-700)' }}>{item.val}</div>
@@ -141,6 +143,7 @@ A escala tipográfica é baseada em `rem`, onde `1rem = 16px` por padrão.
 { token: '--ds-line-height-normal', val: '1.5', desc: 'Padrão para corpo de texto corrido (otimiza a legibilidade de parágrafos)' },
 { token: '--ds-line-height-loose', val: '2', desc: 'Leituras especiais de alto espaçamento ou grids estruturados' },
 ].map((item) => (
+
 <div key={item.token} style={{ display: 'grid', gridTemplateColumns: '1.5fr 1fr 3.5fr', gap: '16px', padding: '16px', background: 'var(--ds-color-neutral-0)', color: 'var(--ds-color-neutral-1000)', alignItems: 'center', fontFamily: 'var(--ds-font-family-sans)', fontSize: '14px' }}>
 <div><code>{item.token}</code></div>
 <div style={{ color: 'var(--ds-color-neutral-700)' }}>{item.val}</div>

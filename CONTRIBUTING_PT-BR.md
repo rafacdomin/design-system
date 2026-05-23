@@ -104,8 +104,15 @@ Para validar os componentes em navegadores reais em ambiente remoto (Windows 11 
 ```bash
 export BROWSERSTACK_USERNAME="seu-usuario"
 export BROWSERSTACK_ACCESS_KEY="sua-chave-de-acesso"
-pnpm test:visual:ci
+pnpm test:visual
 ```
+
+### 7. Integração Contínua & Publicação
+
+O repositório utiliza pipelines do GitHub Actions para verificações e entregas.
+Neste contexto, os workflows disponíveis neste PR são acionados manualmente via `workflow_dispatch`. O deploy do Storybook ocorre por encadeamento de workflow (`workflow_run`) e/ou acionamento manual, conforme a configuração vigente.
+
+Para o passo a passo detalhado sobre configurações de workflows, gatilhos atuais, geração de builds de pacotes e disparos de deploy, consulte o [Guia de Publicação & CI/CD (PUBLISHING.md)](https://github.com/rafacdomin/design-system/blob/main/PUBLISHING.md).
 
 ---
 

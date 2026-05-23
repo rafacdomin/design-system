@@ -1,6 +1,5 @@
 import React from 'react'
 import { useTheme } from '@ds/core'
-import '@ds/core/src/tokens/index.scss'
 
 interface DocsThemeWrapperProps {
   children: React.ReactNode

@@ -26,7 +26,7 @@ pnpm add @ds/core
 Adicione a importação dos tokens globais de estilo e temas no ponto de entrada da sua aplicação (ex: `main.tsx` ou `_app.tsx`):
 
 ```tsx
-import '@ds/core/src/tokens/index.scss'
+import '@ds/core/dist/index.css'
 ```
 
 ---
@@ -140,4 +140,5 @@ Todos os componentes são estruturados seguindo rigorosos padrões de acessibili
 - **Leitores de Tela**: Uso correto de papéis (`roles`), rótulos (`aria-label`, `aria-describedby`) e estados (`aria-expanded`, `aria-hidden`).
 - **Focus Indicator**: Indicador de foco de alto contraste (`--ds-color-focus-ring`) para navegação visível.
 - **Validação por Teste Automático**: Validados programaticamente com `jest-axe` contra violações comuns de acessibilidade.
-  </DocsThemeWrapper>
+
+</DocsThemeWrapper>

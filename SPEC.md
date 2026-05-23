@@ -1,159 +1,206 @@
-# Especificação Geral — Design System de Portfólio (SPEC.md)
+# Especificação Geral — CI/CD e Publicação (SPEC.md)
 
-Este documento atua como a única fonte da verdade para o escopo, arquitetura e especificações de testes de regressão visual com Playwright e Browserstack neste mini design system.
+Este documento descreve a especificação da arquitetura de integração e entrega contínua (CI/CD), publicação dos pacotes do design system no NPM (`@ds/core` e `@ds/carousel`) e publicação do Storybook no GitHub Pages.
 
 ---
 
 ## 1. Visão Geral
 
-Este projeto consiste em um **Mini Design System** de portfólio pessoal e profissional com estética premium minimalista.
+O objetivo desta especificação é automatizar o fluxo de verificação, build, publicação e notificação do design system.
 
-Toda a infraestrutura base, design tokens, sistema de temas (HOC `withTheme` e `ThemeProvider`) e a biblioteca de componentes principais já foram implementados com sucesso. O foco atual do projeto é a **especificação e implementação da suíte de Testes de Regressão Visual** com Playwright e integração com Browserstack.
+Adotaremos uma abordagem de **Multi-Pipelines** no GitHub Actions, onde cada pacote possui sua própria esteira de publicação, e a documentação (Storybook) é atualizada automaticamente após qualquer publicação de biblioteca ou manualmente por demanda.
 
 ---
 
-## 2. Stack Técnica Atualizada
+## 2. Stack Técnica de CI/CD
 
-Abaixo estão as tecnologias adotadas para a infraestrutura geral e especificamente para a suíte de regressão visual:
-
-- **Core:** React 18 + TypeScript 5 (Strict Mode).
+- **Orquestrador de Workflows:** GitHub Actions.
 - **Gerenciador de Pacotes:** `pnpm` Workspaces (v11.2.2).
-- **Monorepo Tooling:** Turborepo.
-- **Estilização:** SCSS Modules + CSS Custom Properties dos Design Tokens (sem CSS-in-JS, sem Tailwind).
-- **Sandbox e Documentação:** Storybook 8 (instalado em [packages/docs](file:///home/rafacdomin/projetos/design-system/packages/docs)).
-- **Testes Unitários e Acessibilidade:** Vitest + React Testing Library (RTL) + `jest-axe`.
-- **Suíte de Regressão Visual:** Playwright (instalado em [packages/docs](file:///home/rafacdomin/projetos/design-system/packages/docs)), rodando testes locais contra a build estática do Storybook, e configurado para execução remota no Browserstack.
-- **CI/CD Integration:** Browserstack Automate (utilizando variáveis de ambiente `BROWSERSTACK_USERNAME` e `BROWSERSTACK_ACCESS_KEY` para autenticação e túnel local seguro).
+- **Orquestração de Tasks:** Turborepo (para paralelizar lint, testes e builds).
+- **Publicação de Pacotes:** Registro do NPM (pacotes públicos `@ds/core` e `@ds/carousel`).
+- **Hospedagem da Documentação:** GitHub Pages (usando deploys nativos).
+- **Notificações:** Webhooks via HTTP POST (`curl`) integrados ao Slack, Discord e Microsoft Teams.
 
 ---
 
-## 3. Estrutura do Monorepo (Foco em Testes Visuais)
+## 3. Desenho de Fluxo de Execução
 
-Abaixo está a estrutura do repositório, destacando onde a suíte de testes de regressão visual do Playwright ficará localizada:
+```mermaid
+graph TD
+    A["Disparo Manual (com escolha SemVer)"] --> B[Workflow: release-core]
+    C["Disparo Manual (com escolha SemVer)"] --> D[Workflow: release-carousel]
 
-```
-design-system/
-├── packages/
-│   ├── core/                    # Componentes base, tokens e temas (Implementados)
-│   ├── carousel/                # Componente de carrossel (Implementado)
-│   └── docs/                    # Storybook + Suíte de Testes Visuais
-│       ├── .storybook/          # Configurações do Storybook 8
-│       ├── playwright.config.ts # Configuração do Playwright (Local e Browserstack)
-│       ├── src/
-│       │   ├── stories/         # Stories dos componentes (Button, Input, etc.)
-│       │   └── test-visual/     # Suíte de regressão visual
-│       │       ├── visual.spec.ts  # Teste automatizado de varredura dinâmica de stories
-│       │       └── snapshots/   # Imagens de referência locais (baselines)
-│       └── package.json
-├── package.json                 # Scripts globais do monorepo
-├── turbo.json                   # Configuração de pipelines do Turborepo
-└── SPEC.md                      # Esta especificação
+    B -->|Sucesso| E{Gatilho Storybook}
+    D -->|Sucesso| E
+    F[Disparo Manual] -->|workflow_dispatch| E
+
+    E --> G[Workflow: deploy-storybook]
 ```
 
 ---
 
-## 4. Escopo Implementado (Fase Anterior)
+## 4. Arquitetura de Multi-Pipelines no GitHub Actions
 
-Os seguintes componentes e infraestrutura foram implementados e estão cobertos por testes unitários e de acessibilidade (Vitest + RTL + `jest-axe`):
+Em vez de uma única pipeline monolítica, o repositório é configurado com três pipelines independentes para garantir agilidade e isolamento de falhas:
 
-1. **Fundação:** Setup do Monorepo, Design Tokens de cores, fontes, espaçamentos e bordas, e o Provedor de Temas (`ThemeProvider` + `withTheme`).
-2. **Componentes Fundamentais:** `Button` (variantes, tamanhos, estados de carregamento e desabilitado).
-3. **Componentes de Formulário:** `Input` (ícones, erros, labels), `Textarea` (redimensionamento dinâmico), e `Dropdown` (menu acessível com Radix UI).
-4. **Componentes de Layout/Apresentação:** `Modal` (diálogo acessível com Radix UI), `Card` (agrupamento de conteúdo), `Tag` (rótulos de tecnologia), e `Avatar` (iniciais e fallback).
-5. **Componente Complexo:** `Carousel` (carrossel de imagens com Embla Carousel).
+### 4.1 Release Core (`.github/workflows/release-core.yml`)
 
-As especificações detalhadas das APIs e comportamentos destes componentes podem ser consultadas em [COMPONENT_SPEC.md](file:///home/rafacdomin/projetos/design-system/references/COMPONENT_SPEC.md).
+Responsável por validar e publicar o pacote `@ds/core`.
 
----
+- **Gatilhos (Triggers):**
+  - **Apenas disparo manual (`workflow_dispatch`).**
+  - **Inputs do Workflow:**
+    - `version_increment` (Choice: `patch`, `minor`, `major`, padrão: `patch`) - Define o tipo de incremento SemVer que será aplicado ao pacote.
+- **Etapas da Pipeline:**
+  1. **Install:** Checkout do código, configuração do Node.js (versão versão 20.19.0), cache de dependências e `pnpm install --frozen-lockfile`.
+  2. **Test:** Execução dos testes unitários e de acessibilidade via `pnpm --filter @ds/core test` e `pnpm --filter @ds/core lint`.
+  3. **Visual Regression Test:** Build estática do Storybook e execução dos testes do Playwright (`pnpm --filter @ds/docs test:visual`, que roda no Browserstack se as credenciais estiverem configuradas nos segredos do repositório, ou localmente caso contrário).
+  4. **Bump Version:** Incrementa a versão do pacote no `package.json` de acordo com a seleção (ex: `pnpm --filter @ds/core version ${{ github.event.inputs.version_increment }} --no-git-tag-version`).
+  5. **Build:** Compilação dos componentes do `@ds/core` para distribuição pública (ESM/CJS).
+  6. **Publication:** Publicação no NPM (`pnpm --filter @ds/core publish --no-git-checks --access public`) autenticada por meio da variável `NPM_TOKEN`.
+  7. **Commit & Push:** Realiza commit e push automático do novo incremento de versão de volta para o repositório.
+  8. **Notification:** Envio de payload via webhook informando o status final da execução.
 
-## 5. Especificação Técnica: Testes de Regressão Visual (Playwright + Browserstack)
+### 4.2 Release Carousel (`.github/workflows/release-carousel.yml`)
 
-Os testes de regressão visual servem para capturar desvios de layout, imperfeições visuais e quebras de CSS não detectáveis em testes unitários convencionais.
+Responsável por validar e publicar o pacote `@ds/carousel`.
 
-### 5.1 Escopo de Execução
+- **Gatilhos (Triggers):**
+  - **Apenas disparo manual (`workflow_dispatch`).**
+  - **Inputs do Workflow:**
+    - `version_increment` (Choice: `patch`, `minor`, `major`, padrão: `patch`) - Define o tipo de incremento SemVer que será aplicado ao pacote.
+- **Etapas da Pipeline:**
+  1. **Install:** Instalação das dependências com cache.
+  2. **Test:** Execução de testes unitários do `@ds/carousel` e linter.
+  3. **Visual Regression Test:** Execução dos testes visuais do Playwright para os stories do carrossel.
+  4. **Bump Version:** Incrementa a versão do pacote no `package.json` de acordo com a seleção (ex: `pnpm --filter @ds/carousel version ${{ github.event.inputs.version_increment }} --no-git-tag-version`).
+  5. **Build:** Compilação da build de distribuição do `@ds/carousel`.
+  6. **Publication:** Publicação no NPM usando o segredo `NPM_TOKEN`.
+  7. **Commit & Push:** Realiza commit e push automático do novo incremento de versão de volta para o repositório.
+  8. **Notification:** Notificação de status final.
 
-Os testes devem cobrir **todas as histórias (stories) ativas** do Storybook nos seguintes cenários:
+### 4.3 Deploy Storybook (`.github/workflows/deploy-storybook.yml`)
 
-- **Temas:** Light (`data-theme="light"`) e Dark (`data-theme="dark"`).
-- **Viewports (Resoluções):**
-  - `mobile`: 375x812 (simulando iPhone 12/13/14)
-  - `tablet`: 768x1024 (simulando iPad Portrait)
-  - `desktop`: 1280x800 (resolução básica de laptop)
-- **Engines de Renderização (Browsers):** Chromium, Firefox, e WebKit (Safari).
+Responsável pelo build e publicação da documentação interativa.
 
-### 5.2 Mapeamento Dinâmico de Stories
-
-Para evitar a necessidade de atualizar scripts de teste manualmente a cada novo componente ou story, o arquivo [visual.spec.ts](file:///home/rafacdomin/projetos/design-system/packages/docs/src/test-visual/visual.spec.ts) deve ler dinamicamente o arquivo `packages/docs/storybook-static/index.json` gerado pelo comando `storybook build`.
-
-1. O script lê a lista de `entries`.
-2. Filtra entradas válidas do tipo `story` (ignorando páginas de documentação).
-3. Para cada story, gera casos de teste parametrizados que visitam a URL isolada do iframe do Storybook:
-   `http://localhost:6006/iframe.html?id=${storyId}&viewMode=story`
-4. Se uma story possuir a tag `'skip-visual'`, ela deve ser ignorada na suíte de testes.
-
-### 5.3 Mitigação de Flakiness (Instabilidades Visuais)
-
-Para garantir que os testes de imagem sejam consistentes e livres de falsos positivos devido a tempos de carregamento e animações:
-
-1. **Desativação global de animações e transições:**
-   O Playwright deve injetar um estilo CSS global na página antes de tirar o screenshot:
-   ```css
-   *,
-   *::before,
-   *::after {
-     transition: none !important;
-     animation: none !important;
-     transition-duration: 0s !important;
-     animation-duration: 0s !important;
-   }
-   ```
-2. **Ocultar Caret do Cursor:** Habilitar a opção `animations: 'disabled'` e `caret: 'initial'` no Playwright.
-3. **Aguardar carregamento completo:** O teste deve esperar até que o elemento raiz esteja montado e a rede esteja em repouso (`networkidle`).
-4. **Paralisação de timers:** stories com lógica de tempo (ex: `Carousel` com autoplay) devem ter opções que desativem interações automáticas, ou ter as animações/avanços desativados por padrão.
-5. **Threshold (Tolerância):** A comparação visual usará o limite estrito de `0.1%` de diferença tolerada de pixels (`maxDiffPixelRatio: 0.001` ou `threshold: 0.1` na função de comparação).
-
-### 5.4 Fluxo de Teste de Temas
-
-Para cada história e viewport, o teste realizará o seguinte ciclo:
-
-1. Visitar a URL da história no Storybook.
-2. Injetar o atributo `data-theme="light"` na tag `body` ou `html`.
-3. Tirar screenshot da história (seja o viewport completo ou apenas o elemento delimitador do componente) e comparar com o baseline Light correspondente.
-4. Alterar o atributo para `data-theme="dark"`.
-5. Tirar novo screenshot e comparar com o baseline Dark correspondente.
-
-### 5.5 Configuração do Playwright (`packages/docs/playwright.config.ts`)
-
-O arquivo de configuração do Playwright deve prever duas modalidades de execução:
-
-1. **Local (Default):**
-   - Utiliza browsers Chromium, Firefox e WebKit locais.
-   - Usa o `webServer` do Playwright para servir a pasta `storybook-static` na porta `6006` antes de iniciar os testes (ex: `http-server storybook-static -p 6006 --silent`).
-   - Salva snapshots em `src/test-visual/snapshots/local`.
-2. **Remote (Browserstack - CI/CD):**
-   - Ativado quando as variáveis de ambiente `BROWSERSTACK_ACCESS_KEY` e `BROWSERSTACK_USERNAME` estiverem definidas.
-   - Configura conexões WebSocket usando a URL do Browserstack:
-     `wss://cdp.browserstack.com/playwright?caps=${encodeURIComponent(JSON.stringify(caps))}`
-   - Executa os testes contra uma matriz de sistemas operacionais e browsers reais fornecida pelo Browserstack.
-   - Faz o upload dos resultados e logs para a plataforma.
-
-### 5.6 CLI e Scripts Disponíveis
-
-Abaixo estão os scripts a serem adicionados no `packages/docs/package.json`:
-
-- `"test:visual"`: Compila o Storybook em modo estático e roda os testes visuais do Playwright localmente.
-  `"build-storybook && playwright test --config=playwright.config.ts"`
-- `"test:visual:update"`: Atualiza os baselines visuais locais.
-  `"playwright test --config=playwright.config.ts --update-snapshots"`
-- `"test:visual:ci"`: Executa a suíte de testes contra a grade do Browserstack (utilizado no pipeline de CI).
+- **Gatilhos (Triggers):**
+  - Conclusão bem-sucedida dos workflows "Release Core Package" ou "Release Carousel Package" (via evento `workflow_run`).
+  - Disparo manual (`workflow_dispatch`).
+- **Permissões GitHub Requeridas:**
+  - `pages: write` e `id-token: write` para deploy nativo no GitHub Pages.
+- **Etapas da Pipeline:**
+  1. **Install:** Setup inicial do Node.js, pnpm e dependências.
+  2. **Build:** Geração da build estática de todo o monorepo (`pnpm build`) para garantir links de dependência, seguida por `pnpm --filter @ds/docs build-storybook` para compilar o Storybook estático na pasta `packages/docs/storybook-static/`.
+  3. **Publication:** Upload do artefato e publicação no GitHub Pages através dos actions oficiais:
+     - `actions/configure-pages@v5`
+     - `actions/upload-pages-artifact@v3` (apontando para `packages/docs/storybook-static`)
+     - `actions/deploy-pages@v4` (que retorna a URL do deploy na variável `${{ steps.deployment.outputs.page_url }}`).
+  4. **Notification:** Notificação de sucesso incluindo a URL direta da documentação publicada.
 
 ---
 
-## 6. Critérios de Done para Regressão Visual
+## 5. Preparação dos Pacotes para Publicação no NPM
 
-Uma funcionalidade ou componente novo é considerado concluído se, além dos critérios anteriores, satisfizer os seguintes requisitos visuais:
+Atualmente, as importações entre pacotes no monorepo apontam diretamente para o código-fonte em TypeScript (`src/index.ts`). Para a publicação NPM, os pacotes devem ser compilados para produção em formatos compatíveis com os navegadores e ambientes Node.js (ESM e CommonJS) e com declarações de tipos (`.d.ts`).
 
-1. **Stories Completos:** Contém stories no Storybook cobrindo todas as variantes críticas e estados interativos.
-2. **Geração de Baselines:** Novas histórias têm baselines válidas geradas localmente (`pnpm test:visual:update`) tanto para o tema `light` quanto para o `dark`.
-3. **Zero Regressões Visuais:** A suíte de testes de regressão visual local (`pnpm test:visual`) executa e passa com sucesso (0% de desvios visuais acima do limiar de `0.1%`).
-4. **Conformidade em CI:** Pipeline de CI executa e valida as imagens no Browserstack sem erros.
+### Requisitos de Configuração no `package.json`
+
+Cada pacote a ser publicado (`core` e `carousel`) deve conter as seguintes definições para produção:
+
+```json
+{
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "files": ["dist"],
+  "scripts": {
+    "build": "tsup src/index.ts --format cjs,esm --dts --clean"
+  }
+}
+```
+
+_Nota: Recomenda-se o uso do `tsup` (um compilador rápido baseado no `esbuild`) para gerar as builds de produção automaticamente com zero esforço de configuração._
+
+### Autenticação NPM
+
+Para permitir a publicação automatizada pelas pipelines, deve ser gerado um token do tipo **Automation** no console do NPM e cadastrado no repositório do GitHub com a chave `NPM_TOKEN` (em _Settings -> Secrets and variables -> Actions_).
+
+No pipeline, o pnpm publica o pacote com o comando:
+
+```bash
+pnpm -r publish --no-git-checks --access public
+```
+
+---
+
+## 6. Configuração de Notificações via Webhook
+
+As notificações utilizam o utilitário nativo `curl` no terminal Linux do GitHub Actions. A pipeline enviará dados estruturados em JSON baseados em variáveis de ambiente secretas:
+
+- **Segredos Disponíveis:** `SLACK_WEBHOOK_URL`, `DISCORD_WEBHOOK_URL`, `TEAMS_WEBHOOK_URL`.
+- **Regra de Sucesso/Falha:** As requisições ocorrem de forma condicional (`if: success()` ou `if: failure()`). Se a URL secreta não estiver configurada no repositório, o passo é pulado com segurança sem interromper o pipeline.
+
+### Payloads de Exemplo (Formatados para curl):
+
+#### A. Slack
+
+```bash
+curl -X POST -H 'Content-type: application/json' \
+     --data '{"text": "✅ *Deploy Sucesso:* Pacote `'"$PACKAGE_NAME"'` publicado!\n*Job:* <https://github.com/'"$GITHUB_REPOSITORY"'/actions/runs/'"$GITHUB_RUN_ID"'|Visualizar no GitHub>"}' \
+     $SLACK_WEBHOOK_URL
+```
+
+#### B. Discord
+
+```bash
+curl -H "Content-Type: application/json" \
+     -X POST \
+     -d '{"content": "🎉 **Sucesso no deploy!** O Storybook do Design System foi publicado.\n🔗 URL: '"$DEPLOY_URL"'"}' \
+     $DISCORD_WEBHOOK_URL
+```
+
+#### C. Microsoft Teams (Adaptive Card)
+
+```bash
+curl -H "Content-Type: application/json" \
+     -d '{
+       "type": "message",
+       "attachments": [{
+         "contentType": "application/vnd.microsoft.card.adaptive",
+         "content": {
+           "type": "AdaptiveCard",
+           "body": [
+             {"type": "TextBlock", "text": "🚀 Pipeline Concluída com Sucesso!", "weight": "bolder", "size": "medium"},
+             {"type": "TextBlock", "text": "O pacote **'"$PACKAGE_NAME"'** foi publicado no NPM."}
+           ],
+           "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+           "version": "1.2"
+         }
+       }]
+     }' $TEAMS_WEBHOOK_URL
+```
+
+---
+
+## 7. Critérios de Conclusão (Critérios de Done da Pipeline)
+
+1. Os scripts e caminhos definidos nos workflows correspondem exatamente à estrutura de pastas do monorepo.
+2. O workflow do Storybook está perfeitamente amarrado ao resultado positivo dos workflows individuais de biblioteca.
+3. Não há tokens expostos; toda a infraestrutura se apoia estritamente no contexto `${{ secrets.* }}`.
+4. O deploy do Storybook utiliza actions oficiais suportados pela infraestrutura nativa do GitHub Pages.
+5. As etapas de publicação no NPM e as chamadas de notificação de webhook possuem tratamento para que a pipeline não quebre caso os segredos não estejam presentes no repositório (graceful degradation).
+
+---
+
+## 8. Entregáveis de Documentação do Repositório
+
+Para consolidar e expor a arquitetura de CI/CD para desenvolvedores e agentes autônomos, a implementação desta especificação exige a criação/atualização dos seguintes documentos no repositório:
+
+1. **Guia de Publicação (`references/PUBLISHING.md`):**
+   - Criação de um novo arquivo detalhando o fluxo de publicação das bibliotecas (`@ds/core`, `@ds/carousel`), empacotamento com `tsup`, tokens de segurança, deploy do Storybook no GitHub Pages e payloads de notificação para Teams, Slack e Discord.
+2. **Diretrizes para Agentes (`AGENTS.md`):**
+   - Atualização do arquivo com links para `references/PUBLISHING.md` e regras claras instruindo agentes de IA a não modificarem as pipelines ou builds do design system sem consentimento prévio.
+3. **Leias-me Principais (`README.md` e `README_PT-BR.md`):**
+   - Adição de uma seção específica sobre CI/CD e Publicação (em ambos os idiomas) mapeando os fluxos e apontando para a documentação técnica oficial.
+4. **Guias de Contribuição (`CONTRIBUTING.md` e `CONTRIBUTING_PT-BR.md`):**
+   - Integração das boas práticas de Integração Contínua e publicação para orientar os desenvolvedores contribuintes.

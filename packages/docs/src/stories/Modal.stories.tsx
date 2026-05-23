@@ -1,7 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react'
 import { useState, ComponentProps } from 'react'
-import { Modal } from '../../../core/src/components/Modal'
-import { Button } from '../../../core/src/components/Button'
+import { Modal, Button } from '@ds/core'
 
 const meta: Meta<typeof Modal> = {
   title: 'Components/Modal',

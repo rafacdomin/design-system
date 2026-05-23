@@ -104,8 +104,15 @@ To validate components on real browsers in a remote environment (Windows 11 and 
 ```bash
 export BROWSERSTACK_USERNAME="your-username"
 export BROWSERSTACK_ACCESS_KEY="your-access-key"
-pnpm test:visual:ci
+pnpm test:visual
 ```
+
+### 7. Continuous Integration & Publishing
+
+The repository is configured with GitHub Actions pipelines for checks and deliveries.
+The workflows added in this project are triggered manually through `workflow_dispatch`, and the Storybook deployment runs via `workflow_run` and/or manual execution rather than automatically on pushes to `main` or release tags.
+
+For detailed steps on workflow configurations, package builds, and manual execution triggers, refer to the [Publishing & CI/CD Guide (PUBLISHING.md)](https://github.com/rafacdomin/design-system/blob/main/PUBLISHING.md).
 
 ---
 
