@@ -46,8 +46,8 @@ Para preparar o `@ds/core` e `@ds/carousel` para publicação, suas propriedades
 
 ```json
 {
-  "main": "./dist/index.cjs",
-  "module": "./dist/index.js",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
   "files": ["dist"],
   "scripts": {

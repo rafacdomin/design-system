@@ -109,8 +109,8 @@ Cada pacote a ser publicado (`core` e `carousel`) deve conter as seguintes defin
 
 ```json
 {
-  "main": "./dist/index.cjs",
-  "module": "./dist/index.js",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
   "files": ["dist"],
   "scripts": {
