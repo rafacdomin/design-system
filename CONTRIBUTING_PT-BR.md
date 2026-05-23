@@ -104,7 +104,7 @@ Para validar os componentes em navegadores reais em ambiente remoto (Windows 11 
 ```bash
 export BROWSERSTACK_USERNAME="seu-usuario"
 export BROWSERSTACK_ACCESS_KEY="sua-chave-de-acesso"
-pnpm test:visual:ci
+pnpm test:visual
 ```
 
 ### 7. Integração Contínua & Publicação

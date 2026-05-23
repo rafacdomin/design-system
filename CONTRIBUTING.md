@@ -104,7 +104,7 @@ To validate components on real browsers in a remote environment (Windows 11 and 
 ```bash
 export BROWSERSTACK_USERNAME="your-username"
 export BROWSERSTACK_ACCESS_KEY="your-access-key"
-pnpm test:visual:ci
+pnpm test:visual
 ```
 
 ### 7. Continuous Integration & Publishing

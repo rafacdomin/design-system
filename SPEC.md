@@ -54,7 +54,7 @@ Responsável por validar e publicar o pacote `@ds/core`.
 - **Etapas da Pipeline:**
   1. **Install:** Checkout do código, configuração do Node.js (versão 18), cache de dependências e `pnpm install --frozen-lockfile`.
   2. **Test:** Execução dos testes unitários e de acessibilidade via `pnpm --filter @ds/core test` e `pnpm --filter @ds/core lint`.
-  3. **Visual Regression Test:** Build estática do Storybook e execução dos testes do Playwright (`pnpm --filter @ds/docs test:visual:ci` se as credenciais do Browserstack estiverem disponíveis nos segredos, caso contrário executa o visual local via `pnpm --filter @ds/docs test:visual`).
+  3. **Visual Regression Test:** Build estática do Storybook e execução dos testes do Playwright (`pnpm --filter @ds/docs test:visual`, que roda no Browserstack se as credenciais estiverem configuradas nos segredos do repositório, ou localmente caso contrário).
   4. **Bump Version:** Incrementa a versão do pacote no `package.json` de acordo com a seleção do usuário (ex: `pnpm --filter @ds/core version ${{ github.event.inputs.version_increment }} --no-git-tag-version`).
   5. **Build:** Compilação dos componentes do `@ds/core` para distribuição pública (ESM/CJS).
   6. **Publication:** Publicação no NPM (`pnpm --filter @ds/core publish --no-git-checks --access public`) autenticada por meio da variável `NPM_TOKEN` (segredo do repositório).

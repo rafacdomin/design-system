@@ -13,10 +13,6 @@
       "dependsOn": ["build"],
       "outputs": ["playwright-report/**", "test-results/**"]
     },
-    "test:visual:ci": {
-      "dependsOn": ["build"],
-      "outputs": ["playwright-report/**", "test-results/**"]
-    },
     "lint": {
       "outputs": []
     },
