@@ -8,8 +8,7 @@
     "build-storybook": "storybook build",
     "build": "storybook build",
     "test:visual": "playwright test --config=playwright.config.ts",
-    "test:visual:update": "playwright test --config=playwright.config.ts --update-snapshots",
-    "test:visual:ci": "RUN_ON_BROWSERSTACK=true playwright test --config=playwright.config.ts"
+    "test:visual:update": "playwright test --config=playwright.config.ts --update-snapshots"
   },
   "devDependencies": {
     "@ds/carousel": "workspace:*",
