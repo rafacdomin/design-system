@@ -1,0 +1,153 @@
+name: Release Core Package
+
+on:
+  workflow_dispatch:
+    inputs:
+      version_increment:
+        description: 'Tipo de incremento de versão (SemVer)'
+        required: true
+        default: 'patch'
+        type: choice
+        options:
+          - patch
+          - minor
+          - major
+
+jobs:
+  ci-cd-core:
+    name: Install, Test, Build, Publish
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v3
+        with:
+          version: 11.2.2
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20.19.0
+          cache: 'pnpm'
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Install Dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Lint Code
+        run: pnpm --filter @ds/core lint
+
+      - name: Run Unit & Accessibility Tests
+        run: pnpm --filter @ds/core test
+
+      - name: Bump Version
+        run: pnpm --filter @ds/core version ${{ github.event.inputs.version_increment }} --no-git-tag-version
+
+      - name: Build Packages
+        run: pnpm turbo run build --filter=@ds/carousel...
+
+      - name: Build Storybook for Visual Testing
+        run: pnpm --filter @ds/docs build-storybook
+
+      - name: Run Visual Regression Tests (Playwright)
+        env:
+          BROWSERSTACK_USERNAME: ${{ secrets.BROWSERSTACK_USERNAME }}
+          BROWSERSTACK_ACCESS_KEY: ${{ secrets.BROWSERSTACK_ACCESS_KEY }}
+        run: pnpm --filter @ds/docs test:visual
+
+      - name: Publish to NPM
+        id: publish_step
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: |
+          if [ -n "$NODE_AUTH_TOKEN" ]; then
+            pnpm --filter @ds/core publish --no-git-checks --access public
+            echo "published=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "Aviso: NPM_TOKEN não está configurado. Pulando publicação real no NPM."
+            echo "published=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Commit and Push Version Bump
+        if: steps.publish_step.outputs.published == 'true'
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          VERSION=$(node -p "require('./packages/core/package.json').version")
+          git add packages/core/package.json
+          git commit -m "chore(release): bump @ds/core version to $VERSION [skip ci]"
+          git push origin HEAD:${{ github.ref_name }}
+
+      - name: Notify Success
+        if: success()
+        run: |
+          PACKAGE_VERSION=$(node -p "require('./packages/core/package.json').version")
+          PUBLISHED="${{ steps.publish_step.outputs.published }}"
+
+          if [ "$PUBLISHED" = "true" ]; then
+            MSG="🚀 **@ds/core** publicado com sucesso no NPM! Versão: \`$PACKAGE_VERSION\`"
+            SLACK_MSG="🚀 *@ds/core* publicado com sucesso no NPM! Versão: \`$PACKAGE_VERSION\`"
+            TEAMS_TITLE="🚀 @ds/core Publicado com Sucesso!"
+            TEAMS_TEXT="O pacote \`@ds/core\` foi publicado no NPM com a versão **$PACKAGE_VERSION**."
+          else
+            MSG="✅ Pipeline **@ds/core** concluída (Dry-run). Versão: \`$PACKAGE_VERSION\`"
+            SLACK_MSG="✅ Pipeline *@ds/core* concluída (Dry-run). Versão: \`$PACKAGE_VERSION\`"
+            TEAMS_TITLE="✅ @ds/core Compilado (Dry-run)"
+            TEAMS_TEXT="O pacote \`@ds/core\` foi compilado com sucesso com a versão **$PACKAGE_VERSION** (publicação pulada)."
+          fi
+
+          if [ -n "${{ secrets.DISCORD_WEBHOOK_URL }}" ]; then
+            curl -H "Content-Type: application/json" -X POST -d '{"content": "'"$MSG"'"}' "${{ secrets.DISCORD_WEBHOOK_URL }}" || true
+          fi
+          if [ -n "${{ secrets.SLACK_WEBHOOK_URL }}" ]; then
+            curl -X POST -H 'Content-type: application/json' --data '{"text": "'"$SLACK_MSG"'"}' "${{ secrets.SLACK_WEBHOOK_URL }}" || true
+          fi
+          if [ -n "${{ secrets.TEAMS_WEBHOOK_URL }}" ]; then
+            curl -H "Content-Type: application/json" -d '{
+              "type": "message",
+              "attachments": [{
+                "contentType": "application/vnd.microsoft.card.adaptive",
+                "content": {
+                  "type": "AdaptiveCard",
+                  "body": [
+                    {"type": "TextBlock", "text": "'"$TEAMS_TITLE"'", "weight": "bolder", "size": "medium"},
+                    {"type": "TextBlock", "text": "'"$TEAMS_TEXT"'"}
+                  ],
+                  "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+                  "version": "1.2"
+                }
+              }]
+            }' "${{ secrets.TEAMS_WEBHOOK_URL }}" || true
+          fi
+
+      - name: Notify Failure
+        if: failure()
+        run: |
+          if [ -n "${{ secrets.DISCORD_WEBHOOK_URL }}" ]; then
+            curl -H "Content-Type: application/json" -X POST -d '{"content": "❌ Falha no pipeline do pacote **@ds/core**."}' "${{ secrets.DISCORD_WEBHOOK_URL }}" || true
+          fi
+          if [ -n "${{ secrets.SLACK_WEBHOOK_URL }}" ]; then
+            curl -X POST -H 'Content-type: application/json' --data '{"text": "❌ Falha no pipeline do pacote *@ds/core*."}' "${{ secrets.SLACK_WEBHOOK_URL }}" || true
+          fi
+          if [ -n "${{ secrets.TEAMS_WEBHOOK_URL }}" ]; then
+            curl -H "Content-Type: application/json" -d '{
+              "type": "message",
+              "attachments": [{
+                "contentType": "application/vnd.microsoft.card.adaptive",
+                "content": {
+                  "type": "AdaptiveCard",
+                  "body": [
+                    {"type": "TextBlock", "text": "❌ Falha na Pipeline @ds/core", "weight": "bolder", "size": "medium", "color": "attention"},
+                    {"type": "TextBlock", "text": "Houve uma falha ao tentar executar ou publicar o pacote `@ds/core`."}
+                  ],
+                  "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+                  "version": "1.2"
+                }
+              }]
+            }' "${{ secrets.TEAMS_WEBHOOK_URL }}" || true
+          fi

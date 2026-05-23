@@ -1,0 +1,119 @@
+name: Deploy Storybook Documentation
+
+on:
+  workflow_dispatch:
+  workflow_run:
+    workflows:
+      - 'Release Core Package'
+      - 'Release Carousel Package'
+    types:
+      - completed
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: 'pages'
+  cancel-in-progress: false
+
+jobs:
+  deploy-storybook:
+    name: Build & Deploy Storybook
+    runs-on: ubuntu-latest
+    if: ${{ github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success' }}
+
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.workflow_run.head_sha || github.sha }}
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v3
+        with:
+          version: 11.2.2
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20.19.0
+          cache: 'pnpm'
+
+      - name: Install Dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build All Monorepo Packages
+        run: pnpm build
+
+      - name: Setup GitHub Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload Pages Artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: 'packages/docs/storybook-static'
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+
+      - name: Notify Success
+        if: success()
+        run: |
+          DEPLOY_URL="${{ steps.deployment.outputs.page_url }}"
+          if [ -n "${{ secrets.DISCORD_WEBHOOK_URL }}" ]; then
+            curl -H "Content-Type: application/json" -X POST -d '{"content": "🎉 **Storybook** atualizado e publicado com sucesso!\n🔗 Acesse aqui: '"$DEPLOY_URL"'"}' "${{ secrets.DISCORD_WEBHOOK_URL }}" || true
+          fi
+          if [ -n "${{ secrets.SLACK_WEBHOOK_URL }}" ]; then
+            curl -X POST -H 'Content-type: application/json' --data '{"text": "🎉 *Storybook* atualizado e publicado com sucesso!\n🔗 Acesse aqui: '"$DEPLOY_URL"'"}' "${{ secrets.SLACK_WEBHOOK_URL }}" || true
+          fi
+          if [ -n "${{ secrets.TEAMS_WEBHOOK_URL }}" ]; then
+            curl -H "Content-Type: application/json" -d '{
+              "type": "message",
+              "attachments": [{
+                "contentType": "application/vnd.microsoft.card.adaptive",
+                "content": {
+                  "type": "AdaptiveCard",
+                  "body": [
+                    {"type": "TextBlock", "text": "🎉 Storybook Publicado com Sucesso!", "weight": "bolder", "size": "medium"},
+                    {"type": "TextBlock", "text": "A documentação do Storybook foi atualizada e está disponível em [Link]('"$DEPLOY_URL"')."}
+                  ],
+                  "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+                  "version": "1.2"
+                }
+              }]
+            }' "${{ secrets.TEAMS_WEBHOOK_URL }}" || true
+          fi
+
+      - name: Notify Failure
+        if: failure()
+        run: |
+          if [ -n "${{ secrets.DISCORD_WEBHOOK_URL }}" ]; then
+            curl -H "Content-Type: application/json" -X POST -d '{"content": "❌ Falha no deploy do Storybook no GitHub Pages."}' "${{ secrets.DISCORD_WEBHOOK_URL }}" || true
+          fi
+          if [ -n "${{ secrets.SLACK_WEBHOOK_URL }}" ]; then
+            curl -X POST -H 'Content-type: application/json' --data '{"text": "❌ Falha no deploy do Storybook no GitHub Pages."}' "${{ secrets.SLACK_WEBHOOK_URL }}" || true
+          fi
+          if [ -n "${{ secrets.TEAMS_WEBHOOK_URL }}" ]; then
+            curl -H "Content-Type: application/json" -d '{
+              "type": "message",
+              "attachments": [{
+                "contentType": "application/vnd.microsoft.card.adaptive",
+                "content": {
+                  "type": "AdaptiveCard",
+                  "body": [
+                    {"type": "TextBlock", "text": "❌ Falha no Deploy do Storybook", "weight": "bolder", "size": "medium", "color": "attention"},
+                    {"type": "TextBlock", "text": "Houve uma falha ao tentar compilar ou publicar a documentação do Storybook."}
+                  ],
+                  "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+                  "version": "1.2"
+                }
+              }]
+            }' "${{ secrets.TEAMS_WEBHOOK_URL }}" || true
+          fi
