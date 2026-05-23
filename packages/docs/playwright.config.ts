@@ -2,16 +2,14 @@ import { defineConfig, devices } from '@playwright/test'
 import path from 'path'
 import fs from 'fs'
 
-const isBrowserStack = process.env.RUN_ON_BROWSERSTACK === 'true'
+let isBrowserStack = false
 
 // Get credentials if running on BrowserStack
 const BS_USERNAME = process.env.BROWSERSTACK_USERNAME
 const BS_ACCESS_KEY = process.env.BROWSERSTACK_ACCESS_KEY
 
-if (isBrowserStack && (!BS_USERNAME || !BS_ACCESS_KEY)) {
-  throw new Error(
-    'Error: BROWSERSTACK_USERNAME and BROWSERSTACK_ACCESS_KEY environment variables are required to run tests on BrowserStack.'
-  )
+if (BS_USERNAME && BS_ACCESS_KEY) {
+  isBrowserStack = true
 }
 
 // Get playwright version dynamically from package.json

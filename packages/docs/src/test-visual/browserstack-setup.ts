@@ -2,7 +2,7 @@ import { FullConfig } from '@playwright/test'
 import { Local } from 'browserstack-local'
 
 export default async function globalSetup(_config: FullConfig): Promise<void> {
-  if (process.env.RUN_ON_BROWSERSTACK !== 'true') return
+  if (!process.env.BROWSERSTACK_ACCESS_KEY) return
 
   const accessKey = process.env.BROWSERSTACK_ACCESS_KEY
   if (!accessKey) {

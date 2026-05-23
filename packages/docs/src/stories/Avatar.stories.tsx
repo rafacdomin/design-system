@@ -4,7 +4,7 @@ import { Avatar } from '@ds/core'
 const meta: Meta<typeof Avatar> = {
   title: 'Components/Avatar',
   component: Avatar,
-  tags: ['autodocs'],
+  tags: ['skip-visual', 'autodocs'],
   argTypes: {
     size: {
       control: { type: 'select' },

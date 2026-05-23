@@ -40,7 +40,9 @@ if (fs.existsSync(storybookIndexPath)) {
 const stories = Object.values(storybookIndex.entries).filter((entry) => {
   const isStory = entry.type === 'story'
   const hasSkipVisual = entry.tags?.includes('skip-visual')
-  return isStory && !hasSkipVisual
+  const filterComponent =
+    entry.title?.includes(process.env.COMPONENT || '') ?? true
+  return isStory && !hasSkipVisual && filterComponent
 })
 
 test.describe('Visual Regression Tests', () => {
@@ -48,7 +50,8 @@ test.describe('Visual Regression Tests', () => {
     test(`Visual: ${story.title} - ${story.name}`, async ({ page }) => {
       // 1. Tema Light
       const storyUrlLight = `/iframe.html?id=${story.id}&viewMode=story&globals=theme:light`
-      await page.goto(storyUrlLight, { waitUntil: 'networkidle' })
+      await page.goto(storyUrlLight, { waitUntil: 'load' })
+      await page.waitForTimeout(300)
 
       // Injeta CSS global para desativar transições/animações
       await page.addStyleTag({
@@ -76,7 +79,8 @@ test.describe('Visual Regression Tests', () => {
 
       // 2. Tema Dark
       const storyUrlDark = `/iframe.html?id=${story.id}&viewMode=story&globals=theme:dark`
-      await page.goto(storyUrlDark, { waitUntil: 'networkidle' })
+      await page.goto(storyUrlDark, { waitUntil: 'load' })
+      await page.waitForTimeout(300)
 
       // Injeta CSS global para desativar transições/animações no novo load
       await page.addStyleTag({
