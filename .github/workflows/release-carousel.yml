@@ -51,8 +51,8 @@ jobs:
       - name: Bump Version
         run: pnpm --filter @ds/carousel version ${{ github.event.inputs.version_increment }} --no-git-tag-version
 
-      - name: Build Carousel & Dependencies Package
-        run: pnpm turbo run build --filter=@ds/carousel...
+      - name: Build Carousel Package
+        run: pnpm turbo run build --filter=@ds/carousel
 
       - name: Check BrowserStack Credentials
         id: check-secrets
