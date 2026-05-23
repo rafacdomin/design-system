@@ -7,6 +7,10 @@
   "files": [
     "dist"
   ],
+  "sideEffects": [
+    "**/*.css",
+    "**/*.scss"
+  ],
   "scripts": {
     "build": "tsup",
     "lint": "eslint src",
