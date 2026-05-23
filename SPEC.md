@@ -1,206 +1,139 @@
-# Especificação Geral — CI/CD e Publicação (SPEC.md)
+# Especificação Geral — Design System MCP Server (SPEC.md)
 
-Este documento descreve a especificação da arquitetura de integração e entrega contínua (CI/CD), publicação dos pacotes do design system no NPM (`@ds/core` e `@ds/carousel`) e publicação do Storybook no GitHub Pages.
+Este documento especifica a arquitetura, as ferramentas, a stack técnica e a estratégia de implementação do servidor MCP (Model Context Protocol) para o design system.
+
+O objetivo do servidor MCP é fornecer a agentes de IA integrados em IDEs de desenvolvimento acesso a metadados em tempo real do design system, viabilizando a geração de código front-end consistente com os padrões e tokens do projeto.
 
 ---
 
 ## 1. Visão Geral
 
-O objetivo desta especificação é automatizar o fluxo de verificação, build, publicação e notificação do design system.
+Ao desenvolver interfaces de usuário, assistentes de IA frequentemente alucinam nomes de componentes, APIs de propriedades (props), classes de utilidade CSS ou ignoram tokens de marca específicos.
+O **Design System MCP Server** resolve isso expondo os componentes disponíveis, suas diretrizes de acessibilidade, estruturas de props e design tokens através de um protocolo padronizado.
 
-Adotaremos uma abordagem de **Multi-Pipelines** no GitHub Actions, onde cada pacote possui sua própria esteira de publicação, e a documentação (Storybook) é atualizada automaticamente após qualquer publicação de biblioteca ou manualmente por demanda.
+### Objetivos Principais:
 
----
-
-## 2. Stack Técnica de CI/CD
-
-- **Orquestrador de Workflows:** GitHub Actions.
-- **Gerenciador de Pacotes:** `pnpm` Workspaces (v11.2.2).
-- **Orquestração de Tasks:** Turborepo (para paralelizar lint, testes e builds).
-- **Publicação de Pacotes:** Registro do NPM (pacotes públicos `@ds/core` e `@ds/carousel`).
-- **Hospedagem da Documentação:** GitHub Pages (usando deploys nativos).
-- **Notificações:** Webhooks via HTTP POST (`curl`) integrados ao Slack, Discord e Microsoft Teams.
+- Permitir a descoberta de componentes disponíveis (`@ds/core`, `@ds/carousel`).
+- Fornecer a documentação de acessibilidade de cada componente em formato estruturado.
+- Entregar valores exatos de design tokens (cores, fontes, espaçamento).
+- Fornecer snippets de código de uso correto e integração com o sistema de temas (`withTheme`).
 
 ---
 
-## 3. Desenho de Fluxo de Execução
+## 2. Stack Técnica
 
-```mermaid
-graph TD
-    A["Disparo Manual (com escolha SemVer)"] --> B[Workflow: release-core]
-    C["Disparo Manual (com escolha SemVer)"] --> D[Workflow: release-carousel]
+- **Protocolo:** Model Context Protocol (MCP).
+- **SDK do Servidor:** `@modelcontextprotocol/sdk` (v1.0.1+).
+- **Ambiente de Execução:** Node.js v20.19.0+ e TypeScript.
+- **Bundler:** `tsup` para compilar o servidor em um pacote ESM executável autônomo com declaração de tipos.
+- **Transporte padrão:** `StdioServerTransport` (comunicação JSON-RPC bidirecional via entrada e saída padrão `stdin`/`stdout`).
+- **Gerenciador de Pacotes:** `pnpm` workspaces.
+- **Framework de Testes:** Vitest.
 
-    B -->|Sucesso| E{Gatilho Storybook}
-    D -->|Sucesso| E
-    F[Disparo Manual] -->|workflow_dispatch| E
+---
 
-    E --> G[Workflow: deploy-storybook]
+## 3. Estrutura no Monorepo
+
+O servidor MCP será implementado como um novo workspace dentro da pasta `packages/mcp-server`:
+
+```text
+packages/mcp-server/
+├── src/
+│   ├── __tests__/        # Testes unitários e de integração JSON-RPC
+│   │   └── server.test.ts
+│   ├── tools/            # Implementação de ferramentas MCP individuais
+│   │   ├── components.ts
+│   │   ├── tokens.ts
+│   │   └── index.ts
+│   ├── resources/        # Definição e carregamento de recursos estáticos/documentações
+│   │   └── index.ts
+│   └── index.ts          # Inicialização e loop do servidor MCP
+├── tsconfig.json         # Configurações estritas do TypeScript
+├── tsup.config.ts        # Script de build de produção do servidor
+└── package.json          # Manifesto do pacote
 ```
 
----
-
-## 4. Arquitetura de Multi-Pipelines no GitHub Actions
-
-Em vez de uma única pipeline monolítica, o repositório é configurado com três pipelines independentes para garantir agilidade e isolamento de falhas:
-
-### 4.1 Release Core (`.github/workflows/release-core.yml`)
-
-Responsável por validar e publicar o pacote `@ds/core`.
-
-- **Gatilhos (Triggers):**
-  - **Apenas disparo manual (`workflow_dispatch`).**
-  - **Inputs do Workflow:**
-    - `version_increment` (Choice: `patch`, `minor`, `major`, padrão: `patch`) - Define o tipo de incremento SemVer que será aplicado ao pacote.
-- **Etapas da Pipeline:**
-  1. **Install:** Checkout do código, configuração do Node.js (versão versão 20.19.0), cache de dependências e `pnpm install --frozen-lockfile`.
-  2. **Test:** Execução dos testes unitários e de acessibilidade via `pnpm --filter @ds/core test` e `pnpm --filter @ds/core lint`.
-  3. **Visual Regression Test:** Build estática do Storybook e execução dos testes do Playwright (`pnpm --filter @ds/docs test:visual`, que roda no Browserstack se as credenciais estiverem configuradas nos segredos do repositório, ou localmente caso contrário).
-  4. **Bump Version:** Incrementa a versão do pacote no `package.json` de acordo com a seleção (ex: `pnpm --filter @ds/core version ${{ github.event.inputs.version_increment }} --no-git-tag-version`).
-  5. **Build:** Compilação dos componentes do `@ds/core` para distribuição pública (ESM/CJS).
-  6. **Publication:** Publicação no NPM (`pnpm --filter @ds/core publish --no-git-checks --access public`) autenticada por meio da variável `NPM_TOKEN`.
-  7. **Commit & Push:** Realiza commit e push automático do novo incremento de versão de volta para o repositório.
-  8. **Notification:** Envio de payload via webhook informando o status final da execução.
-
-### 4.2 Release Carousel (`.github/workflows/release-carousel.yml`)
-
-Responsável por validar e publicar o pacote `@ds/carousel`.
-
-- **Gatilhos (Triggers):**
-  - **Apenas disparo manual (`workflow_dispatch`).**
-  - **Inputs do Workflow:**
-    - `version_increment` (Choice: `patch`, `minor`, `major`, padrão: `patch`) - Define o tipo de incremento SemVer que será aplicado ao pacote.
-- **Etapas da Pipeline:**
-  1. **Install:** Instalação das dependências com cache.
-  2. **Test:** Execução de testes unitários do `@ds/carousel` e linter.
-  3. **Visual Regression Test:** Execução dos testes visuais do Playwright para os stories do carrossel.
-  4. **Bump Version:** Incrementa a versão do pacote no `package.json` de acordo com a seleção (ex: `pnpm --filter @ds/carousel version ${{ github.event.inputs.version_increment }} --no-git-tag-version`).
-  5. **Build:** Compilação da build de distribuição do `@ds/carousel`.
-  6. **Publication:** Publicação no NPM usando o segredo `NPM_TOKEN`.
-  7. **Commit & Push:** Realiza commit e push automático do novo incremento de versão de volta para o repositório.
-  8. **Notification:** Notificação de status final.
-
-### 4.3 Deploy Storybook (`.github/workflows/deploy-storybook.yml`)
-
-Responsável pelo build e publicação da documentação interativa.
-
-- **Gatilhos (Triggers):**
-  - Conclusão bem-sucedida dos workflows "Release Core Package" ou "Release Carousel Package" (via evento `workflow_run`).
-  - Disparo manual (`workflow_dispatch`).
-- **Permissões GitHub Requeridas:**
-  - `pages: write` e `id-token: write` para deploy nativo no GitHub Pages.
-- **Etapas da Pipeline:**
-  1. **Install:** Setup inicial do Node.js, pnpm e dependências.
-  2. **Build:** Geração da build estática de todo o monorepo (`pnpm build`) para garantir links de dependência, seguida por `pnpm --filter @ds/docs build-storybook` para compilar o Storybook estático na pasta `packages/docs/storybook-static/`.
-  3. **Publication:** Upload do artefato e publicação no GitHub Pages através dos actions oficiais:
-     - `actions/configure-pages@v5`
-     - `actions/upload-pages-artifact@v3` (apontando para `packages/docs/storybook-static`)
-     - `actions/deploy-pages@v4` (que retorna a URL do deploy na variável `${{ steps.deployment.outputs.page_url }}`).
-  4. **Notification:** Notificação de sucesso incluindo a URL direta da documentação publicada.
+Ele será adicionado à lista de workspaces no `pnpm-workspace.yaml`.
 
 ---
 
-## 5. Preparação dos Pacotes para Publicação no NPM
+## 4. Design Tokens Expostos (Design Tokens Tool)
 
-Atualmente, as importações entre pacotes no monorepo apontam diretamente para o código-fonte em TypeScript (`src/index.ts`). Para a publicação NPM, os pacotes devem ser compilados para produção em formatos compatíveis com os navegadores e ambientes Node.js (ESM e CommonJS) e com declarações de tipos (`.d.ts`).
+O servidor MCP lerá as especificações de design tokens de `references/DESIGN_TOKENS.md` ou de definições internas estruturadas e os fornecerá via ferramenta.
 
-### Requisitos de Configuração no `package.json`
+### Ferramenta: `get_design_tokens`
 
-Cada pacote a ser publicado (`core` e `carousel`) deve conter as seguintes definições para produção:
-
-```json
-{
-  "main": "./dist/index.js",
-  "module": "./dist/index.mjs",
-  "types": "./dist/index.d.ts",
-  "files": ["dist"],
-  "scripts": {
-    "build": "tsup src/index.ts --format cjs,esm --dts --clean"
-  }
-}
-```
-
-_Nota: Recomenda-se o uso do `tsup` (um compilador rápido baseado no `esbuild`) para gerar as builds de produção automaticamente com zero esforço de configuração._
-
-### Autenticação NPM
-
-Para permitir a publicação automatizada pelas pipelines, deve ser gerado um token do tipo **Automation** no console do NPM e cadastrado no repositório do GitHub com a chave `NPM_TOKEN` (em _Settings -> Secrets and variables -> Actions_).
-
-No pipeline, o pnpm publica o pacote com o comando:
-
-```bash
-pnpm -r publish --no-git-checks --access public
-```
+- **Descrição:** Retorna a lista completa de custom properties de CSS do Design System categorizadas.
+- **Retorno:** Estrutura JSON contendo:
+  - `typography`: Famílias, tamanhos, pesos e line-heights.
+  - `colors`: Escala neutra de HSL/HEX por tema (Light/Dark) e cores de acento (`--ds-color-danger`, `--ds-color-focus-ring`).
+  - `spacing`: Escala linear de espaçamentos (de `--ds-spacing-1` a `--ds-spacing-16`).
+  - `borders`: Border radius e border width.
+  - `shadows`: Sombras do sistema (`--ds-shadow-sm` a `--ds-shadow-lg`).
+  - `breakpoints`: Pontos de quebra de responsividade.
 
 ---
 
-## 6. Configuração de Notificações via Webhook
+## 5. Ferramentas do Componente (Component Tools)
 
-As notificações utilizam o utilitário nativo `curl` no terminal Linux do GitHub Actions. A pipeline enviará dados estruturados em JSON baseados em variáveis de ambiente secretas:
+O servidor disponibilizará ferramentas para expor detalhes dos componentes do design system.
 
-- **Segredos Disponíveis:** `SLACK_WEBHOOK_URL`, `DISCORD_WEBHOOK_URL`, `TEAMS_WEBHOOK_URL`.
-- **Regra de Sucesso/Falha:** As requisições ocorrem de forma condicional (`if: success()` ou `if: failure()`). Se a URL secreta não estiver configurada no repositório, o passo é pulado com segurança sem interromper o pipeline.
+### Ferramenta: `list_components`
 
-### Payloads de Exemplo (Formatados para curl):
+- **Descrição:** Lista o nome de todos os componentes disponíveis no design system baseando-se no que está exportado pelos pacotes `@ds/core` e `@ds/carousel`.
+- **Retorno:** `string[]` (ex: `["Button", "Input", "Textarea", "Dropdown", "Modal", "Carousel"]`).
 
-#### A. Slack
+### Ferramenta: `get_component_api`
 
-```bash
-curl -X POST -H 'Content-type: application/json' \
-     --data '{"text": "✅ *Deploy Sucesso:* Pacote `'"$PACKAGE_NAME"'` publicado!\n*Job:* <https://github.com/'"$GITHUB_REPOSITORY"'/actions/runs/'"$GITHUB_RUN_ID"'|Visualizar no GitHub>"}' \
-     $SLACK_WEBHOOK_URL
-```
+- **Parâmetros:**
+  - `componentName` (string): O nome do componente a inspecionar.
+- **Descrição:** Extrai a assinatura do componente e a interface de Props com comentários JSDoc associados.
+- **Retorno:** Estrutura JSON com a lista de propriedades, tipo, valor padrão, obrigatoriedade e descrição de uso.
 
-#### B. Discord
+### Ferramenta: `get_component_spec`
 
-```bash
-curl -H "Content-Type: application/json" \
-     -X POST \
-     -d '{"content": "🎉 **Sucesso no deploy!** O Storybook do Design System foi publicado.\n🔗 URL: '"$DEPLOY_URL"'"}' \
-     $DISCORD_WEBHOOK_URL
-```
+- **Parâmetros:**
+  - `componentName` (string): O nome do componente a inspecionar.
+- **Descrição:** Retorna os requisitos de acessibilidade (regras WCAG 2.1 AA, navegação via teclado, atributos ARIA necessários) e estados visuais exigidos descritos em `references/COMPONENT_SPEC.md`.
 
-#### C. Microsoft Teams (Adaptive Card)
+### Ferramenta: `get_component_examples`
 
-```bash
-curl -H "Content-Type: application/json" \
-     -d '{
-       "type": "message",
-       "attachments": [{
-         "contentType": "application/vnd.microsoft.card.adaptive",
-         "content": {
-           "type": "AdaptiveCard",
-           "body": [
-             {"type": "TextBlock", "text": "🚀 Pipeline Concluída com Sucesso!", "weight": "bolder", "size": "medium"},
-             {"type": "TextBlock", "text": "O pacote **'"$PACKAGE_NAME"'** foi publicado no NPM."}
-           ],
-           "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
-           "version": "1.2"
-         }
-       }]
-     }' $TEAMS_WEBHOOK_URL
-```
+- **Parâmetros:**
+  - `componentName` (string): O nome do componente a inspecionar.
+- **Descrição:** Retorna trechos práticos de uso em React (JSX/TSX) e integração com o sistema de temas (`withTheme`).
 
 ---
 
-## 7. Critérios de Conclusão (Critérios de Done da Pipeline)
+## 6. Recursos do MCP (Resources)
 
-1. Os scripts e caminhos definidos nos workflows correspondem exatamente à estrutura de pastas do monorepo.
-2. O workflow do Storybook está perfeitamente amarrado ao resultado positivo dos workflows individuais de biblioteca.
-3. Não há tokens expostos; toda a infraestrutura se apoia estritamente no contexto `${{ secrets.* }}`.
-4. O deploy do Storybook utiliza actions oficiais suportados pela infraestrutura nativa do GitHub Pages.
-5. As etapas de publicação no NPM e as chamadas de notificação de webhook possuem tratamento para que a pipeline não quebre caso os segredos não estejam presentes no repositório (graceful degradation).
+Recursos expõem arquivos estáticos legíveis por agentes de IA utilizando esquemas de URI.
+
+O servidor registrará as seguintes URIs de Recursos:
+
+- `design-system://docs/accessibility` -> Conteúdo integral de `references/ACCESSIBILITY.md`.
+- `design-system://docs/theming` -> Conteúdo integral de `references/THEMING.md`.
+- `design-system://docs/architecture` -> Conteúdo integral de `references/ARCHITECTURE.md`.
+- `design-system://docs/workflow` -> Conteúdo integral de `references/WORKFLOW.md`.
 
 ---
 
-## 8. Entregáveis de Documentação do Repositório
+## 7. Estratégia de Testes
 
-Para consolidar e expor a arquitetura de CI/CD para desenvolvedores e agentes autônomos, a implementação desta especificação exige a criação/atualização dos seguintes documentos no repositório:
+Seguindo a política rígida de TDD do projeto:
 
-1. **Guia de Publicação (`references/PUBLISHING.md`):**
-   - Criação de um novo arquivo detalhando o fluxo de publicação das bibliotecas (`@ds/core`, `@ds/carousel`), empacotamento com `tsup`, tokens de segurança, deploy do Storybook no GitHub Pages e payloads de notificação para Teams, Slack e Discord.
-2. **Diretrizes para Agentes (`AGENTS.md`):**
-   - Atualização do arquivo com links para `references/PUBLISHING.md` e regras claras instruindo agentes de IA a não modificarem as pipelines ou builds do design system sem consentimento prévio.
-3. **Leias-me Principais (`README.md` e `README_PT-BR.md`):**
-   - Adição de uma seção específica sobre CI/CD e Publicação (em ambos os idiomas) mapeando os fluxos e apontando para a documentação técnica oficial.
-4. **Guias de Contribuição (`CONTRIBUTING.md` e `CONTRIBUTING_PT-BR.md`):**
-   - Integração das boas práticas de Integração Contínua e publicação para orientar os desenvolvedores contribuintes.
+- **Testes Unitários:** Testar os parsers de documentação e as resoluções de caminho.
+- **Testes de Integração:** Simular o ciclo de vida do servidor MCP rodando `Vitest`. Enviamos requisições mockadas no padrão JSON-RPC (ex: `initialize`, `tools/list`, `tools/call`) para a stream stdin e lemos a stream stdout correspondente para verificar se os retornos estão de acordo com o protocolo MCP.
+- **Acessibilidade:** N/A para o servidor de terminal, mas as regras de acessibilidade descritas em ferramentas do MCP devem bater com as especificações WCAG 2.1 AA.
+- **Zero any:** Regra rígida aplicada. Todo payload JSON-RPC deve ser tipado utilizando as interfaces do próprio SDK do MCP ou tipos estritos.
+
+---
+
+## 8. Critérios de Done (Definição de Pronto)
+
+1. Novo workspace `packages/mcp-server` criado e integrado ao `pnpm-workspace.yaml`.
+2. Servidor MCP implementado e compilado com sucesso via `pnpm build`.
+3. Ferramentas `list_components`, `get_component_api`, `get_component_spec`, `get_design_tokens` e `get_component_examples` implementadas e retornando payloads válidos.
+4. Recursos `design-system://docs/*` registrados e carregando a documentação markdown correspondente.
+5. 100% dos testes unitários e de integração passando.
+6. Zero tipos `any` ou asserções inseguras no TypeScript.
+7. Script de inicialização configurado (`pnpm mcp` ou `pnpm --filter @ds/mcp-server start`).
