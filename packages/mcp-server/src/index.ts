@@ -9,9 +9,11 @@ import {
   ListComponentsSchema,
   GetComponentApiSchema,
   GetComponentSpecSchema,
+  GetComponentExamplesSchema,
   scanComponents,
   parseComponentApi,
   parseComponentSpec,
+  getComponentExamples,
   findProjectRoot,
 } from './tools/index.js'
 
@@ -176,6 +178,41 @@ server.registerTool(
           {
             type: 'text',
             text: `Erro ao obter especificação do componente: ${errorMessage}`,
+          },
+        ],
+      }
+    }
+  }
+)
+
+// Registro de ferramenta get_component_examples
+server.registerTool(
+  'get_component_examples',
+  {
+    description:
+      'Retorna exemplos de código e snippets de uso prático dos componentes a partir de suas histórias no Storybook.',
+    inputSchema: GetComponentExamplesSchema.shape,
+  },
+  async (args) => {
+    try {
+      const examples = await getComponentExamples(args.componentName)
+      return {
+        content: [
+          {
+            type: 'text',
+            text: JSON.stringify(examples, null, 2),
+          },
+        ],
+      }
+    } catch (error: unknown) {
+      const errorMessage =
+        error instanceof Error ? error.message : String(error)
+      return {
+        isError: true,
+        content: [
+          {
+            type: 'text',
+            text: `Erro ao obter exemplos do componente: ${errorMessage}`,
           },
         ],
       }

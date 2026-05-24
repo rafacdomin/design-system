@@ -2,7 +2,7 @@
 
 ## Status
 
-[ ] Planejada [ ] Em desenvolvimento [ ] Concluída
+[ ] Planejada [ ] Em desenvolvimento [x] Concluída
 
 ## Objetivo
 
@@ -10,12 +10,12 @@ Implementar a ferramenta MCP `get_component_examples` que permite a agentes de I
 
 ## Critérios de Aceite
 
-- [ ] Registro da ferramenta `get_component_examples` com o parâmetro `componentName`.
-- [ ] Lógica para ler e expor os stories de exemplo a partir de `packages/docs/src/stories/` correspondentes ao componente solicitado.
-- [ ] Inclusão de exemplos básicos, variações de estado (loading, disabled) e variantes estéticas (primary, secondary, etc.).
-- [ ] Fornecer snippets de código que incluam importações corretas de pacotes (`@ds/core` e `@ds/carousel`) e a envelopagem necessária (como uso de wrapper ou classes corretas).
-- [ ] Retorno da ferramenta estruturado contendo o código em texto limpo.
-- [ ] Garantia de tratamento de erros amigável caso não haja exemplos documentados para um componente solicitado.
+- [x] Registro da ferramenta `get_component_examples` com o parâmetro `componentName`.
+- [x] Lógica para ler e expor os stories de exemplo a partir de `packages/docs/src/stories/` correspondentes ao componente solicitado.
+- [x] Inclusão de exemplos básicos, variações de estado (loading, disabled) e variantes estéticas (primary, secondary, etc.).
+- [x] Fornecer snippets de código que incluam importações corretas de pacotes (`@ds/core` e `@ds/carousel`) e a envelopagem necessária (como uso de wrapper ou classes corretas).
+- [x] Retorno da ferramenta estruturado contendo o código em texto limpo.
+- [x] Garantia de tratamento de erros amigável caso não haja exemplos documentados para um componente solicitado.
 
 ## Arquivos a Criar/Modificar
 
@@ -266,38 +266,38 @@ O checklist a seguir descreve de forma granular as etapas de desenvolvimento do 
 
 ### Infraestrutura e Setup
 
-- [ ] 1. Garantir que as dependências de testes e do TypeScript (`typescript`) estejam disponíveis no escopo do pacote `packages/mcp-server`.
-- [ ] 2. Criar o arquivo `packages/mcp-server/src/tools/examples.ts`.
-- [ ] 3. Exportar a nova ferramenta a partir de `packages/mcp-server/src/tools/index.ts`.
+- [x] 1. Garantir que as dependências de testes e do TypeScript (`typescript`) estejam disponíveis no escopo do pacote `packages/mcp-server`.
+- [x] 2. Criar o arquivo `packages/mcp-server/src/tools/examples.ts`.
+- [x] 3. Exportar a nova ferramenta a partir de `packages/mcp-server/src/tools/index.ts`.
 
 ### Resolução de Caminhos e Erros
 
-- [ ] 4. Implementar a lógica para encontrar arquivos de stories em `packages/docs/src/stories/` de maneira case-insensitive (ex: `button` busca por `Button.stories.tsx`).
-- [ ] 5. Adicionar tratamento de erros robusto e amigável caso o componente especificado não tenha um arquivo de story correspondente, retornando os nomes dos componentes disponíveis.
-- [ ] 6. Escrever o teste que verifica a falha e o comportamento apropriado do servidor para componentes inexistentes.
+- [x] 4. Implementar a lógica para encontrar arquivos de stories em `packages/docs/src/stories/` de maneira case-insensitive (ex: `button` busca por `Button.stories.tsx`).
+- [x] 5. Adicionar tratamento de erros robusto e amigável caso o componente especificado não tenha um arquivo de story correspondente, retornando os nomes dos componentes disponíveis.
+- [x] 6. Escrever o teste que verifica a falha e o comportamento apropriado do servidor para componentes inexistentes.
 
 ### Parsing de AST do Storybook (TypeScript Compiler API)
 
-- [ ] 7. Implementar a leitura assíncrona do arquivo de stories usando `fs.promises.readFile`.
-- [ ] 8. Inicializar o AST do TypeScript a partir do conteúdo do arquivo com `ts.createSourceFile`.
-- [ ] 9. Implementar a varredura (traverse) para coletar todas as declarações de importações de `@ds/core`, `@ds/carousel` e `react`.
-- [ ] 10. Implementar o parser para extrair as propriedades do objeto literal default export (`meta`), focando em obter `component` e o `render` raiz.
-- [ ] 11. Implementar o parser para identificar todas as exportações nomeadas que representam stories válidos no padrão CSF v3 (`Playground`, `Primary`, etc.).
-- [ ] 12. Implementar a extração dos valores definidos em `args` para cada story individual.
+- [x] 7. Implementar a leitura assíncrona do arquivo de stories usando `fs.promises.readFile`.
+- [x] 8. Inicializar o AST do TypeScript a partir do conteúdo do arquivo com `ts.createSourceFile`.
+- [x] 9. Implementar a varredura (traverse) para coletar todas as declarações de importações de `@ds/core`, `@ds/carousel` e `react`.
+- [x] 10. Implementar o parser para extrair as propriedades do objeto literal default export (`meta`), focando em obter `component` e o `render` raiz.
+- [x] 11. Implementar o parser para identificar todas as exportações nomeadas que representam stories válidos no padrão CSF v3 (`Playground`, `Primary`, etc.).
+- [x] 12. Implementar a extração dos valores definidos em `args` para cada story individual.
 
 ### Geração de Snippets de Código
 
-- [ ] 13. Criar uma função utilitária para converter os valores de `args` de volta para o formato de propriedades JSX (ex: `{ disabled: true }` vira `disabled`, `{ label: "User" }` vira `label="User"`).
-- [ ] 14. Implementar a extração e limpeza do JSX retornado em funções `render` customizadas de stories (ex: desestruturar `render: (args) => (<Button {...args} />)`).
-- [ ] 15. Escrever a lógica para substituir a expressão `{...args}` (ou `{...props}`) pelos atributos JSX reais montados a partir do objeto `args` do story.
-- [ ] 16. Implementar um formatador/limpador simples de código para evitar quebras de linhas órfãs e parênteses sobressalentes na string final.
-- [ ] 17. Inserir de forma programática o exemplo `ThemedIntegration` contendo a envelopagem com `ThemeProvider`.
+- [x] 13. Criar uma função utilitária para converter os valores de `args` de volta para o formato de propriedades JSX (ex: `{ disabled: true }` vira `disabled`, `{ label: "User" }` vira `label="User"`).
+- [x] 14. Implementar a extração e limpeza do JSX retornado em funções `render` customizadas de stories (ex: desestruturar `render: (args) => (<Button {...args} />)`).
+- [x] 15. Escrever a lógica para substituir a expressão `{...args}` (ou `{...props}`) pelos atributos JSX reais montados a partir do objeto `args` do story.
+- [x] 16. Implementar um formatador/limpador simples de código para evitar quebras de linhas órfãs e parênteses sobressalentes na string final.
+- [x] 17. Inserir de forma programática o exemplo `ThemedIntegration` contendo a envelopagem com `ThemeProvider`.
 
 ### Testes e Integração
 
-- [ ] 18. Criar o arquivo de testes unitários `packages/mcp-server/src/__tests__/examples.test.ts`.
-- [ ] 19. Escrever casos de teste validando o parsing de componentes simples (como `Button` com args planos) e componentes compostos (como `Dropdown` ou `Input` com renderizações personalizadas).
-- [ ] 20. Implementar testes de integração JSON-RPC que emulam uma chamada para a ferramenta `get_component_examples` através de entrada padrão (stdio) e verificam o payload de resposta estruturado com sucesso.
+- [x] 18. Criar o arquivo de testes unitários `packages/mcp-server/src/__tests__/examples.test.ts`.
+- [x] 19. Escrever casos de teste validando o parsing de componentes simples (como `Button` com args planos) e componentes compostos (como `Dropdown` ou `Input` com renderizações personalizadas).
+- [x] 20. Implementar testes de integração JSON-RPC que emulam uma chamada para a ferramenta `get_component_examples` através de entrada padrão (stdio) e verificam o payload de resposta estruturado com sucesso.
 
 ---
 
