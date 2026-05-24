@@ -2,7 +2,7 @@
 
 ## Status
 
-[ ] Planejada [ ] Em desenvolvimento [ ] Concluída
+[ ] Planejada [ ] Em desenvolvimento [x] Concluída
 
 ## Objetivo
 
@@ -190,23 +190,23 @@ No bloco `"scripts"`, registrar o comando global para inicialização facilitada
 
 ## Checklist de Implementação
 
-- [ ] 1. Criar a estrutura física de diretórios em `packages/mcp-server/src`.
-- [ ] 2. Criar o arquivo `packages/mcp-server/package.json` com nome `@ds/mcp-server`.
-- [ ] 3. Configurar `"type": "module"` no `package.json` do pacote.
-- [ ] 4. Instalar as dependências de produção do SDK do MCP (`@modelcontextprotocol/sdk`) e validação de schema (`zod`).
-- [ ] 5. Instalar as devDependencies locais (`tsup`, `typescript`, `@types/node`, `vitest`).
-- [ ] 6. Criar o arquivo `packages/mcp-server/tsconfig.json` herdando as diretivas estritas do tsconfig raiz.
-- [ ] 7. Adicionar o type do `"node"` nas configurações de tipo (`types`) do tsconfig local.
-- [ ] 8. Criar o arquivo de configuração `packages/mcp-server/tsup.config.ts`.
-- [ ] 9. Habilitar o entrypoint `src/index.ts`, output format `esm` e geração de dts no config do tsup.
-- [ ] 10. Inserir a instrução de banner de JavaScript no tsup config para injetar a shebang `#!/usr/bin/env node`.
-- [ ] 11. Criar o arquivo de código fonte inicial `packages/mcp-server/src/index.ts`.
-- [ ] 12. Importar as classes de servidor e transporte do SDK oficial do MCP.
-- [ ] 13. Instanciar o servidor MCP (`McpServer`) definindo metadados adequados.
-- [ ] 14. Registrar a ferramenta simples `ping` no servidor usando tipagem estrita para resposta de texto.
-- [ ] 15. Criar a função assíncrona `main` para encapsular a inicialização e acoplar o transporte Stdio.
-- [ ] 16. Configurar tratamento de erro (`catch`) na inicialização do servidor e redirecionamento de logs de runtime para stderr.
-- [ ] 17. Adicionar o script `"mcp": "pnpm --filter @ds/mcp-server start"` no `package.json` na raiz do monorepo.
+- [x] 1. Criar a estrutura física de diretórios em `packages/mcp-server/src`.
+- [x] 2. Criar o arquivo `packages/mcp-server/package.json` com nome `@ds/mcp-server`.
+- [x] 3. Configurar `"type": "module"` no `package.json` do pacote.
+- [x] 4. Instalar as dependências de produção do SDK do MCP (`@modelcontextprotocol/sdk`) e validação de schema (`zod`).
+- [x] 5. Instalar as devDependencies locais (`tsup`, `typescript`, `@types/node`, `vitest`).
+- [x] 6. Criar o arquivo `packages/mcp-server/tsconfig.json` herdando as diretivas estritas do tsconfig raiz.
+- [x] 7. Adicionar o type do `"node"` nas configurações de tipo (`types`) do tsconfig local.
+- [x] 8. Criar o arquivo de configuração `packages/mcp-server/tsup.config.ts`.
+- [x] 9. Habilitar o entrypoint `src/index.ts`, output format `esm` e geração de dts no config do tsup.
+- [x] 10. Inserir a instrução de banner de JavaScript no tsup config para injetar a shebang `#!/usr/bin/env node`.
+- [x] 11. Criar o arquivo de código fonte inicial `packages/mcp-server/src/index.ts`.
+- [x] 12. Importar as classes de servidor e transporte do SDK oficial do MCP.
+- [x] 13. Instanciar o servidor MCP (`McpServer`) definindo metadados adequados.
+- [x] 14. Registrar a ferramenta simples `ping` no servidor usando tipagem estrita para resposta de texto.
+- [x] 15. Criar a função assíncrona `main` para encapsular a inicialização e acoplar o transporte Stdio.
+- [x] 16. Configurar tratamento de erro (`catch`) na inicialização do servidor e redirecionamento de logs de runtime para stderr.
+- [x] 17. Adicionar o script `"mcp": "pnpm --filter @ds/mcp-server start"` no `package.json` na raiz do monorepo.
 - [ ] 18. Executar comando de compilação `pnpm --filter @ds/mcp-server build` para assegurar build correto do bundle.
 - [ ] 19. Verificar se o bundle compilado em `dist/index.js` foi criado com a shebang correta e sem erros de sintaxe.
 - [ ] 20. Executar o servidor localmente de forma manual via linha de comando para certificar que inicia com sucesso sem lançar exceções de runtime.

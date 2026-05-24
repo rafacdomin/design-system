@@ -15,7 +15,8 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "storybook": "turbo storybook",
-    "prepare": "husky"
+    "prepare": "husky",
+    "mcp": "pnpm --filter @ds/mcp-server start"
   },
   "keywords": [
     "design-system",

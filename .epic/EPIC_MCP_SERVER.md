@@ -8,7 +8,7 @@ Este documento descreve o progresso global da implementação do servidor MCP (M
 
 | ID       | Issue                                                                                                                                                               | Dependências           | Estimativa | Status          |
 | :------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------ | :--------------------- | :--------- | :-------------- |
-| **#001** | [Setup do Pacote MCP Server](file:///home/rafacdomin/projetos/design-system/.epic/issues/mcp/001_mcp_setup.md)                                                      | Nenhuma                | M          | `[x] Planejada` |
+| **#001** | [Setup do Pacote MCP Server](file:///home/rafacdomin/projetos/design-system/.epic/issues/mcp/001_mcp_setup.md)                                                      | Nenhuma                | M          | `[x] Concluída` |
 | **#002** | [Ferramenta: get_design_tokens](file:///home/rafacdomin/projetos/design-system/.epic/issues/mcp/002_mcp_tokens_tool.md)                                             | #001                   | P          | `[x] Planejada` |
 | **#003** | [Ferramentas: list_components, get_component_api & get_component_spec](file:///home/rafacdomin/projetos/design-system/.epic/issues/mcp/003_mcp_components_tools.md) | #001                   | M          | `[x] Planejada` |
 | **#004** | [Ferramenta: get_component_examples](file:///home/rafacdomin/projetos/design-system/.epic/issues/mcp/004_mcp_examples_tool.md)                                      | #001, #003             | P          | `[x] Planejada` |
