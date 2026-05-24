@@ -2,7 +2,7 @@
 
 ## Status
 
-[ ] Planejada [ ] Em desenvolvimento [ ] Concluída
+[ ] Planejada [ ] Em desenvolvimento [x] Concluída
 
 ## Objetivo
 
@@ -10,12 +10,12 @@ Implementar a ferramenta MCP `get_design_tokens` no servidor, permitindo que age
 
 ## Critérios de Aceite
 
-- [ ] Definição do schema da ferramenta `get_design_tokens` exposto de acordo com a especificação do MCP.
-- [ ] Implementação de parser ou mapeamento estruturado em TypeScript que lê as especificações de [DESIGN_TOKENS.md](file:///home/rafacdomin/projetos/design-system/references/DESIGN_TOKENS.md) ou expõe os tokens como JSON estruturado.
-- [ ] Separação das cores do tema claro e escuro e cores de foco.
-- [ ] Retorno da ferramenta formatado em JSON estruturado legível para facilitar a interpretação por modelos de IA.
-- [ ] Zero uso de tipos `any` nas estruturas internas de dados e tipagens de retornos.
-- [ ] Testes unitários para validar a exatidão das custom properties retornadas e se a formatação JSON está correta.
+- [x] Definição do schema da ferramenta `get_design_tokens` exposto de acordo com a especificação do MCP.
+- [x] Implementação de parser ou mapeamento estruturado em TypeScript que lê as especificações de [DESIGN_TOKENS.md](file:///home/rafacdomin/projetos/design-system/references/DESIGN_TOKENS.md) ou expõe os tokens como JSON estruturado.
+- [x] Separação das cores do tema claro e escuro e cores de foco.
+- [x] Retorno da ferramenta formatado em JSON estruturado legível para facilitar a interpretação por modelos de IA.
+- [x] Zero uso de tipos `any` nas estruturas internas de dados e tipagens de retornos.
+- [x] Testes unitários para validar a exatidão das custom properties retornadas e se a formatação JSON está correta.
 
 ---
 
@@ -553,42 +553,42 @@ export function filterTokens(
 
 ### 1. Modelos, Interfaces e Tipagem
 
-- [ ] 1.1 Criar o arquivo de ferramenta `packages/mcp-server/src/tools/tokens.ts` no workspace do MCP.
-- [ ] 1.2 Definir a interface estrita `DesignTokens` mapeando todas as chaves e tokens suportados.
-- [ ] 1.3 Definir o tipo e a interface `GetDesignTokensInput` para representar o payload de entrada da ferramenta utilizando schema Zod.
+- [x] 1.1 Criar o arquivo de ferramenta `packages/mcp-server/src/tools/tokens.ts` no workspace do MCP.
+- [x] 1.2 Definir a interface estrita `DesignTokens` mapeando todas as chaves e tokens suportados.
+- [x] 1.3 Definir o tipo e a interface `GetDesignTokensInput` para representar o payload de entrada da ferramenta utilizando schema Zod.
 
 ### 2. Mecanismo de Parsing (DESIGN_TOKENS.md)
 
-- [ ] 2.1 Implementar a função assíncrona `locateDesignTokensPath` de forma resiliente usando `fs/promises.access`.
-- [ ] 2.2 Implementar a função `parseDesignTokens` que lê e converte as linhas do markdown em texto bruto.
-- [ ] 2.3 Adicionar lógica de parsing por regex para a categoria de Tipografia (fontFamilies, fontSizes, fontWeights, lineHeights).
-- [ ] 2.4 Desenvolver o parseador da tabela de Cores Neutras extraindo os valores HSL/HEX de light/dark e uso sugerido.
-- [ ] 2.5 Desenvolver o parser das Cores de Acento (focus-ring, danger), mapeando os valores de light e dark de forma distinta.
-- [ ] 2.6 Implementar o parseador da escala de Espaçamento, extraindo valor rem e o equivalente em pixels.
-- [ ] 2.7 Adicionar regexes de extração para Bordas (raio e espessura) e Sombras do sistema.
-- [ ] 2.8 Adicionar lógica para ler a seção de Breakpoints de responsividade.
+- [x] 2.1 Implementar a função assíncrona `locateDesignTokensPath` de forma resiliente usando `fs/promises.access`.
+- [x] 2.2 Implementar a função `parseDesignTokens` que lê e converte as linhas do markdown em texto bruto.
+- [x] 2.3 Adicionar lógica de parsing por regex para a categoria de Tipografia (fontFamilies, fontSizes, fontWeights, lineHeights).
+- [x] 2.4 Desenvolver o parseador da tabela de Cores Neutras extraindo os valores HSL/HEX de light/dark e uso sugerido.
+- [x] 2.5 Desenvolver o parser das Cores de Acento (focus-ring, danger), mapeando os valores de light e dark de forma distinta.
+- [x] 2.6 Implementar o parseador da escala de Espaçamento, extraindo valor rem e o equivalente em pixels.
+- [x] 2.7 Adicionar regexes de extração para Bordas (raio e espessura) e Sombras do sistema.
+- [x] 2.8 Adicionar lógica para ler a seção de Breakpoints de responsividade.
 
 ### 3. Filtros e Regras de Negócio
 
-- [ ] 3.1 Implementar a função pura `filterTokens` para realizar a filtragem condicional baseada na categoria selecionada.
-- [ ] 3.2 Implementar a resolução dinâmica de temas em `filterTokens`, convertendo a estrutura de cores com propriedades `light` e `dark` para uma propriedade simples `value` baseada no tema selecionado.
-- [ ] 3.3 Adicionar tratamento de exceção (`try/catch`) na execução do parse e retornar mensagens de erro ricas para o agente de IA em vez de lançar erros não tratados.
+- [x] 3.1 Implementar a função pura `filterTokens` para realizar a filtragem condicional baseada na categoria selecionada.
+- [x] 3.2 Implementar a resolução dinâmica de temas em `filterTokens`, convertendo a estrutura de cores com propriedades `light` e `dark` para uma propriedade simples `value` baseada no tema selecionado.
+- [x] 3.3 Adicionar tratamento de exceção (`try/catch`) na execução do parse e retornar mensagens de erro ricas para o agente de IA em vez de lançar erros não tratados.
 
 ### 4. Integração no Servidor MCP
 
-- [ ] 4.1 Exportar a ferramenta no arquivo de registro central `packages/mcp-server/src/tools/index.ts`.
-- [ ] 4.2 Registrar a ferramenta `get_design_tokens` usando o SDK no arquivo de boot `packages/mcp-server/src/index.ts`, definindo o nome da ferramenta e o schema do Zod.
-- [ ] 4.3 Mapear o retorno da ferramenta formatando o JSON resultante em string no array de conteúdo (`content`).
+- [x] 4.1 Exportar a ferramenta no arquivo de registro central `packages/mcp-server/src/tools/index.ts`.
+- [x] 4.2 Registrar a ferramenta `get_design_tokens` usando o SDK no arquivo de boot `packages/mcp-server/src/index.ts`, definindo o nome da ferramenta e o schema do Zod.
+- [x] 4.3 Mapear o retorno da ferramenta formatando o JSON resultante em string no array de conteúdo (`content`).
 
 ### 5. Cobertura de Testes (TDD)
 
-- [ ] 5.1 Criar o arquivo de testes unitários `packages/mcp-server/src/__tests__/tokens.test.ts`.
-- [ ] 5.2 Escrever testes para validar se a leitura e parser de um arquivo markdown mockado contendo a especificação dos tokens gera o JSON correspondente correto.
-- [ ] 5.3 Escrever testes unitários para a função `filterTokens` validando a separação por categorias.
-- [ ] 5.4 Validar o comportamento de filtragem de tema (Light vs Dark), garantindo a substituição correta de chaves.
-- [ ] 5.5 Desenvolver teste de integração simulando a chamada JSON-RPC da ferramenta através de streams StdInput e StdOutput.
-- [ ] 5.6 Executar os testes localmente com `pnpm test` e verificar se a cobertura da ferramenta está em 100%.
-- [ ] 5.7 Executar o linter e o formatador de código (`pnpm lint`, `pnpm format`) garantindo zero warnings ou erros de formatação.
+- [x] 5.1 Criar o arquivo de testes unitários `packages/mcp-server/src/__tests__/tokens.test.ts`.
+- [x] 5.2 Escrever testes para validar se a leitura e parser de um arquivo markdown mockado contendo a especificação dos tokens gera o JSON correspondente correto.
+- [x] 5.3 Escrever testes unitários para a função `filterTokens` validando a separação por categorias.
+- [x] 5.4 Validar o comportamento de filtragem de tema (Light vs Dark), garantindo a substituição correta de chaves.
+- [x] 5.5 Desenvolver teste de integração simulando a chamada JSON-RPC da ferramenta através de streams StdInput e StdOutput.
+- [x] 5.6 Executar os testes localmente com `pnpm test` e verificar se a cobertura da ferramenta está em 100%.
+- [x] 5.7 Executar o linter e o formatador de código (`pnpm lint`, `pnpm format`) garantindo zero warnings ou erros de formatação.
 
 ---
 
