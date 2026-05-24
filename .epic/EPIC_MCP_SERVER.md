@@ -13,7 +13,7 @@ Este documento descreve o progresso global da implementação do servidor MCP (M
 | **#003** | [Ferramentas: list_components, get_component_api & get_component_spec](file:///home/rafacdomin/projetos/design-system/.epic/issues/mcp/003_mcp_components_tools.md) | #001                   | M          | `[x] Concluída` |
 | **#004** | [Ferramenta: get_component_examples](file:///home/rafacdomin/projetos/design-system/.epic/issues/mcp/004_mcp_examples_tool.md)                                      | #001, #003             | P          | `[x] Concluída` |
 | **#005** | [Recursos: design-system://docs/\*](file:///home/rafacdomin/projetos/design-system/.epic/issues/mcp/005_mcp_resources.md)                                           | #001                   | P          | `[x] Concluída` |
-| **#006** | [Testes Unitários, de Integração JSON-RPC e Validação](file:///home/rafacdomin/projetos/design-system/.epic/issues/mcp/006_mcp_integration_tests.md)                | #002, #003, #004, #005 | M          | `[x] Planejada` |
+| **#006** | [Testes Unitários, de Integração JSON-RPC e Validação](file:///home/rafacdomin/projetos/design-system/.epic/issues/mcp/006_mcp_integration_tests.md)                | #002, #003, #004, #005 | M          | `[x] Concluída` |
 
 ---
 

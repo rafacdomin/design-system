@@ -2,7 +2,7 @@
 
 ## Status
 
-[x] Planejada [ ] Em desenvolvimento [ ] Concluída
+[ ] Planejada [ ] Em desenvolvimento [x] Concluída
 
 ## Objetivo
 
@@ -10,11 +10,11 @@ Escrever testes unitários completos e testes de integração JSON-RPC usando `V
 
 ## Critérios de Aceite
 
-- [ ] Suite de testes unitários em `packages/mcp-server/src/__tests__/` com cobertura de 100% nas funções de parse e mapeamento de recursos e ferramentas.
-- [ ] Suite de testes de integração JSON-RPC que simula o fluxo do ciclo de vida do servidor (inicialização via handshake, chamada de `list_components`, `get_design_tokens` e leitura de recurso `design-system://docs/accessibility`) escrevendo na stream `stdin` e lendo a stream `stdout` mockadas.
-- [ ] Zero uso de tipos `any` nas declarações e asserções de mock de streams ou mocks do SDK do MCP.
-- [ ] Validação do build de produção (`pnpm build`) executada sem erros de compilação ou de types.
-- [ ] Execução manual com sucesso do inspector de MCP localmente para assegurar a conformidade do servidor com os padrões formais do protocolo.
+- [x] Suite de testes unitários em `packages/mcp-server/src/__tests__/` com cobertura de 100% nas funções de parse e mapeamento de recursos e ferramentas.
+- [x] Suite de testes de integração JSON-RPC que simula o fluxo do ciclo de vida do servidor (inicialização via handshake, chamada de `list_components`, `get_design_tokens` e leitura de recurso `design-system://docs/accessibility`) escrevendo na stream `stdin` e lendo a stream `stdout` mockadas.
+- [x] Zero uso de tipos `any` nas declarações e asserções de mock de streams ou mocks do SDK do MCP.
+- [x] Validação do build de produção (`pnpm build`) executada sem erros de compilação ou de types.
+- [x] Execução manual com sucesso do inspector de MCP localmente para assegurar a conformidade do servidor com os padrões formais do protocolo.
 
 ## Arquivos a Criar/Modificar
 
@@ -230,23 +230,23 @@ describe('MCP Server Integration Tests', () => {
 
 ## Checklist de Implementação
 
-- [ ] 1. Configurar dependência do `vitest` no `package.json` de `packages/mcp-server`
-- [ ] 2. Adicionar script `"test": "vitest run"` no `package.json` do servidor MCP
-- [ ] 3. Criar arquivo de configuração `packages/mcp-server/vitest.config.ts` herdando os padrões do monorepo
-- [ ] 4. Ajustar `tsconfig.json` do servidor para incluir diretórios e referências de tipos de teste do Vitest
-- [ ] 5. Criar `packages/mcp-server/src/__tests__/mcp-test-client.ts` para orquestração de testes JSON-RPC
-- [ ] 6. Garantir que nenhuma tipagem do arquivo `mcp-test-client.ts` contenha `any`
-- [ ] 7. Implementar parser de quebra de linha com buffer em `mcp-test-client.ts` para processamento correto de pacotes parciais
-- [ ] 8. Criar arquivo principal de testes `packages/mcp-server/src/__tests__/server.test.ts`
-- [ ] 9. Refatorar o ponto de entrada em `packages/mcp-server/src/index.ts` expor a fábrica `createServer` sem side-effects
-- [ ] 10. Implementar teste integrado de Handshake básico (`initialize` + `notifications/initialized`)
-- [ ] 11. Implementar teste integrado para chamada à ferramenta `get_design_tokens` após handshake
-- [ ] 12. Implementar teste integrado para chamada à ferramenta `list_components`
-- [ ] 13. Implementar teste integrado para chamada à ferramenta `get_component_api` e validar erros de parâmetros inválidos
-- [ ] 14. Implementar teste integrado para chamada à ferramenta `get_component_spec` e validação do parse de COMPONENT_SPEC.md
-- [ ] 15. Implementar teste integrado para chamada à ferramenta `get_component_examples`
-- [ ] 16. Implementar teste integrado para leitura de recursos mapeados em `design-system://docs/*`
-- [ ] 17. Implementar teste específico de segurança contra Directory Traversal em `resources/read`
-- [ ] 18. Adicionar testes unitários com cobertura de 100% nas funções de mapeamento e parsing interno do servidor
-- [ ] 19. Validar a execução completa da suíte de testes localmente
-- [ ] 20. Executar a validação manual usando o `@modelcontextprotocol/inspector` apontando para o build de produção do servidor
+- [x] 1. Configurar dependência do `vitest` no `package.json` de `packages/mcp-server`
+- [x] 2. Adicionar script `"test": "vitest run"` no `package.json` do servidor MCP
+- [x] 3. Criar arquivo de configuração `packages/mcp-server/vitest.config.ts` herdando os padrões do monorepo
+- [x] 4. Ajustar `tsconfig.json` do servidor para incluir diretórios e referências de tipos de teste do Vitest
+- [x] 5. Criar `packages/mcp-server/src/__tests__/mcp-test-client.ts` para orquestração de testes JSON-RPC
+- [x] 6. Garantir que nenhuma tipagem do arquivo `mcp-test-client.ts` contenha `any`
+- [x] 7. Implementar parser de quebra de linha com buffer em `mcp-test-client.ts` para processamento correto de pacotes parciais
+- [x] 8. Criar arquivo principal de testes `packages/mcp-server/src/__tests__/server.test.ts`
+- [x] 9. Refatorar o ponto de entrada em `packages/mcp-server/src/index.ts` expor a fábrica `createServer` sem side-effects
+- [x] 10. Implementar teste integrado de Handshake básico (`initialize` + `notifications/initialized`)
+- [x] 11. Implementar teste integrado para chamada à ferramenta `get_design_tokens` após handshake
+- [x] 12. Implementar teste integrado para chamada à ferramenta `list_components`
+- [x] 13. Implementar teste integrado para chamada à ferramenta `get_component_api` e validar erros de parâmetros inválidos
+- [x] 14. Implementar teste integrado para chamada à ferramenta `get_component_spec` e validação do parse de COMPONENT_SPEC.md
+- [x] 15. Implementar teste integrado para chamada à ferramenta `get_component_examples`
+- [x] 16. Implementar teste integrado para leitura de recursos mapeados em `design-system://docs/*`
+- [x] 17. Implementar teste específico de segurança contra Directory Traversal em `resources/read`
+- [x] 18. Adicionar testes unitários com cobertura de 100% nas funções de mapeamento e parsing interno do servidor
+- [x] 19. Validar a execução completa da suíte de testes localmente
+- [x] 20. Executar a validação manual usando o `@modelcontextprotocol/inspector` apontando para o build de produção do servidor
