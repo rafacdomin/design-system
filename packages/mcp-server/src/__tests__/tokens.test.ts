@@ -370,10 +370,13 @@ describe('Design Tokens MCP Tool - Integration Tests', () => {
     })
 
     // Register the actual get_design_tokens tool with error handling
-    server.tool(
+    server.registerTool(
       'get_design_tokens',
-      'Retorna os design tokens do projeto de forma estruturada, com opção de filtro por categoria e por tema.',
-      GetDesignTokensSchema.shape,
+      {
+        description:
+          'Retorna os design tokens do projeto de forma estruturada, com opção de filtro por categoria e por tema.',
+        inputSchema: GetDesignTokensSchema.shape,
+      },
       async (args) => {
         try {
           const tokensPath = await locateDesignTokensPath()

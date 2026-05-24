@@ -1,10 +1,18 @@
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js'
 import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js'
+import * as path from 'path'
 import {
   GetDesignTokensSchema,
   locateDesignTokensPath,
   parseDesignTokens,
   filterTokens,
+  ListComponentsSchema,
+  GetComponentApiSchema,
+  GetComponentSpecSchema,
+  scanComponents,
+  parseComponentApi,
+  parseComponentSpec,
+  findProjectRoot,
 } from './tools/index.js'
 
 // Inicializa o servidor MCP do Design System
@@ -14,10 +22,13 @@ const server = new McpServer({
 })
 
 // Registro de ferramenta get_design_tokens
-server.tool(
+server.registerTool(
   'get_design_tokens',
-  'Retorna os design tokens do projeto de forma estruturada, com opção de filtro por categoria e por tema.',
-  GetDesignTokensSchema.shape,
+  {
+    description:
+      'Retorna os design tokens do projeto de forma estruturada, com opção de filtro por categoria e por tema.',
+    inputSchema: GetDesignTokensSchema.shape,
+  },
   async (args) => {
     try {
       const tokensPath = await locateDesignTokensPath()
@@ -47,11 +58,137 @@ server.tool(
   }
 )
 
+// Registro de ferramenta list_components
+server.registerTool(
+  'list_components',
+  {
+    description:
+      'Lista todos os componentes disponíveis no Design System, permitindo filtrar por pacote (core, carousel ou all).',
+    inputSchema: ListComponentsSchema.shape,
+  },
+  async (args) => {
+    try {
+      const components = await scanComponents(args.package)
+      return {
+        content: [
+          {
+            type: 'text',
+            text: JSON.stringify(components, null, 2),
+          },
+        ],
+      }
+    } catch (error: unknown) {
+      const errorMessage =
+        error instanceof Error ? error.message : String(error)
+      return {
+        isError: true,
+        content: [
+          {
+            type: 'text',
+            text: `Erro ao listar componentes: ${errorMessage}`,
+          },
+        ],
+      }
+    }
+  }
+)
+
+// Registro de ferramenta get_component_api
+server.registerTool(
+  'get_component_api',
+  {
+    description:
+      'Retorna as interfaces TypeScript e propriedades (API) do componente com seus comentários JSDoc.',
+    inputSchema: GetComponentApiSchema.shape,
+  },
+  async (args) => {
+    try {
+      const components = await scanComponents('all')
+      const target = components.find(
+        (c) => c.name.toLowerCase() === args.componentName.toLowerCase()
+      )
+      if (!target) {
+        throw new Error(
+          `Componente '${args.componentName}' não encontrado no projeto.`
+        )
+      }
+      const rootDir = findProjectRoot()
+      const absolutePath = path.resolve(
+        rootDir,
+        target.path,
+        `${target.name}.tsx`
+      )
+      const api = parseComponentApi(absolutePath)
+      return {
+        content: [
+          {
+            type: 'text',
+            text: JSON.stringify(api, null, 2),
+          },
+        ],
+      }
+    } catch (error: unknown) {
+      const errorMessage =
+        error instanceof Error ? error.message : String(error)
+      return {
+        isError: true,
+        content: [
+          {
+            type: 'text',
+            text: `Erro ao obter API do componente: ${errorMessage}`,
+          },
+        ],
+      }
+    }
+  }
+)
+
+// Registro de ferramenta get_component_spec
+server.registerTool(
+  'get_component_spec',
+  {
+    description:
+      'Retorna as especificações funcionais, regras de acessibilidade WCAG/WAI-ARIA e comportamentos de estados do componente a partir do COMPONENT_SPEC.md.',
+    inputSchema: GetComponentSpecSchema.shape,
+  },
+  async (args) => {
+    try {
+      const spec = parseComponentSpec(args.componentName)
+      if (!spec) {
+        throw new Error(
+          `Especificação do componente '${args.componentName}' não encontrada no COMPONENT_SPEC.md.`
+        )
+      }
+      return {
+        content: [
+          {
+            type: 'text',
+            text: JSON.stringify(spec, null, 2),
+          },
+        ],
+      }
+    } catch (error: unknown) {
+      const errorMessage =
+        error instanceof Error ? error.message : String(error)
+      return {
+        isError: true,
+        content: [
+          {
+            type: 'text',
+            text: `Erro ao obter especificação do componente: ${errorMessage}`,
+          },
+        ],
+      }
+    }
+  }
+)
+
 // Registro de ferramenta de teste simples (ping)
-server.tool(
+server.registerTool(
   'ping',
-  'Verifica a conectividade do servidor MCP do Design System',
-  {},
+  {
+    description: 'Verifica a conectividade do servidor MCP do Design System',
+  },
   async () => {
     return {
       content: [

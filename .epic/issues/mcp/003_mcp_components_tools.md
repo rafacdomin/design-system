@@ -2,7 +2,7 @@
 
 ## Status
 
-[x] Planejada [ ] Em desenvolvimento [ ] Concluída
+[ ] Planejada [ ] Em desenvolvimento [x] Concluída
 
 ## Objetivo
 
@@ -10,13 +10,13 @@ Implementar as ferramentas MCP responsáveis por mapear os componentes do design
 
 ## Critérios de Aceite
 
-- [ ] Registro das ferramentas MCP no servidor principal.
-- [ ] Lógica para varrer dinamicamente ou mapear estaticamente a pasta `packages/core/src/components` e `packages/carousel/src/components` no `list_components` para identificar componentes disponíveis.
-- [ ] Implementação de parser (usando regex seguro, parser de TS ou mapeamento robusto) no `get_component_api` que lê as assinaturas e interfaces de props (`ButtonProps`, `InputProps`, etc.) do código fonte e extrai as descrições JSDoc.
-- [ ] Implementação no `get_component_spec` de um parser markdown que extrai as seções de especificações de comportamento, estados e acessibilidade correspondentes a cada componente a partir do arquivo [COMPONENT_SPEC.md](file:///home/rafacdomin/projetos/design-system/references/COMPONENT_SPEC.md).
-- [ ] Tratamento amigável de erro se for solicitado um componente inexistente.
-- [ ] Garante que subcomponentes de Compound Components (como `Dropdown.Item` ou `Input.StartIcon`) sejam identificados e documentados na API do componente pai.
-- [ ] Zero tipos `any` nas funções de varredura e parse.
+- [x] Registro das ferramentas MCP no servidor principal.
+- [x] Lógica para varrer dinamicamente ou mapear estaticamente a pasta `packages/core/src/components` e `packages/carousel/src/components` no `list_components` para identificar componentes disponíveis.
+- [x] Implementação de parser (usando regex seguro, parser de TS ou mapeamento robusto) no `get_component_api` que lê as assinaturas e interfaces de props (`ButtonProps`, `InputProps`, etc.) do código fonte e extrai as descrições JSDoc.
+- [x] Implementação no `get_component_spec` de um parser markdown que extrai as seções de especificações de comportamento, estados e acessibilidade correspondentes a cada componente a partir do arquivo [COMPONENT_SPEC.md](file:///home/rafacdomin/projetos/design-system/references/COMPONENT_SPEC.md).
+- [x] Tratamento amigável de erro se for solicitado um componente inexistente.
+- [x] Garante que subcomponentes de Compound Components (como `Dropdown.Item` ou `Input.StartIcon`) sejam identificados e documentados na API do componente pai.
+- [x] Zero tipos `any` nas funções de varredura e parse.
 
 ## Arquivos a Criar/Modificar
 
@@ -345,23 +345,23 @@ export function parseComponentSpec(
 
 ## Checklist de Implementação
 
-- [ ] 1. Configurar dependências e typings necessários no `packages/mcp-server/package.json` (incluindo `typescript` como devDependency e peer dependency se necessário).
-- [ ] 2. Criar o arquivo `packages/mcp-server/src/tools/components.ts` para agrupar as implementações lógicas das ferramentas.
-- [ ] 3. Implementar a lógica de varredura `scanComponents` para ler dinamicamente as pastas `packages/core/src/components` e `packages/carousel/src/components`.
-- [ ] 4. Adicionar lógica em `scanComponents` para ignorar diretórios que não possuem arquivos `.tsx`.
-- [ ] 5. Implementar função `findSubcomponents` para inspecionar os arquivos `.tsx` em busca de atribuições de subcomponentes Compound (ex: `Dropdown.Item`).
-- [ ] 6. Escrever testes unitários em Vitest para cobrir os retornos corretos de `list_components`, validando pacotes individuais e filtros.
-- [ ] 7. Implementar o parser TypeScript AST `parseComponentApi` usando `ts.createSourceFile`.
-- [ ] 8. Configurar o parser AST para identificar todas as interfaces terminadas em `Props` que estão declaradas no arquivo do componente.
-- [ ] 9. Adicionar tratamento robusto de comentários JSDoc de propriedades usando a API de AST ou `ts.getLeadingCommentRanges` caso os nós nativos do compilador não preencham.
-- [ ] 10. Implementar tratamento de props de subcomponentes de Compound no mesmo retorno (ex: as props de `DropdownItemProps` agregadas em `Dropdown`).
-- [ ] 11. Escrever testes unitários em Vitest para `get_component_api` utilizando o código fonte do componente `Button` e do componente `Input`.
-- [ ] 12. Implementar a função `parseComponentSpec` para fatiar o arquivo [COMPONENT_SPEC.md](file:///home/rafacdomin/projetos/design-system/references/COMPONENT_SPEC.md) com base em expressões regulares estruturadas.
-- [ ] 13. Garantir que o parser do markdown capture corretamente a descrição do componente e todas as seções (Ex: Props, Comportamentos, Acessibilidade).
-- [ ] 14. Escrever testes unitários em Vitest para `get_component_spec` certificando que a especificação de um componente é retornada por completo.
-- [ ] 15. Definir schemas de validação Zod estruturados para os argumentos de entrada das três ferramentas em `packages/mcp-server/src/tools/index.ts`.
-- [ ] 16. Mapear e registrar as ferramentas no MCP Server atendendo ao request handler de `ListToolsRequestSchema`.
-- [ ] 17. Implementar roteamento das requisições JSON-RPC em `packages/mcp-server/src/index.ts` sob o handler de `CallToolRequestSchema`.
-- [ ] 18. Adicionar tratamento amigável de erro para componentes inexistentes ou falhas ao ler diretórios (evitando derrubar o processo principal stdio).
-- [ ] 19. Escrever testes de integração do ciclo JSON-RPC do MCP Server mockando `stdin`/`stdout` para as três ferramentas de componentes.
-- [ ] 20. Rodar suite de lint, formatação e verificação de tipos estritos (sem uso de `any`) para garantir conformidade com o projeto.
+- [x] 1. Configurar dependências e typings necessários no `packages/mcp-server/package.json` (incluindo `typescript` como devDependency e peer dependency se necessário).
+- [x] 2. Criar o arquivo `packages/mcp-server/src/tools/components.ts` para agrupar as implementações lógicas das ferramentas.
+- [x] 3. Implementar a lógica de varredura `scanComponents` para ler dinamicamente as pastas `packages/core/src/components` e `packages/carousel/src/components`.
+- [x] 4. Adicionar lógica em `scanComponents` para ignorar diretórios que não possuem arquivos `.tsx`.
+- [x] 5. Implementar função `findSubcomponents` para inspecionar os arquivos `.tsx` em busca de atribuições de subcomponentes Compound (ex: `Dropdown.Item`).
+- [x] 6. Escrever testes unitários em Vitest para cobrir os retornos corretos de `list_components`, validando pacotes individuais e filtros.
+- [x] 7. Implementar o parser TypeScript AST `parseComponentApi` usando `ts.createSourceFile`.
+- [x] 8. Configurar o parser AST para identificar todas as interfaces terminadas em `Props` que estão declaradas no arquivo do componente.
+- [x] 9. Adicionar tratamento robusto de comentários JSDoc de propriedades usando a API de AST ou `ts.getLeadingCommentRanges` caso os nós nativos do compilador não preencham.
+- [x] 10. Implementar tratamento de props de subcomponentes de Compound no mesmo retorno (ex: as props de `DropdownItemProps` agregadas em `Dropdown`).
+- [x] 11. Escrever testes unitários em Vitest para `get_component_api` utilizando o código fonte do componente `Button` e do componente `Input`.
+- [x] 12. Implementar a função `parseComponentSpec` para fatiar o arquivo [COMPONENT_SPEC.md](file:///home/rafacdomin/projetos/design-system/references/COMPONENT_SPEC.md) com base em expressões regulares estruturadas.
+- [x] 13. Garantir que o parser do markdown capture corretamente a descrição do componente e todas as seções (Ex: Props, Comportamentos, Acessibilidade).
+- [x] 14. Escrever testes unitários em Vitest para `get_component_spec` certificando que a especificação de um componente é retornada por completo.
+- [x] 15. Definir schemas de validação Zod estruturados para os argumentos de entrada das três ferramentas em `packages/mcp-server/src/tools/index.ts`.
+- [x] 16. Mapear e registrar as ferramentas no MCP Server atendendo ao request handler de `ListToolsRequestSchema`.
+- [x] 17. Implementar roteamento das requisições JSON-RPC em `packages/mcp-server/src/index.ts` sob o handler de `CallToolRequestSchema`.
+- [x] 18. Adicionar tratamento amigável de erro para componentes inexistentes ou falhas ao ler diretórios (evitando derrubar o processo principal stdio).
+- [x] 19. Escrever testes de integração do ciclo JSON-RPC do MCP Server mockando `stdin`/`stdout` para as três ferramentas de componentes.
+- [x] 20. Rodar suite de lint, formatação e verificação de tipos estritos (sem uso de `any`) para garantir conformidade com o projeto.
