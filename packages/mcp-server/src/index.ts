@@ -1,6 +1,7 @@
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js'
 import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js'
 import * as path from 'path'
+import { registerResources } from './resources/index.js'
 import {
   GetDesignTokensSchema,
   locateDesignTokensPath,
@@ -22,6 +23,9 @@ const server = new McpServer({
   name: 'design-system-mcp-server',
   version: '1.0.0',
 })
+
+// Registro de Recursos
+registerResources(server)
 
 // Registro de ferramenta get_design_tokens
 server.registerTool(

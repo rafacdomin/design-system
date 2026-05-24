@@ -2,7 +2,7 @@
 
 ## Status
 
-[ ] Planejada [ ] Em desenvolvimento [ ] Concluída
+[ ] Planejada [ ] Em desenvolvimento [x] Concluída
 
 ## Objetivo
 
@@ -10,16 +10,16 @@ Configurar a exposição de recursos estáticos no servidor MCP, disponibilizand
 
 ## Critérios de Aceite
 
-- [ ] Registro dos recursos no MCP Server atendendo ao método `resources/list`.
-- [ ] Implementação de mapeamento de URIs de recurso:
+- [x] Registro dos recursos no MCP Server atendendo ao método `resources/list`.
+- [x] Implementação de mapeamento de URIs de recurso:
   - `design-system://docs/accessibility` -> mapeia para [references/ACCESSIBILITY.md](file:///home/rafacdomin/projetos/design-system/references/ACCESSIBILITY.md)
   - `design-system://docs/theming` -> mapeia para [references/THEMING.md](file:///home/rafacdomin/projetos/design-system/references/THEMING.md)
   - `design-system://docs/tokens` -> mapeia para [references/DESIGN_TOKENS.md](file:///home/rafacdomin/projetos/design-system/references/DESIGN_TOKENS.md)
   - `design-system://docs/architecture` -> mapeia para [references/ARCHITECTURE.md](file:///home/rafacdomin/projetos/design-system/references/ARCHITECTURE.md)
   - `design-system://docs/workflow` -> mapeia para [references/WORKFLOW.md](file:///home/rafacdomin/projetos/design-system/references/WORKFLOW.md)
-- [ ] Lógica no método `resources/read` para ler os arquivos markdown em tempo real do sistema de arquivos e retornar o conteúdo como texto puro (`textDocuments`).
-- [ ] Testes unitários para validar a resolução correta de caminhos absolutos e se o conteúdo do recurso é retornado corretamente em formato UTF-8.
-- [ ] Proteção contra ataques de Directory Traversal no carregamento de arquivos a partir de URIs arbitrárias.
+- [x] Lógica no método `resources/read` para ler os arquivos markdown em tempo real do sistema de arquivos e retornar o conteúdo como texto puro (`textDocuments`).
+- [x] Testes unitários para validar a resolução correta de caminhos absolutos e se o conteúdo do recurso é retornado corretamente em formato UTF-8.
+- [x] Proteção contra ataques de Directory Traversal no carregamento de arquivos a partir de URIs arbitrárias.
 
 ## Arquivos a Criar/Modificar
 
@@ -344,28 +344,28 @@ describe('MCP Resources System', () => {
 
 ## Checklist de Implementação
 
-- [ ] 1. Criar o subdiretório `packages/mcp-server/src/resources/` caso não exista.
-- [ ] 2. Criar o arquivo de implementação de recursos `packages/mcp-server/src/resources/index.ts`.
-- [ ] 3. Declarar e exportar o dicionário estrito `DOCS_MAP` mapeando cada chave do recurso ao respectivo arquivo em `references/` (ex: `accessibility` -> `ACCESSIBILITY.md`).
-- [ ] 4. Definir metadados claros (`title` e `description`) em português para cada entrada do `DOCS_MAP`.
-- [ ] 5. Implementar a função `getReferencesDir` para resolver de forma dinâmica a pasta `/references` suportando caminhos em `dist` e `src`.
-- [ ] 6. Implementar validações para levantar erro caso o diretório de referências não seja localizado pela função `getReferencesDir`.
-- [ ] 7. Implementar a função `getSafeDocPath` para validar o parâmetro `topic` de entrada.
-- [ ] 8. Aplicar normalização case-insensitive na pesquisa da whitelist em `getSafeDocPath`.
-- [ ] 9. Adicionar verificação de segurança em `getSafeDocPath` usando `path.resolve` para assegurar a canonicalização do caminho final.
-- [ ] 10. Implementar verificação de Directory Traversal com prefixo contido (`startsWith` contendo `path.sep` final) no caminho absoluto gerado.
-- [ ] 11. Implementar verificação secundária de segurança usando `path.relative()` garantindo que o caminho não saia da base.
-- [ ] 12. Implementar a função principal `registerResources(server: McpServer)` para gerenciar os registros.
-- [ ] 13. Iterar sobre as chaves de `DOCS_MAP` usando `server.registerResource` para publicar individualmente cada recurso.
-- [ ] 14. Configurar o mimeType do recurso registrado como `text/markdown`.
-- [ ] 15. Adicionar a leitura assíncrona do arquivo de documentação do disco com `fs.promises.readFile` no encoding `utf-8`.
-- [ ] 16. Estruturar a resposta do handler do recurso seguindo a interface do protocolo MCP (`contents: [{ uri, mimeType, text }]`).
-- [ ] 17. Adicionar bloco try-catch robusto e direcionar erros na leitura para o terminal stderr (`console.error`).
-- [ ] 18. Atualizar o arquivo principal `packages/mcp-server/src/index.ts` importando e registrando os recursos do módulo.
-- [ ] 19. Assegurar conformidade com a especificação ESM usando sufixos `.js` nos caminhos de importação relativos.
-- [ ] 20. Criar o arquivo de testes unitários `packages/mcp-server/src/resources/index.test.ts`.
-- [ ] 21. Adicionar testes unitários para a função `getReferencesDir` cobrindo cenários de sucesso e caminhos inexistentes.
-- [ ] 22. Adicionar testes unitários para `getSafeDocPath` validando sucesso, case-insensitivity, trim de espaços e falhas com tópicos inexistentes.
-- [ ] 23. Adicionar testes simulando tentativas de path traversal em `getSafeDocPath` para validar o bloqueio do ataque.
-- [ ] 24. Adicionar testes verificando se todos os recursos no `DOCS_MAP` foram corretamente registrados na inicialização do servidor.
-- [ ] 25. Executar a suíte de testes usando `pnpm test` e verificar se a cobertura de testes é atendida sem erros de TypeScript ou tempo de execução.
+- [x] 1. Criar o subdiretório `packages/mcp-server/src/resources/` caso não exista.
+- [x] 2. Criar o arquivo de implementação de recursos `packages/mcp-server/src/resources/index.ts`.
+- [x] 3. Declarar e exportar o dicionário estrito `DOCS_MAP` mapeando cada chave do recurso ao respectivo arquivo em `references/` (ex: `accessibility` -> `ACCESSIBILITY.md`).
+- [x] 4. Definir metadados claros (`title` e `description`) em português para cada entrada do `DOCS_MAP`.
+- [x] 5. Implementar a função `getReferencesDir` para resolver de forma dinâmica a pasta `/references` suportando caminhos em `dist` e `src`.
+- [x] 6. Implementar validações para levantar erro caso o diretório de referências não seja localizado pela função `getReferencesDir`.
+- [x] 7. Implementar a função `getSafeDocPath` para validar o parâmetro `topic` de entrada.
+- [x] 8. Aplicar normalização case-insensitive na pesquisa da whitelist em `getSafeDocPath`.
+- [x] 9. Adicionar verificação de segurança em `getSafeDocPath` usando `path.resolve` para assegurar a canonicalização do caminho final.
+- [x] 10. Implementar verificação de Directory Traversal com prefixo contido (`startsWith` contendo `path.sep` final) no caminho absoluto gerado.
+- [x] 11. Implementar verificação secundária de segurança usando `path.relative()` garantindo que o caminho não saia da base.
+- [x] 12. Implementar a função principal `registerResources(server: McpServer)` para gerenciar os registros.
+- [x] 13. Iterar sobre as chaves de `DOCS_MAP` usando `server.registerResource` para publicar individualmente cada recurso.
+- [x] 14. Configurar o mimeType do recurso registrado como `text/markdown`.
+- [x] 15. Adicionar a leitura assíncrona do arquivo de documentação do disco com `fs.promises.readFile` no encoding `utf-8`.
+- [x] 16. Estruturar a resposta do handler do recurso seguindo a interface do protocolo MCP (`contents: [{ uri, mimeType, text }]`).
+- [x] 17. Adicionar bloco try-catch robusto e direcionar erros na leitura para o terminal stderr (`console.error`).
+- [x] 18. Atualizar o arquivo principal `packages/mcp-server/src/index.ts` importando e registrando os recursos do módulo.
+- [x] 19. Assegurar conformidade com a especificação ESM usando sufixos `.js` nos caminhos de importação relativos.
+- [x] 20. Criar o arquivo de testes unitários `packages/mcp-server/src/resources/index.test.ts`.
+- [x] 21. Adicionar testes unitários para a função `getReferencesDir` cobrindo cenários de sucesso e caminhos inexistentes.
+- [x] 22. Adicionar testes unitários para `getSafeDocPath` validando sucesso, case-insensitivity, trim de espaços e falhas com tópicos inexistentes.
+- [x] 23. Adicionar testes simulando tentativas de path traversal em `getSafeDocPath` para validar o bloqueio do ataque.
+- [x] 24. Adicionar testes verificando se todos os recursos no `DOCS_MAP` foram corretamente registrados na inicialização do servidor.
+- [x] 25. Executar a suíte de testes usando `pnpm test` e verificar se a cobertura de testes é atendida sem erros de TypeScript ou tempo de execução.
