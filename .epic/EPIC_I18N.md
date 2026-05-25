@@ -6,11 +6,11 @@ Este documento descreve o progresso global da implementação de internacionaliz
 
 ## Tabela de Issues e Progresso
 
-| ID       | Issue                                                                                                                                                            | Dependências | Estimativa | Status          |
-| :------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------- | :----------- | :--------- | :-------------- |
-| **#021** | [Componentes: Customização de Textos ARIA (core & carousel)](file:///home/rafacdomin/projetos/design-system/.epic/issues/i18n/021_core_components_text_props.md) | Nenhuma      | P          | `[ ] Planejada` |
-| **#022** | [Storybook: Infraestrutura e Tradução de Histórias (@ds/docs)](file:///home/rafacdomin/projetos/design-system/.epic/issues/i18n/022_docs_i18n_infrastructure.md) | #021         | M          | `[ ] Planejada` |
-| **#023** | [Documentação: Tradução MDX de Design Tokens e Guias](file:///home/rafacdomin/projetos/design-system/.epic/issues/i18n/023_translate_mdx_documentations.md)      | #022         | M          | `[ ] Planejada` |
+| ID       | Issue                                                                                                                                                                       | Dependências | Estimativa | Status          |
+| :------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :----------- | :--------- | :-------------- |
+| **#021** | [Componentes: Customização de Textos ARIA (core & carousel)](file:///home/rafacdomin/projetos/design-system/.epic/issues/i18n/021_core_components_text_props.md)            | Nenhuma      | P          | `[x] Concluído` |
+| **#022** | [Storybook: Infraestrutura e Tradução de Histórias (@rafacdomin/ds-docs)](file:///home/rafacdomin/projetos/design-system/.epic/issues/i18n/022_docs_i18n_infrastructure.md) | #021         | M          | `[x] Concluído` |
+| **#023** | [Documentação: Tradução MDX de Design Tokens e Guias](file:///home/rafacdomin/projetos/design-system/.epic/issues/i18n/023_translate_mdx_documentations.md)                 | #022         | M          | `[x] Concluído` |
 
 ---
 

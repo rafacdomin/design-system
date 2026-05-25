@@ -82,14 +82,14 @@ M
 
 ### Estrutura de Arquivos
 
-O componente `Input` será composto pelos seguintes arquivos no pacote `@ds/core`:
+O componente `Input` será composto pelos seguintes arquivos no pacote `@rafacdomin/ds-core`:
 
 - `packages/core/src/components/Input/Input.tsx` (Lógica e estrutura)
 - `packages/core/src/components/Input/Input.module.scss` (Estilização modular e temas)
 - `packages/core/src/components/Input/Input.test.tsx` (Testes TDD e A11y)
 - `packages/core/src/components/Input/index.ts` (Exportação do componente)
 
-As histórias do Storybook serão adicionadas no pacote `@ds/docs`:
+As histórias do Storybook serão adicionadas no pacote `@rafacdomin/ds-docs`:
 
 - `packages/docs/src/stories/Input.stories.tsx` (Documentação e visual regression)
 
@@ -494,7 +494,7 @@ describe('Input Component', () => {
 ```typescript
 import type { Meta, StoryObj } from '@storybook/react'
 import React from 'react'
-import { Input } from '@ds/core'
+import { Input } from '@rafacdomin/ds-core'
 
 const meta: Meta<typeof Input> = {
   title: 'Components/Input',

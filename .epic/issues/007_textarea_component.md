@@ -380,7 +380,7 @@ describe('Textarea Component', () => {
 ```typescript
 import type { Meta, StoryObj } from '@storybook/react'
 import React from 'react'
-import { Textarea, TextareaProps } from '@ds/core'
+import { Textarea, TextareaProps } from '@rafacdomin/ds-core'
 
 const meta: Meta<typeof Textarea> = {
   title: 'Components/Textarea',

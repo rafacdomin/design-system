@@ -473,7 +473,7 @@ describe('Dropdown Component', () => {
 ```typescript
 import type { Meta, StoryObj } from '@storybook/react'
 import React, { useState } from 'react'
-import { Dropdown, DropdownProps } from '@ds/core'
+import { Dropdown, DropdownProps } from '@rafacdomin/ds-core'
 
 const options = [
   { label: 'React.js', value: 'react' },
@@ -765,7 +765,7 @@ export type { DropdownProps, DropdownOption } from './Dropdown'
 - [x] 3. Criar a pasta do componente em `packages/core/src/components/Dropdown/`.
 - [x] 4. Criar o arquivo de estilos em `packages/core/src/components/Dropdown/Dropdown.module.scss`.
 - [x] 5. Criar o arquivo de teste `packages/core/src/components/Dropdown/Dropdown.test.tsx` com a estrutura e cenários do plano de testes (TDD).
-- [x] 6. Confirmar que a suíte de testes falha adequadamente executando o comando de teste (`pnpm --filter @ds/core test`).
+- [x] 6. Confirmar que a suíte de testes falha adequadamente executando o comando de teste (`pnpm --filter @rafacdomin/ds-core test`).
 - [x] 7. Implementar o componente `Dropdown.tsx` definindo a interface `DropdownOption` e `DropdownProps` utilizando `withTheme`.
 - [x] 8. Estruturar a renderização HTML no `Dropdown.tsx` com suporte a `label`, `helperText` e `error`.
 - [x] 9. Configurar os atributos de acessibilidade ARIA (`aria-describedby` para erros e textos auxiliares, e vinculação de labels por `htmlFor`/`id`).
@@ -779,5 +779,5 @@ export type { DropdownProps, DropdownOption } from './Dropdown'
 - [x] 17. Rodar a suíte de testes novamente e garantir que todos os 15 cenários planejados passem com sucesso.
 - [x] 18. Verificar se há violações de acessibilidade adicionais rodando testes unitários do axe.
 - [x] 19. Criar a história de Storybook em `packages/docs/src/stories/Dropdown.stories.tsx` seguindo o agrupamento de documentação (`autodocs` e `!dev`).
-- [x] 20. Rodar o Storybook localmente (`pnpm --filter @ds/docs storybook`) para validar visualmente o comportamento e contraste do componente nos temas Light e Dark.
+- [x] 20. Rodar o Storybook localmente (`pnpm --filter @rafacdomin/ds-docs storybook`) para validar visualmente o comportamento e contraste do componente nos temas Light e Dark.
 - [x] 21. Executar a revisão final de lint e formatação utilizando as regras do `AGENTS.md` e comando `/review`.

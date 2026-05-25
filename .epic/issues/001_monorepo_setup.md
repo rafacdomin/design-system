@@ -143,8 +143,8 @@ packages:
 
 ### 4. Esqueletos dos Pacotes do Monorepo
 
-- [x] [x] 4.1 Criar pasta `packages/core` contendo `package.json` (declarando o nome `@ds/core`), `tsconfig.json` (herdando da raiz) e estrutura básica `src/index.ts`.
-- [x] [x] 4.2 Criar pasta `packages/docs` contendo `package.json` (declarando o nome `@ds/docs`), `tsconfig.json` (herdando da raiz) e arquivo base.
+- [x] [x] 4.1 Criar pasta `packages/core` contendo `package.json` (declarando o nome `@rafacdomin/ds-core`), `tsconfig.json` (herdando da raiz) e estrutura básica `src/index.ts`.
+- [x] [x] 4.2 Criar pasta `packages/docs` contendo `package.json` (declarando o nome `@rafacdomin/ds-docs`), `tsconfig.json` (herdando da raiz) e arquivo base.
 - [x] [x] 4.3 Rodar `pnpm install` na raiz para sincronizar os workspaces e gerar os links locais.
 
 ### 5. Validação do Pipeline

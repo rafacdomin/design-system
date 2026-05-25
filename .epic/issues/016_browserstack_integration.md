@@ -96,7 +96,7 @@ Mapeamento de arquivos novos e modificados:
 
 ## Checklist de Implementação
 
-- [x] Instalar o pacote `browserstack-local` como dependência de desenvolvimento no pacote `@ds/docs` (`pnpm --filter @ds/docs add -D browserstack-local`).
+- [x] Instalar o pacote `browserstack-local` como dependência de desenvolvimento no pacote `@rafacdomin/ds-docs` (`pnpm --filter @rafacdomin/ds-docs add -D browserstack-local`).
 - [x] Criar o arquivo `packages/docs/src/test-visual/browserstack-setup.ts` para gerenciar o início do túnel local.
 - [x] Implementar validação da presença de `BROWSERSTACK_ACCESS_KEY` no `browserstack-setup.ts`.
 - [x] Iniciar a conexão do túnel `browserstack-local` e expor a instância em `globalThis.__bsLocal__` de forma segura (sem usar `any`).

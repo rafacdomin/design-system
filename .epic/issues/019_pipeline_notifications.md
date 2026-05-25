@@ -93,15 +93,15 @@ Em seguida, testarão a existência de cada segredo individualmente antes de exe
 ## Checklist de Implementação
 
 - [x] Identificar a seção de notificações de sucesso em `.github/workflows/release-core.yml`.
-- [x] Validar a leitura dinâmica de versão do `@ds/core` via Node.js em ambiente bash.
+- [x] Validar a leitura dinâmica de versão do `@rafacdomin/ds-core` via Node.js em ambiente bash.
 - [x] Validar que o payload do Discord em `release-core.yml` inclui o nome do pacote e versão.
 - [x] Validar que o payload do Slack em `release-core.yml` está devidamente formatado.
 - [x] Validar que o payload do Teams (Adaptive Card) está especificado com a URL de schema e versão corretas.
 - [x] Identificar a seção de notificações de falha em `.github/workflows/release-core.yml`.
 - [x] Validar o payload do Slack, Discord e Teams para casos de falha na pipeline de core.
 - [x] Repetir a validação para o arquivo `.github/workflows/release-carousel.yml`.
-- [x] Ajustar a leitura dinâmica de versão do `@ds/carousel` no script bash de sucesso.
-- [x] Validar o comportamento sob falha no workflow do `@ds/carousel`.
+- [x] Ajustar a leitura dinâmica de versão do `@rafacdomin/ds-carousel` no script bash de sucesso.
+- [x] Validar o comportamento sob falha no workflow do `@rafacdomin/ds-carousel`.
 - [x] Identificar a seção de notificações de sucesso e falha em `.github/workflows/deploy-storybook.yml`.
 - [x] Mapear o link do deploy `${{ steps.deployment.outputs.page_url }}` nos payloads de sucesso do Storybook.
 - [x] Garantir que todas as chamadas `curl` utilizam a flag `-H "Content-Type: application/json"`.

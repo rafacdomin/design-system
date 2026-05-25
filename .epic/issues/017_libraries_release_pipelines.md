@@ -1,4 +1,4 @@
-# #017 — Pipelines de Release das Bibliotecas (@ds/core e @ds/carousel)
+# #017 — Pipelines de Release das Bibliotecas (@rafacdomin/ds-core e @rafacdomin/ds-carousel)
 
 ## Status
 
@@ -6,12 +6,12 @@
 
 ## Objetivo
 
-Configurar os workflows do GitHub Actions para a publicação manual das bibliotecas `@ds/core` e `@ds/carousel` no NPM, permitindo que o desenvolvedor escolha o incremento de versão semântico (SemVer) no momento do disparo.
+Configurar os workflows do GitHub Actions para a publicação manual das bibliotecas `@rafacdomin/ds-core` e `@rafacdomin/ds-carousel` no NPM, permitindo que o desenvolvedor escolha o incremento de versão semântico (SemVer) no momento do disparo.
 
 ## Critérios de Aceite
 
-- [ ] Criar o arquivo `.github/workflows/release-core.yml` para publicação do `@ds/core`.
-- [ ] Criar o arquivo `.github/workflows/release-carousel.yml` para publicação do `@ds/carousel`.
+- [ ] Criar o arquivo `.github/workflows/release-core.yml` para publicação do `@rafacdomin/ds-core`.
+- [ ] Criar o arquivo `.github/workflows/release-carousel.yml` para publicação do `@rafacdomin/ds-carousel`.
 - [ ] Ambos os workflows devem ter disparos **exclusivamente manuais** (`workflow_dispatch`).
 - [ ] Definir o input `version_increment` como escolha obrigatória de SemVer (`patch`, `minor`, `major`) com padrão `patch`.
 - [ ] Configurar os workflows para usar cache do PNPM e do Turborepo para agilizar a instalação de dependências e builds.
@@ -99,7 +99,7 @@ As pipelines manuais serão configuradas no diretório `.github/workflows/` com 
 
 ### 2. Orquestração do Build
 
-Para o `@ds/carousel`, o script de build deve invocar a compilação do pacote core primeiro. Como configuramos a dependência `"@ds/core": "workspace:*"` no `packages/carousel/package.json`, o comando `pnpm --filter @ds/carousel build` chamará automaticamente a build do core graças às regras do Turborepo (`dependsOn: ["^build"]` no `turbo.json`).
+Para o `@rafacdomin/ds-carousel`, o script de build deve invocar a compilação do pacote core primeiro. Como configuramos a dependência `"@rafacdomin/ds-core": "workspace:*"` no `packages/carousel/package.json`, o comando `pnpm --filter @rafacdomin/ds-carousel build` chamará automaticamente a build do core graças às regras do Turborepo (`dependsOn: ["^build"]` no `turbo.json`).
 
 ---
 
@@ -123,14 +123,14 @@ Para o `@ds/carousel`, o script de build deve invocar a compilação do pacote c
 - [x] Configurar a action de setup do pnpm `pnpm/action-setup@v3` (v11.2.2).
 - [x] Configurar setup do Node.js v18 e cache de dependências de pnpm via `actions/setup-node@v4`.
 - [x] Executar instalação limpa das dependências com `pnpm install --frozen-lockfile`.
-- [x] Adicionar passo para executar linter do pacote core (`pnpm --filter @ds/core lint`).
-- [x] Adicionar passo para executar testes unitários e de acessibilidade do pacote core (`pnpm --filter @ds/core test`).
-- [x] Adicionar passo de compilação estática do Storybook (`pnpm --filter @ds/docs build-storybook`).
-- [x] Configurar execução dos testes visuais do Playwright (`pnpm --filter @ds/docs test:visual` ou `test:visual:ci`).
-- [x] Adicionar passo de incremento da versão do `@ds/core` de acordo com a seleção de SemVer.
-- [x] Executar build de produção para gerar os bundles de distribuição no diretório `dist/` do `@ds/core`.
+- [x] Adicionar passo para executar linter do pacote core (`pnpm --filter @rafacdomin/ds-core lint`).
+- [x] Adicionar passo para executar testes unitários e de acessibilidade do pacote core (`pnpm --filter @rafacdomin/ds-core test`).
+- [x] Adicionar passo de compilação estática do Storybook (`pnpm --filter @rafacdomin/ds-docs build-storybook`).
+- [x] Configurar execução dos testes visuais do Playwright (`pnpm --filter @rafacdomin/ds-docs test:visual` ou `test:visual:ci`).
+- [x] Adicionar passo de incremento da versão do `@rafacdomin/ds-core` de acordo com a seleção de SemVer.
+- [x] Executar build de produção para gerar os bundles de distribuição no diretório `dist/` do `@rafacdomin/ds-core`.
 - [x] Configurar passo condicional de publicação no NPM usando `NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}`.
 - [x] Configurar etapa de notificação de status de sucesso e falha (Slack/Discord/Teams).
 - [x] Criar o arquivo `.github/workflows/release-carousel.yml` repetindo o mesmo esqueleto estrutural.
-- [x] Ajustar linter, testes, build e passos de publicação do `release-carousel.yml` para filtrar pelo pacote `@ds/carousel`.
-- [x] Validar que o build do `@ds/carousel` aciona o build dependente do `@ds/core` de forma nativa e integrada.
+- [x] Ajustar linter, testes, build e passos de publicação do `release-carousel.yml` para filtrar pelo pacote `@rafacdomin/ds-carousel`.
+- [x] Validar que o build do `@rafacdomin/ds-carousel` aciona o build dependente do `@rafacdomin/ds-core` de forma nativa e integrada.

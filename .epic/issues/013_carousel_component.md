@@ -6,11 +6,11 @@
 
 ## Objetivo
 
-Implementar o componente `Carousel` para exibição sequencial de slides ou imagens de projetos no portfólio. Este componente será criado em um pacote separado (`@ds/carousel`) devido à dependência do `embla-carousel-react`, visando a otimização de bundle sizes conforme a arquitetura.
+Implementar o componente `Carousel` para exibição sequencial de slides ou imagens de projetos no portfólio. Este componente será criado em um pacote separado (`@rafacdomin/ds-carousel`) devido à dependência do `embla-carousel-react`, visando a otimização de bundle sizes conforme a arquitetura.
 
 ## Critérios de Aceite
 
-- [x] Inicializar o pacote `@ds/carousel` em `packages/carousel` com seu respectivo `package.json` dependente de `embla-carousel-react`.
+- [x] Inicializar o pacote `@rafacdomin/ds-carousel` em `packages/carousel` com seu respectivo `package.json` dependente de `embla-carousel-react`.
 - [x] Implementar o componente `Carousel` integrando o hook `useEmblaCarousel`.
 - [x] Fornecer navegação através de botões de setas Anterior/Próximo e indicadores de pontos (dots/paginação) opcionais no rodapé do carrossel.
 - [x] Suportar propriedade `autoplay` opcional utilizando o plugin `embla-carousel-autoplay` ou implementação reativa de timer do React (com limpeza do timer no desmonte).
@@ -134,7 +134,7 @@ export interface CarouselDotsProps extends React.HTMLAttributes<HTMLDivElement> 
 
 ## Decisões Técnicas
 
-1. **Dependência Externa (@ds/carousel)**: Criado como pacote separado para evitar inflar o bundle size do `@ds/core` com o `embla-carousel-react`.
+1. **Dependência Externa (@rafacdomin/ds-carousel)**: Criado como pacote separado para evitar inflar o bundle size do `@rafacdomin/ds-core` com o `embla-carousel-react`.
 2. **Autoplay Nativo via React (setInterval)**: Optamos por implementar o autoplay reativamente usando `setInterval` no React, facilitando o controle de estados, pausa sob interações (hover/focus) e testes unitários via `vi.useFakeTimers()`, sem a necessidade de dependências adicionais como `embla-carousel-autoplay`.
 3. **Compound Component Pattern**: Implementação usando `Object.assign` para expor componentes filhos. O componente `<Carousel>` fornecerá o contexto implicitamente, permitindo tanto o uso flexível (Compound) quanto o uso rápido via props (`showArrows`, `showDots`).
 
@@ -142,8 +142,8 @@ export interface CarouselDotsProps extends React.HTMLAttributes<HTMLDivElement> 
 
 ## Checklist de Implementação
 
-- [x] 1. Configurar dependências e scripts em `packages/carousel/package.json` (incluir `@ds/core`, `embla-carousel-react`, `vitest`, etc.).
-- [x] 2. Adicionar `@ds/carousel` no `package.json` do storybook (`packages/docs`).
+- [x] 1. Configurar dependências e scripts em `packages/carousel/package.json` (incluir `@rafacdomin/ds-core`, `embla-carousel-react`, `vitest`, etc.).
+- [x] 2. Adicionar `@rafacdomin/ds-carousel` no `package.json` do storybook (`packages/docs`).
 - [x] 3. Criar `packages/carousel/vitest.config.ts` herdando regras e integrando suporte a react.
 - [x] 4. Criar `packages/carousel/src/setupTests.ts` configurando `jest-axe`.
 - [x] 5. Criar `CarouselContext` para compartilhar referência e estado do Embla Carousel.

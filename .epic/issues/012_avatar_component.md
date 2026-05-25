@@ -332,7 +332,7 @@ describe('Avatar Component', () => {
 
 ```typescript
 import type { Meta, StoryObj } from '@storybook/react'
-import { Avatar } from '@ds/core'
+import { Avatar } from '@rafacdomin/ds-core'
 
 const meta: Meta<typeof Avatar> = {
   title: 'Components/Avatar',

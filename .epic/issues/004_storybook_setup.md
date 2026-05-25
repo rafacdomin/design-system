@@ -6,13 +6,13 @@
 
 ## Objetivo
 
-Configurar e inicializar o Storybook 8 no pacote `@ds/docs` para servir como ambiente isolado de visualização, documentação interativa e sandbox dos componentes de `@ds/core`.
+Configurar e inicializar o Storybook 8 no pacote `@rafacdomin/ds-docs` para servir como ambiente isolado de visualização, documentação interativa e sandbox dos componentes de `@rafacdomin/ds-core`.
 
 ## Critérios de Aceite
 
 - [x] Inicializar o Storybook 8 no diretório `packages/docs` (usando Vite como bundler interno para velocidade).
-- [x] Configurar `.storybook/main.ts` para carregar histórias (`.stories.tsx`) localizadas no pacote `@ds/core` (`../core/src/**/*.stories.tsx`) e do `@ds/carousel` (`../carousel/src/**/*.stories.tsx`).
-- [x] Configurar `.storybook/preview.tsx` para importar os estilos globais de tokens do `@ds/core`.
+- [x] Configurar `.storybook/main.ts` para carregar histórias (`.stories.tsx`) localizadas no pacote `@rafacdomin/ds-core` (`../core/src/**/*.stories.tsx`) e do `@rafacdomin/ds-carousel` (`../carousel/src/**/*.stories.tsx`).
+- [x] Configurar `.storybook/preview.tsx` para importar os estilos globais de tokens do `@rafacdomin/ds-core`.
 - [x] Adicionar no `.storybook/preview.tsx` um decorator/addon global para alternar o tema do Storybook (Light/Dark) injetando o atributo `data-theme` na div wrapper das stories.
 - [x] Carregar as fontes `Inter` e `Poppins` globalmente na pré-visualização (pode ser feito injetando tags `<link>` no arquivo `.storybook/preview-head.html`).
 - [x] Adicionar scripts `"storybook"` e `"build-storybook"` no `packages/docs/package.json`.
@@ -98,7 +98,7 @@ export default config
 ```typescript
 import type { Preview } from '@storybook/react';
 import React from 'react';
-import '@ds/core/src/tokens/index.scss';
+import '@rafacdomin/ds-core/src/tokens/index.scss';
 
 const preview: Preview = {
   globalTypes: {
@@ -161,13 +161,13 @@ export default preview;
 
 ## Checklist de Implementação
 
-- [x] Instalar devDependencies do Storybook no pacote `@ds/docs` (`storybook`, `@storybook/react`, `@storybook/react-vite`, `@storybook/addon-essentials`, `@storybook/addon-interactions`, `@storybook/addon-a11y`, `@storybook/blocks`, `vite`, `@vitejs/plugin-react`, `sass`).
-- [x] Adicionar os scripts do Storybook no `package.json` de `@ds/docs` (`storybook`, `build-storybook`, `build`).
+- [x] Instalar devDependencies do Storybook no pacote `@rafacdomin/ds-docs` (`storybook`, `@storybook/react`, `@storybook/react-vite`, `@storybook/addon-essentials`, `@storybook/addon-interactions`, `@storybook/addon-a11y`, `@storybook/blocks`, `vite`, `@vitejs/plugin-react`, `sass`).
+- [x] Adicionar os scripts do Storybook no `package.json` de `@rafacdomin/ds-docs` (`storybook`, `build-storybook`, `build`).
 - [x] Atualizar o include do `packages/docs/tsconfig.json` para suportar `.storybook/**/*`.
 - [x] Criar a pasta `packages/docs/.storybook/`.
 - [x] Criar o arquivo `packages/docs/.storybook/main.ts` configurando o path de stories do core e carousel e os addons.
 - [x] Criar o arquivo `packages/docs/.storybook/preview.tsx` com o import do SCSS global e o decorator de alternância do `data-theme`.
 - [x] Criar o arquivo `packages/docs/.storybook/preview-head.html` com os links de fontes do Google Fonts.
-- [x] Validar o build de produção do Storybook via `npx pnpm --filter @ds/docs build-storybook` e garantir que termina sem erros de compilação.
+- [x] Validar o build de produção do Storybook via `npx pnpm --filter @rafacdomin/ds-docs build-storybook` e garantir que termina sem erros de compilação.
 - [x] Rodar o linter (`npx pnpm lint`) e formatar os arquivos (`npx pnpm format`).
 - [x] Atualizar status nos arquivos de acompanhamento do epic e issue.

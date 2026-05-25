@@ -63,6 +63,19 @@ Quando tags nativas não forem suficientes ou ao criar padrões baseados no Radi
 - `aria-describedby`: Aponta para o `id` da mensagem de ajuda ou de erro associada ao input.
 - `aria-label` / `aria-labelledby`: Fornece um nome acessível para elementos sem texto visual (ex: botão de fechar representado por um ícone "X" deve ter `aria-label="Fechar"`).
 
+### 3.3 Internacionalização de Rótulos Acessíveis
+
+Para que os componentes permaneçam acessíveis em qualquer idioma sem acoplar bibliotecas de tradução pesadas, seguimos as seguintes diretrizes:
+
+- **Parametrização via Props**: Componentes que renderizam elementos gráficos ou interativos sem rótulo visível (como o ícone de remover na `Tag`) devem aceitar propriedades de customização do leitor de tela (ex: `removeAriaLabel`).
+- **Padrão de Interpolação Textual**: Para componentes dinâmicos (como o `Carousel`), onde o rótulo ARIA depende de estados dinâmicos (como o número do slide ativo), utilize templates de string customizáveis contendo chaves padrões (`{index}` e `{total}`) e faça a interpolação no próprio componente via substituições simples (`.replace()`):
+  ```typescript
+  const slideLabel = slideAriaLabelFormat
+    .replace('{index}', String(index + 1))
+    .replace('{total}', String(totalSlides))
+  ```
+- **Fallbacks Estáveis**: Sempre forneça valores padrões na língua base (português brasileiro) se as propriedades de formatação ARIA forem omitidas, assegurando que o componente permaneça acessível por padrão.
+
 ---
 
 ## 4. Testes de Acessibilidade no Ciclo de TDD

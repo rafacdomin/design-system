@@ -10,7 +10,7 @@ Traduzir todo o conteúdo explicativo dos tokens de design e guias introdutório
 
 ## Critérios de Aceite
 
-- [x] Integrar o componente `<Language>` importado do pacote `@ds/docs` nas páginas MDX.
+- [x] Integrar o componente `<Language>` importado do pacote `@rafacdomin/ds-docs` nas páginas MDX.
 - [x] Traduzir `Introduction.mdx` (Guia de Instalação, Theming e Acessibilidade).
 - [x] Traduzir `Colors.mdx` (Documentação de tokens de cores).
 - [x] Traduzir `Typography.mdx` (Fontes, pesos, tamanhos e alturas de linha).
@@ -91,7 +91,7 @@ Todos os arquivos abaixo devem ser modificados para importar o componente `<Lang
 
 ### Exemplo de Uso do Componente `<Language>`
 
-As documentações MDX devem importar o componente `<Language>` do pacote `@ds/docs` (por meio de caminho relativo, uma vez que estão no mesmo pacote):
+As documentações MDX devem importar o componente `<Language>` do pacote `@rafacdomin/ds-docs` (por meio de caminho relativo, uma vez que estão no mesmo pacote):
 
 ```mdx
 import { Meta } from '@storybook/blocks'
@@ -176,7 +176,7 @@ Optamos por manter as versões de múltiplos idiomas dentro de um único arquivo
 
 ### Fase 4: Garantia de Qualidade e Testes
 
-- [x] Rodar o servidor local do Storybook (`pnpm --filter @ds/docs storybook` ou comando equivalente do monorepo).
+- [x] Rodar o servidor local do Storybook (`pnpm --filter @rafacdomin/ds-docs storybook` ou comando equivalente do monorepo).
 - [x] Testar dinamicamente a alternância de idioma por meio da toolbar global do Storybook em todas as 6 documentações MDX.
 - [x] Verificar se há logs de aviso de hidratação ou erros do React no console do navegador ao alternar os idiomas.
 - [x] Validar a acessibilidade das páginas MDX em ambos os idiomas usando o addon `@storybook/addon-a11y`.

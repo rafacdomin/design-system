@@ -308,21 +308,21 @@ export const Button = withTheme<HTMLButtonElement, ButtonProps>(ButtonComponent)
 
 ## Checklist de Implementação
 
-- [x] Instalar as dependências `@radix-ui/react-slot`, `clsx` e `class-variance-authority` no pacote `@ds/core`.
+- [x] Instalar as dependências `@radix-ui/react-slot`, `clsx` e `class-variance-authority` no pacote `@rafacdomin/ds-core`.
 - [x] Atualizar o HOC `withTheme` em `packages/core/src/themes/withTheme.tsx` para usar `React.forwardRef` e repassar refs corretamente.
 - [x] Criar o arquivo `Button.module.scss` e definir os styles de base, variantes, tamanhos, foco, estado disabled e animação de spinner.
 - [x] Criar o arquivo de testes unitários `Button.test.tsx` com os casos para TDD.
-- [x] Validar a falha dos testes unitários do botão (TDD inicial): `npx pnpm --filter @ds/core test`.
+- [x] Validar a falha dos testes unitários do botão (TDD inicial): `npx pnpm --filter @rafacdomin/ds-core test`.
 - [x] Criar o arquivo de componente `Button.tsx`.
 - [x] Implementar as props, o uso de `cva`, `Slot` para polimorfismo, `forwardRef`, tratamento de `loading` e exportação com `withTheme`.
 - [x] Garantir que o linter e o build passem sem erros após a implementação.
 - [x] Resolver a exportação do componente no arquivo `packages/core/src/components/Button/index.ts`.
 - [x] Adicionar o export do componente no `packages/core/src/index.ts`.
-- [x] Rodar e passar em todos os testes unitários do botão: `npx pnpm --filter @ds/core test`.
+- [x] Rodar e passar em todos os testes unitários do botão: `npx pnpm --filter @rafacdomin/ds-core test`.
 - [x] Criar o arquivo de stories do Storybook em `Button.stories.tsx`.
 - [x] Implementar stories demonstrando todas as variantes de botão.
 - [x] Implementar stories demonstrando todos os tamanhos de botão.
 - [x] Implementar stories para os estados `disabled`, `loading` e polimorfismo (`asChild`).
-- [x] Validar que o Storybook é compilado em ambiente produtivo sem erros: `npx pnpm --filter @ds/docs build-storybook`.
+- [x] Validar que o Storybook é compilado em ambiente produtivo sem erros: `npx pnpm --filter @rafacdomin/ds-docs build-storybook`.
 - [x] Executar o linter e prettier globalmente no monorepo.
 - [x] Atualizar o status da issue em `.epic/issues/005_button_component.md` e na tabela de issues em `EPIC_DESIGN_SYSTEM.md` para Concluído.

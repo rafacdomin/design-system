@@ -349,7 +349,7 @@ export type { CardProps } from './Card'
 ```tsx
 import React from 'react'
 import type { Meta, StoryObj } from '@storybook/react'
-import { Card } from '@ds/core' // Ou import relativo dependendo da build
+import { Card } from '@rafacdomin/ds-core' // Ou import relativo dependendo da build
 
 const meta: Meta<typeof Card> = {
   title: 'Components/Card',
@@ -472,7 +472,7 @@ export const Interactive: Story = {
    - Utilização estrita dos tokens de design através das propriedades customizadas CSS do projeto (`--ds-border-radius-lg`, `--ds-color-neutral-50`, `--ds-color-neutral-0`, etc.).
    - Hover dinâmico integrado por meio da classe `.interactive` que altera transformações (`translateY(-2px)`) e o background/border correspondente de cada variante.
 4. **Localização de Storybook Stories:**
-   - De acordo com o padrão do monorepo definido em `references/ARCHITECTURE.md` (e observado no codebase), os arquivos de Stories do Storybook devem residir no pacote `@ds/docs` (`packages/docs/src/stories/Card.stories.tsx`), e não em `packages/core`.
+   - De acordo com o padrão do monorepo definido em `references/ARCHITECTURE.md` (e observado no codebase), os arquivos de Stories do Storybook devem residir no pacote `@rafacdomin/ds-docs` (`packages/docs/src/stories/Card.stories.tsx`), e não em `packages/core`.
 
 ---
 

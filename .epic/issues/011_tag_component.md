@@ -470,7 +470,7 @@ describe('Tag Component', () => {
 
 ```tsx
 import type { Meta, StoryObj } from '@storybook/react'
-import { Tag } from '@ds/core'
+import { Tag } from '@rafacdomin/ds-core'
 
 const meta: Meta<typeof Tag> = {
   title: 'Components/Tag',
@@ -614,7 +614,7 @@ export type { TagProps } from './Tag'
   - [x] 21. Estilizar o contêiner composto `.tagGroup` para exibir a tag interativa e o botão de remoção integrados visualmente.
 
 - [x] **Etapa 5: Stories e Integração Final**
-  - [ ] 22. Exportar o componente `Tag` e `TagProps` no entrypoint `@ds/core` (`packages/core/src/index.ts`). (Pendente liberação do arquivo central)
+  - [ ] 22. Exportar o componente `Tag` e `TagProps` no entrypoint `@rafacdomin/ds-core` (`packages/core/src/index.ts`). (Pendente liberação do arquivo central)
   - [x] 23. Criar o arquivo `packages/docs/src/stories/Tag.stories.tsx` com variações para o Storybook (Playground, Neutral, Outline, Interactive, tamanhos, removível e composta).
   - [x] 24. Executar os testes locais com `vitest` e certificar-se de obter 100% de sucesso.
   - [x] 25. Rodar o Storybook localmente para inspeção visual nos temas Light e Dark.

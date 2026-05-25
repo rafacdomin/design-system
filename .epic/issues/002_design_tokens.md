@@ -6,7 +6,7 @@
 
 ## Objetivo
 
-Implementar a escala de design tokens monocromáticos e tipografia do sistema no pacote `@ds/core`. Os tokens serão expostos como variáveis CSS globais (`--ds-*`) associadas a arquivos CSS estruturados.
+Implementar a escala de design tokens monocromáticos e tipografia do sistema no pacote `@rafacdomin/ds-core`. Os tokens serão expostos como variáveis CSS globais (`--ds-*`) associadas a arquivos CSS estruturados.
 
 ## Critérios de Aceite
 

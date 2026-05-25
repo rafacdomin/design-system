@@ -281,7 +281,7 @@ export interface AvatarProps extends React.HTMLAttributes<HTMLDivElement> {
 
 ## 9. Carousel
 
-Carrossel responsivo para slides de conteúdo ou imagens de projetos, isolado sob o pacote `@ds/carousel` devido à dependência externa do `embla-carousel-react`.
+Carrossel responsivo para slides de conteúdo ou imagens de projetos, isolado sob o pacote `@rafacdomin/ds-carousel` devido à dependência externa do `embla-carousel-react`.
 
 ### 9.1 Props e Subcomponentes
 

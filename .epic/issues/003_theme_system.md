@@ -6,7 +6,7 @@
 
 ## Objetivo
 
-Criar o provedor de tema (`ThemeProvider`) e o Higher-Order Component (`withTheme`) no pacote `@ds/core`, gerenciando a aplicação e alternância do atributo `data-theme` no DOM de forma tipada e reativa.
+Criar o provedor de tema (`ThemeProvider`) e o Higher-Order Component (`withTheme`) no pacote `@rafacdomin/ds-core`, gerenciando a aplicação e alternância do atributo `data-theme` no DOM de forma tipada e reativa.
 
 ## Critérios de Aceite
 
@@ -16,7 +16,7 @@ Criar o provedor de tema (`ThemeProvider`) e o Higher-Order Component (`withThem
 - [x] Criar o HOC `withTheme` que envolve um componente genérico e passa a propriedade `data-theme` baseada no tema atual.
 - [x] Garantir tipagem estrita com TypeScript para as props do HOC (`withTheme`).
 - [x] Criar testes unitários para validar que o `ThemeProvider` aplica o atributo `data-theme` correto no elemento HTML/DOM e que é possível alternar o tema via botão de toggle.
-- [x] Exportar `ThemeProvider`, `withTheme` e `useTheme` no `index.ts` do `@ds/core`.
+- [x] Exportar `ThemeProvider`, `withTheme` e `useTheme` no `index.ts` do `@rafacdomin/ds-core`.
 
 ## Cenários de Validação
 
@@ -157,7 +157,7 @@ export function withTheme<P extends object>(Component: React.ComponentType<P>) {
 
 ## Checklist de Implementação
 
-- [x] Instalar devDependencies de teste no pacote `@ds/core` (`vitest`, `vite`, `@vitejs/plugin-react`, `jsdom`, `@testing-library/react`, `@testing-library/jest-dom`, `@testing-library/user-event`, `jest-axe`, `@types/jest-axe`).
+- [x] Instalar devDependencies de teste no pacote `@rafacdomin/ds-core` (`vitest`, `vite`, `@vitejs/plugin-react`, `jsdom`, `@testing-library/react`, `@testing-library/jest-dom`, `@testing-library/user-event`, `jest-axe`, `@types/jest-axe`).
 - [x] Criar arquivo `packages/core/vitest.config.ts` configurando o ambiente `jsdom` e o plugin React.
 - [x] Criar arquivo `packages/core/src/setupTests.ts` para carregar matchers do `jest-dom` e estender os matchers do `vitest` com `jest-axe/matchers`.
 - [x] Atualizar `tsconfig.json` do core/raiz para incluir types do Vitest e Jest DOM.

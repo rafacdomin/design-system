@@ -1,6 +1,6 @@
 # Publishing and CI/CD Guide
 
-This document describes in detail the Continuous Integration and Continuous Delivery (CI/CD) architecture adopted in this design system, the automatic Pull Request verification workflow, the NPM publishing workflow for the `@ds/core` and `@ds/carousel` packages, the Storybook deployment to GitHub Pages, the integrated visual regression testing, and the messaging notifications setup.
+This document describes in detail the Continuous Integration and Continuous Delivery (CI/CD) architecture adopted in this design system, the automatic Pull Request verification workflow, the NPM publishing workflow for the `@rafacdomin/ds-core` and `@rafacdomin/ds-carousel` packages, the Storybook deployment to GitHub Pages, the integrated visual regression testing, and the messaging notifications setup.
 
 ---
 
@@ -40,7 +40,7 @@ graph TD
    - **Parameters:** Requires choosing the SemVer increment type (`patch`, `minor`, `major`).
    - **Flow:**
      1. Installation and caching via `pnpm`.
-     2. Builds internal monorepo dependencies (e.g., `@ds/core`).
+     2. Builds internal monorepo dependencies (e.g., `@rafacdomin/ds-core`).
      3. Linting (`eslint`) and Unit & Accessibility tests (`vitest`).
      4. Checks BrowserStack credentials and runs Visual Regression Tests using Playwright.
      5. Bumps the package version in `package.json`.
@@ -63,7 +63,7 @@ graph TD
    - **Flow (Executes parallel jobs):**
      - **Job `lint-and-build`:** Sets up Node.js 22.20.0 and pnpm 11.2.2, installs dependencies, checks linting rules (`eslint`), checks code formatting using Prettier, and compiles all packages in the monorepo.
      - **Job `unit-tests`:** Installs dependencies and executes unit and accessibility tests (`vitest`).
-     - **Job `visual-tests`:** Verifies if BrowserStack credentials are present in secrets. If available, builds the monorepo and executes Playwright visual regression tests (`pnpm --filter @ds/docs test:visual`) to check for visual changes.
+     - **Job `visual-tests`:** Verifies if BrowserStack credentials are present in secrets. If available, builds the monorepo and executes Playwright visual regression tests (`pnpm --filter @rafacdomin/ds-docs test:visual`) to check for visual changes.
 
 ---
 
@@ -73,7 +73,7 @@ To allow packages to be imported in both modern ES Modules (ESM) environments an
 
 ### 2.1 `package.json` Configuration
 
-The `@ds/core` and `@ds/carousel` packages expose the following export fields:
+The `@rafacdomin/ds-core` and `@rafacdomin/ds-carousel` packages expose the following export fields:
 
 ```json
 {

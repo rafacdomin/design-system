@@ -6,11 +6,11 @@
 
 ## Objetivo
 
-Instalar o Playwright no pacote `@ds/docs` e configurar a execução local dos testes de regressão visual contra a build estática do Storybook.
+Instalar o Playwright no pacote `@rafacdomin/ds-docs` e configurar a execução local dos testes de regressão visual contra a build estática do Storybook.
 
 ## Critérios de Aceite
 
-- [x] Instalar `@playwright/test` como `devDependency` no pacote `@ds/docs`.
+- [x] Instalar `@playwright/test` como `devDependency` no pacote `@rafacdomin/ds-docs`.
 - [x] Criar o arquivo `packages/docs/playwright.config.ts` configurado para rodar localmente.
 - [x] Configurar múltiplos navegadores locais: Chromium, Firefox e WebKit (Safari).
 - [x] Configurar viewports de testes padrão:
@@ -52,7 +52,7 @@ M
 
 ### Melhores Práticas do Playwright para Testes de Regressão Visual
 
-- **Instalação Local:** Playwright é instalado via `@playwright/test` e requer o download de binários do navegador via `playwright install`. No monorepo, instalamos no pacote `@ds/docs` pois é onde residem as configurações e stories do Storybook.
+- **Instalação Local:** Playwright é instalado via `@playwright/test` e requer o download de binários do navegador via `playwright install`. No monorepo, instalamos no pacote `@rafacdomin/ds-docs` pois é onde residem as configurações e stories do Storybook.
 - **Uso de WebServer Integrado:** O Playwright oferece a opção `webServer` em seu arquivo de configuração. Essa funcionalidade lança automaticamente um servidor HTTP local antes de rodar os testes e o encerra ao terminar, mitigando a necessidade de gerenciar o ciclo de vida do servidor manualmente em scripts shell ou pipelines de CI.
 - **Execução contra Build Estática:** Rodar testes contra a build de produção estática (`storybook-static`) gerada pelo `build-storybook` é mais estável e rápido do que rodar contra o servidor de desenvolvimento (`storybook dev`), além de garantir que estamos testando o bundle de produção dos componentes.
 
@@ -156,9 +156,9 @@ export default defineConfig({
 12. [ ] Configurar o projeto `webkit-mobile` com perfil de `iPhone 12` (viewport `375x812`).
 13. [ ] Configurar o projeto `webkit-tablet` com perfil de `iPad Mini` (viewport `768x1024`).
 14. [ ] Configurar o bloco `webServer` para executar o `http-server` servindo `storybook-static` na porta `6006`.
-15. [ ] Adicionar o script `"test:visual"` no `package.json` do `@ds/docs`: `"playwright test"`.
-16. [ ] Adicionar o script `"test:visual:update"` no `package.json` do `@ds/docs`: `"playwright test --update-snapshots"`.
+15. [ ] Adicionar o script `"test:visual"` no `package.json` do `@rafacdomin/ds-docs`: `"playwright test"`.
+16. [ ] Adicionar o script `"test:visual:update"` no `package.json` do `@rafacdomin/ds-docs`: `"playwright test --update-snapshots"`.
 17. [ ] Configurar a tarefa `"test:visual"` no `turbo.json` da raiz, marcando dependência do pipeline `"build"` e mapeando saídas apropriadas.
 18. [ ] Adicionar scripts globais de conveniência no `package.json` da raiz para facilitar execução dos testes visuais.
 19. [ ] Compilar localmente o Storybook executando `pnpm build` para assegurar que a pasta `storybook-static` está presente.
-20. [ ] Executar `pnpm --filter @ds/docs test:visual` para validar que o setup inicia a execução dos testes com sucesso.
+20. [ ] Executar `pnpm --filter @rafacdomin/ds-docs test:visual` para validar que o setup inicia a execução dos testes com sucesso.

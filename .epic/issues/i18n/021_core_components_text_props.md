@@ -6,7 +6,7 @@
 
 ## Objetivo
 
-Tornar os componentes `@ds/core` e `@ds/carousel` locale-agnósticos, permitindo que todas as strings internas descritivas de acessibilidade (ARIA) sejam parametrizadas via props de chamada, com fallbacks automáticos para português se omitidos.
+Tornar os componentes `@rafacdomin/ds-core` e `@rafacdomin/ds-carousel` locale-agnósticos, permitindo que todas as strings internas descritivas de acessibilidade (ARIA) sejam parametrizadas via props de chamada, com fallbacks automáticos para português se omitidos.
 
 ## Critérios de Aceite
 
@@ -222,7 +222,7 @@ const CarouselDotsComponent = React.forwardRef<
 ## Decisões Técnicas
 
 1. **Abordagem Locale-Agnóstica (Isolamento de i18n)**:
-   - A inclusão direta de bibliotecas de internacionalização (como `i18next` ou `react-intl`) nos pacotes de componentes `@ds/core` e `@ds/carousel` geraria acoplamento desnecessário, dependências pesadas em tempo de execução e aumentaria o tamanho final do bundle.
+   - A inclusão direta de bibliotecas de internacionalização (como `i18next` ou `react-intl`) nos pacotes de componentes `@rafacdomin/ds-core` e `@rafacdomin/ds-carousel` geraria acoplamento desnecessário, dependências pesadas em tempo de execução e aumentaria o tamanho final do bundle.
    - Manter as bibliotecas de componentes agnósticas a i18n garante que os consumidores possam integrar seus próprios ecossistemas de i18n passando os textos customizados via props normais.
 2. **Propriedades de Formato Declarativo (Interpoladores de String)**:
    - _Alternativa_: Receber funções callback nas props, por exemplo: `slideAriaLabel={(index, total) => string}`.
@@ -238,7 +238,7 @@ const CarouselDotsComponent = React.forwardRef<
 - [x] Ler as especificações em [SPEC.md](file:///home/rafacdomin/projetos/design-system/SPEC.md) e as diretrizes de acessibilidade em [ACCESSIBILITY.md](file:///home/rafacdomin/projetos/design-system/references/ACCESSIBILITY.md).
 - [x] Executar a suíte de testes existente (`pnpm test`) para garantir que os componentes `Tag` e `Carousel` estão íntegros antes de qualquer alteração.
 
-### Fase 2: Componente Tag (`@ds/core`)
+### Fase 2: Componente Tag (`@rafacdomin/ds-core`)
 
 - [x] Adicionar a propriedade opcional `removeAriaLabel?: string` à interface `TagProps` no arquivo [Tag.tsx](file:///home/rafacdomin/projetos/design-system/packages/core/src/components/Tag/Tag.tsx).
 - [x] Ajustar a inicialização da constante `removeLabel` para usar `removeAriaLabel` se fornecido; do contrário, usar o fallback padrão existente.
@@ -247,7 +247,7 @@ const CarouselDotsComponent = React.forwardRef<
 - [x] Adicionar teste unitário em [Tag.test.tsx](file:///home/rafacdomin/projetos/design-system/packages/core/src/components/Tag/Tag.test.tsx) validando que, se omitida a prop, o fallback nativo continua funcionando.
 - [x] Executar o teste de acessibilidade `axe` em [Tag.test.tsx](file:///home/rafacdomin/projetos/design-system/packages/core/src/components/Tag/Tag.test.tsx) e garantir que não há violações introduzidas com a customização de ARIA.
 
-### Fase 3: Componente Carousel (`@ds/carousel`)
+### Fase 3: Componente Carousel (`@rafacdomin/ds-carousel`)
 
 - [x] Adicionar as propriedades opcionais `slideAriaLabelFormat?: string` e `dotAriaLabelFormat?: string` à interface `CarouselProps` no arquivo [Carousel.tsx](file:///home/rafacdomin/projetos/design-system/packages/carousel/src/components/Carousel/Carousel.tsx).
 - [x] Incluir os novos campos `slideAriaLabelFormat: string` and `dotAriaLabelFormat: string` à interface `CarouselContextValue`.

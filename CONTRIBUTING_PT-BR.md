@@ -35,7 +35,7 @@ graph TD
 
 Para que qualquer modificação ou componente seja aceito no repositório, ele **deve** atender a estas 9 regras sem exceção:
 
-1. **Estrutura Padrão de Arquivos:** Todo componente criado sob o pacote `@ds/core` deve possuir exatamente os seguintes arquivos em sua pasta:
+1. **Estrutura Padrão de Arquivos:** Todo componente criado sob o pacote `@rafacdomin/ds-core` deve possuir exatamente os seguintes arquivos em sua pasta:
    - `ComponentName.tsx` (Implementação com forwardRef)
    - `ComponentName.test.tsx` (Testes unitários e de acessibilidade)
    - `ComponentName.module.scss` (Estilos isolados)

@@ -41,7 +41,7 @@ design-system/
 
 ```
 
-- **Why separate `@ds/carousel`?** We maintain the rule that any component with a heavy dependency (>10kb gzipped) must reside in its own subpackage to optimize the final bundle size of the core application.
+- **Why separate `@rafacdomin/ds-carousel`?** We maintain the rule that any component with a heavy dependency (>10kb gzipped) must reside in its own subpackage to optimize the final bundle size of the core application.
 
 ---
 
@@ -138,7 +138,7 @@ We guarantee component reliability through three layers of automated testing:
 We adopt a **Multi-Pipeline** design on GitHub Actions to test, build, and publish packages and documentation independently:
 
 - **PR Verification:** Automated validation of code formatting, linting rules, package building, and unit/accessibility tests runs on every Pull Request targeting the `main` or `master` branches (with optional visual regression tests if BrowserStack credentials are provided).
-- **Package Releases:** Manual publishing of `@ds/core` and `@ds/carousel` to the NPM registry via workflow execution on GitHub Actions (with choice inputs for SemVer: `major`, `minor`, `patch`).
+- **Package Releases:** Manual publishing of `@rafacdomin/ds-core` and `@rafacdomin/ds-carousel` to the NPM registry via workflow execution on GitHub Actions (with choice inputs for SemVer: `major`, `minor`, `patch`).
 - **Storybook Deployment:** The static Storybook documentation builds and deploys to GitHub Pages automatically upon successful library releases or manual dispatch.
 - **Notifications:** Simple webhooks built with `curl` report workflow status results to Discord, Slack, or Microsoft Teams.
 

@@ -35,7 +35,7 @@ graph TD
 
 For any modification or component to be accepted into the repository, it **must** meet these 9 rules without exception:
 
-1. **Standard File Structure:** Every component created under the `@ds/core` package must have exactly the following files in its folder:
+1. **Standard File Structure:** Every component created under the `@rafacdomin/ds-core` package must have exactly the following files in its folder:
    - `ComponentName.tsx` (Implementation with forwardRef)
    - `ComponentName.test.tsx` (Unit and accessibility tests)
    - `ComponentName.module.scss` (Isolated styles)

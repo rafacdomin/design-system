@@ -46,7 +46,7 @@ ComponentName.displayName = 'ComponentName'
 ## Regras de Stories (Storybook)
 
 - **Arquivo Único**: Cada componente deve possuir apenas um arquivo `ComponentName.stories.tsx` sob `packages/docs/src/stories/`.
-- **Importação de Componentes**: Importe os componentes diretamente do pacote `@ds/core` (ex: `import { ComponentName } from '@ds/core'`).
+- **Importação de Componentes**: Importe os componentes diretamente do pacote `@rafacdomin/ds-core` (ex: `import { ComponentName } from '@rafacdomin/ds-core'`).
 - **Menu Lateral Limpo**: O componente deve aparecer como um único item no menu lateral (não deve ter sub-páginas/stories para cada variante no menu).
 - **Playground**: Defina a story `Playground` como a primeira exportada para atuar como a visualização principal com os _Controls_.
 - **Variações Ocultas**: Adicione `tags: ['!dev']` em todas as stories de variações/estados secundários para ocultá-las do menu lateral enquanto são exibidas na página principal de `Docs`.

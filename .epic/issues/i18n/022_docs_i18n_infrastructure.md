@@ -1,4 +1,4 @@
-# 022 - Storybook: Infraestrutura e Tradução de Histórias (@ds/docs)
+# 022 - Storybook: Infraestrutura e Tradução de Histórias (@rafacdomin/ds-docs)
 
 ## Status
 
@@ -6,11 +6,11 @@
 
 ## Objetivo
 
-Implementar a estrutura e o sistema de i18n exclusivo do Storybook no pacote `@ds/docs`, integrando um seletor de idioma na toolbar e traduzindo automaticamente as propriedades das stories com base no idioma ativo.
+Implementar a estrutura e o sistema de i18n exclusivo do Storybook no pacote `@rafacdomin/ds-docs`, integrando um seletor de idioma na toolbar e traduzindo automaticamente as propriedades das stories com base no idioma ativo.
 
 ## Critérios de Aceite
 
-- [x] Criar o `LocaleContext`, `LocaleProvider` e o hook `useLocale` no pacote `@ds/docs`.
+- [x] Criar o `LocaleContext`, `LocaleProvider` e o hook `useLocale` no pacote `@rafacdomin/ds-docs`.
 - [x] Criar o componente `<Language>` para exibição condicional em documentações MDX.
 - [x] Configurar o seletor `locale` em `globalTypes` no arquivo `.storybook/preview.tsx` com as opções `pt-BR` e `en-US`.
 - [x] Criar o decorator `withI18n` para prover o `LocaleProvider` a todas as histórias.
@@ -342,15 +342,15 @@ const withI18n = (Story: React.ComponentType, context: any) => {
 
 ### 1. Dicionário Estático Centralizado vs. i18next nos Componentes
 
-Optamos por centralizar todas as traduções das stories e documentações no pacote `@ds/docs` através de um dicionário estático no Storybook e tradução recursiva automatizada de `args`.
+Optamos por centralizar todas as traduções das stories e documentações no pacote `@rafacdomin/ds-docs` através de um dicionário estático no Storybook e tradução recursiva automatizada de `args`.
 
-- **Preservação do Design System Puro**: Manter os pacotes `@ds/core` e `@ds/carousel` livres de dependências de runtime de i18n (como `i18next`, `react-i18next` ou arquivos JSON de tradução). Os componentes permanecem 100% agnósticos, aceitando suas labels de acessibilidade e textos customizados via propriedades.
+- **Preservação do Design System Puro**: Manter os pacotes `@rafacdomin/ds-core` e `@rafacdomin/ds-carousel` livres de dependências de runtime de i18n (como `i18next`, `react-i18next` ou arquivos JSON de tradução). Os componentes permanecem 100% agnósticos, aceitando suas labels de acessibilidade e textos customizados via propriedades.
 - **Performance e Bundle Size**: Evita o overhead de carregar bibliotecas de tradução adicionais no bundle final dos componentes de produção.
 - **Redução de Duplicação nas Stories**: O decorator traduz os argumentos de forma automatizada e recursiva. Escrevemos a story apenas uma vez (em português brasileiro) e ela se torna dinamicamente multilíngue dependendo do idioma selecionado no Storybook.
 
-### 2. Contexto de Locale Contido Exclusivamente no `@ds/docs`
+### 2. Contexto de Locale Contido Exclusivamente no `@rafacdomin/ds-docs`
 
-Como o escopo da internacionalização neste momento é exclusivamente focado na apresentação do Storybook e nas páginas de documentação MDX, toda a infraestrutura do contexto (`LocaleContext`, `LocaleProvider`, `useLocale` e o componente `<Language>`) residirá no pacote de documentação `@ds/docs`. Se no futuro houver necessidade de i18n em aplicações consumidoras, estas implementarão seus próprios provedores, consumindo as propriedades explícitas de internacionalização e acessibilidade expostas nos componentes core.
+Como o escopo da internacionalização neste momento é exclusivamente focado na apresentação do Storybook e nas páginas de documentação MDX, toda a infraestrutura do contexto (`LocaleContext`, `LocaleProvider`, `useLocale` e o componente `<Language>`) residirá no pacote de documentação `@rafacdomin/ds-docs`. Se no futuro houver necessidade de i18n em aplicações consumidoras, estas implementarão seus próprios provedores, consumindo as propriedades explícitas de internacionalização e acessibilidade expostas nos componentes core.
 
 ---
 

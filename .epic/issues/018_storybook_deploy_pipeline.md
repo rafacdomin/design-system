@@ -16,7 +16,7 @@ Configurar o workflow do GitHub Actions para gerar a build estática do Storyboo
 - [ ] Declarar as permissões de gravação exigidas pelo GitHub Pages no arquivo do workflow (`pages: write`, `id-token: write`).
 - [ ] Adicionar controle de concorrência (`concurrency`) para evitar deploys simultâneos corrompendo a build ativa do GitHub Pages.
 - [ ] Executar o build estático de todo o monorepo (`pnpm build`) antes do Storybook para garantir que as dependências internas do workspaces estejam resolvidas.
-- [ ] Gerar o Storybook estático utilizando o script `pnpm --filter @ds/docs build-storybook` direcionando para a pasta `packages/docs/storybook-static`.
+- [ ] Gerar o Storybook estático utilizando o script `pnpm --filter @rafacdomin/ds-docs build-storybook` direcionando para a pasta `packages/docs/storybook-static`.
 - [ ] Realizar o deploy usando as actions oficiais e recomendadas pelo GitHub:
   - `actions/configure-pages@v5`
   - `actions/upload-pages-artifact@v3` (apontando para a pasta estática gerada)
@@ -85,7 +85,7 @@ permissions:
 O arquivo `.github/workflows/deploy-storybook.yml` definirá o job de deploy direcionado ao ambiente `github-pages`:
 
 - Executará a compilação do design system (`pnpm build`) para satisfazer as resoluções de pacotes locais.
-- Executará a build estática do docs (`pnpm --filter @ds/docs build-storybook`).
+- Executará a build estática do docs (`pnpm --filter @rafacdomin/ds-docs build-storybook`).
 - Fará o upload da pasta `packages/docs/storybook-static` e acionará o deploy.
 
 ### 2. Tratamento de Concorrência
@@ -103,7 +103,7 @@ concurrency:
 ## Decisões Técnicas
 
 - **Decisão: Separação em Workflow Independente do Release das Libs**
-  _Justificativa:_ Manter as esteiras desacopladas permite que alterações de documentação (como novos stories ou mudanças em páginas MDX no `@ds/docs`) sejam publicadas de forma manual a qualquer momento sem a necessidade de gerar novas versões das bibliotecas `@ds/core` e `@ds/carousel` no NPM.
+  _Justificativa:_ Manter as esteiras desacopladas permite que alterações de documentação (como novos stories ou mudanças em páginas MDX no `@rafacdomin/ds-docs`) sejam publicadas de forma manual a qualquer momento sem a necessidade de gerar novas versões das bibliotecas `@rafacdomin/ds-core` e `@rafacdomin/ds-carousel` no NPM.
 - **Decisão: Deploy via OIDC nativo**
   _Justificativa:_ Segurança e performance. Não é necessário manter chaves de deploy (SSH deploy keys) ou tokens pessoais de acesso (PAT), e elimina-se a poluição do histórico do git com arquivos compilados.
 
@@ -125,7 +125,7 @@ concurrency:
 - [x] Configurar setup do Node.js v18 com cache de dependências de pnpm (`actions/setup-node@v4`).
 - [x] Instalar as dependências do monorepo usando `pnpm install --frozen-lockfile`.
 - [x] Executar build de produção geral do monorepo (`pnpm build`) para compilar dependências locais.
-- [x] Compilar Storybook de forma estática via `pnpm --filter @ds/docs build-storybook`.
+- [x] Compilar Storybook de forma estática via `pnpm --filter @rafacdomin/ds-docs build-storybook`.
 - [x] Adicionar a action de preparação de ambiente `actions/configure-pages@v5`.
 - [x] Adicionar a action de upload `actions/upload-pages-artifact@v3` apontando para o caminho `packages/docs/storybook-static`.
 - [x] Adicionar a action de deploy final `actions/deploy-pages@v4` com ID `deployment`.
