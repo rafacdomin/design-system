@@ -4,6 +4,7 @@ import { ThemeProvider, useTheme, Theme } from '@ds/core'
 import { DocsContainer } from '@storybook/blocks'
 import { addons } from '@storybook/preview-api'
 import { GLOBALS_UPDATED } from '@storybook/core-events'
+import { LocaleProvider, Locale, translations } from '../src'
 import '@ds/core/dist/index.css'
 import '@ds/carousel/dist/index.css'
 
@@ -57,6 +58,16 @@ const DocsThemeContainer = ({
     return initialTheme === 'dark' ? 'dark' : 'light'
   })
 
+  const [locale, setLocale] = React.useState<Locale>(() => {
+    const sbContext = context as unknown as StorybookContext
+    const contextGlobals =
+      sbContext?.globals ||
+      sbContext?.store?.globals?.globals ||
+      sbContext?.store?.userGlobals?.globals
+    const initialLocale = contextGlobals?.locale
+    return initialLocale === 'en-US' ? 'en-US' : 'pt-BR'
+  })
+
   React.useEffect(() => {
     const channel = addons.getChannel()
     const handleGlobalsUpdated = (
@@ -67,6 +78,10 @@ const DocsThemeContainer = ({
       if (newTheme === 'light' || newTheme === 'dark') {
         setTheme(newTheme)
       }
+      const newLocale = globals?.locale
+      if (newLocale === 'pt-BR' || newLocale === 'en-US') {
+        setLocale(newLocale)
+      }
     }
 
     channel.on(GLOBALS_UPDATED, handleGlobalsUpdated)
@@ -76,12 +91,63 @@ const DocsThemeContainer = ({
   }, [])
 
   return (
-    <ThemeProvider defaultTheme={theme}>
-      <ThemeSync theme={theme}>
-        <DocsContainer context={context}>{children}</DocsContainer>
-      </ThemeSync>
-    </ThemeProvider>
+    <LocaleProvider locale={locale}>
+      <ThemeProvider defaultTheme={theme}>
+        <ThemeSync theme={theme}>
+          <DocsContainer context={context}>{children}</DocsContainer>
+        </ThemeSync>
+      </ThemeProvider>
+    </LocaleProvider>
   )
+}
+
+function translateValue(value: unknown, locale: 'pt-BR' | 'en-US'): unknown {
+  if (locale === 'pt-BR') {
+    return value
+  }
+
+  if (typeof value === 'string') {
+    return translations[value] || value
+  }
+
+  if (React.isValidElement(value)) {
+    const element = value as React.ReactElement<Record<string, unknown>>
+    const newProps: Record<string, unknown> = {}
+    for (const key of Object.keys(element.props)) {
+      if (key !== 'children') {
+        newProps[key] = translateValue(element.props[key], locale)
+      }
+    }
+    const children = translateValue(element.props.children, locale)
+    return React.cloneElement(element, newProps, children as React.ReactNode)
+  }
+
+  if (Array.isArray(value)) {
+    return value.map((item) => translateValue(item, locale))
+  }
+
+  if (value !== null && typeof value === 'object') {
+    const translatedObj: Record<string, unknown> = {}
+    for (const key of Object.keys(value)) {
+      translatedObj[key] = translateValue(
+        (value as Record<string, unknown>)[key],
+        locale
+      )
+    }
+    return translatedObj
+  }
+
+  return value
+}
+
+function translateArgs(
+  args: Record<string, unknown> | undefined,
+  locale: 'pt-BR' | 'en-US'
+): Record<string, unknown> | undefined {
+  if (!args || locale === 'pt-BR') {
+    return args
+  }
+  return translateValue(args, locale) as Record<string, unknown>
 }
 
 const preview: Preview = {
@@ -122,27 +188,45 @@ const preview: Preview = {
         dynamicTitle: true,
       },
     },
+    locale: {
+      description: 'Internationalization locale',
+      defaultValue: 'pt-BR',
+      toolbar: {
+        title: 'Locale',
+        icon: 'globe',
+        items: [
+          { value: 'pt-BR', title: 'Português', right: 'PT' },
+          { value: 'en-US', title: 'English', right: 'EN' },
+        ],
+        dynamicTitle: true,
+      },
+    },
   },
   decorators: [
     (Story, context) => {
+      const locale = (context.globals.locale || 'pt-BR') as 'pt-BR' | 'en-US'
+      context.args = translateArgs(context.args, locale) || {}
+
       const theme = context.globals.theme || 'light'
       const isDocs = context.viewMode === 'docs'
       return (
-        <ThemeProvider defaultTheme={theme}>
-          <ThemeSync theme={theme}>
-            <div
-              style={{
-                padding: isDocs ? '1rem' : '2rem',
-                minHeight: isDocs ? 'auto' : '100vh',
-                background: 'var(--ds-color-neutral-0)',
-                color: 'var(--ds-color-neutral-1000)',
-                transition: 'background-color 0.2s ease, color 0.2s ease',
-              }}
-            >
-              <Story />
-            </div>
-          </ThemeSync>
-        </ThemeProvider>
+        <LocaleProvider locale={locale}>
+          <ThemeProvider defaultTheme={theme}>
+            <ThemeSync theme={theme}>
+              <div
+                style={{
+                  padding: isDocs ? '1rem' : '2rem',
+                  minHeight: isDocs ? 'auto' : '100vh',
+                  background: 'var(--ds-color-neutral-0)',
+                  color: 'var(--ds-color-neutral-1000)',
+                  transition: 'background-color 0.2s ease, color 0.2s ease',
+                }}
+              >
+                <Story />
+              </div>
+            </ThemeSync>
+          </ThemeProvider>
+        </LocaleProvider>
       )
     },
   ],

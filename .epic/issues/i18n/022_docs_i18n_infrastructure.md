@@ -2,7 +2,7 @@
 
 ## Status
 
-[ ] Planejada [ ] Em desenvolvimento [ ] Concluída
+[ ] Planejada [ ] Em desenvolvimento [x] Concluída
 
 ## Objetivo
 
@@ -10,13 +10,13 @@ Implementar a estrutura e o sistema de i18n exclusivo do Storybook no pacote `@d
 
 ## Critérios de Aceite
 
-- [ ] Criar o `LocaleContext`, `LocaleProvider` e o hook `useLocale` no pacote `@ds/docs`.
-- [ ] Criar o componente `<Language>` para exibição condicional em documentações MDX.
-- [ ] Configurar o seletor `locale` em `globalTypes` no arquivo `.storybook/preview.tsx` com as opções `pt-BR` e `en-US`.
-- [ ] Criar o decorator `withI18n` para prover o `LocaleProvider` a todas as histórias.
-- [ ] Criar um dicionário estático no Storybook para traduzir strings (como labels, placeholders, erros e aria-labels) usadas nas stories de português para inglês.
-- [ ] Implementar a tradução recursiva automatizada de `args` passados para os componentes.
-- [ ] Atualizar o `DocsThemeContainer` para reagir à alteração de `locale` na global toolbar de modo que as páginas MDX recarreguem instantaneamente no idioma correto.
+- [x] Criar o `LocaleContext`, `LocaleProvider` e o hook `useLocale` no pacote `@ds/docs`.
+- [x] Criar o componente `<Language>` para exibição condicional em documentações MDX.
+- [x] Configurar o seletor `locale` em `globalTypes` no arquivo `.storybook/preview.tsx` com as opções `pt-BR` e `en-US`.
+- [x] Criar o decorator `withI18n` para prover o `LocaleProvider` a todas as histórias.
+- [x] Criar um dicionário estático no Storybook para traduzir strings (como labels, placeholders, erros e aria-labels) usadas nas stories de português para inglês.
+- [x] Implementar a tradução recursiva automatizada de `args` passados para os componentes.
+- [x] Atualizar o `DocsThemeContainer` para reagir à alteração de `locale` na global toolbar de modo que as páginas MDX recarreguem instantaneamente no idioma correto.
 
 ## Arquivos a Criar/Modificar
 
@@ -356,23 +356,23 @@ Como o escopo da internacionalização neste momento é exclusivamente focado na
 
 ## Checklist de Implementação
 
-- [ ] Criar o arquivo `packages/docs/src/context/LocaleContext.tsx`
-- [ ] Definir os tipos strict `Locale` e `LocaleContextType`
-- [ ] Criar o React Context `LocaleContext`
-- [ ] Implementar e exportar o componente `LocaleProvider` suportando controle interno e prop externa `locale`
-- [ ] Implementar e exportar o hook customizado `useLocale` com validação de inicialização
-- [ ] Criar o arquivo `packages/docs/src/components/Language.tsx`
-- [ ] Implementar e exportar o componente `<Language>` usando `useLocale` para exibição condicional do `children`
-- [ ] Definir o `displayName = 'Language'` no componente `<Language>`
-- [ ] Criar o arquivo `packages/docs/src/i18n/translations.ts`
-- [ ] Cadastrar os termos e sentenças em português das histórias de `Tag`, `Carousel`, `Dropdown` e `Modal` mapeados para inglês no dicionário
-- [ ] Exportar `LocaleContext`, `LocaleProvider`, `useLocale` e `Language` a partir de `packages/docs/src/index.ts`
-- [ ] Configurar a globalType `locale` em `packages/docs/.storybook/preview.tsx` com as opções `pt-BR` e `en-US` e ícone `globe`
-- [ ] Implementar a função utilitária `translateValue` com recursão e suporte seguro a elementos React em `preview.tsx`
-- [ ] Implementar a função utilitária `translateArgs` em `preview.tsx`
-- [ ] Criar o decorator `withI18n` em `preview.tsx` integrando a tradução de args e envolvendo a história com o `LocaleProvider`
-- [ ] Adicionar o decorator `withI18n` à lista global de `decorators` em `preview.tsx`
-- [ ] Atualizar o `DocsThemeContainer` em `preview.tsx` para sincronizar o estado local de `locale` via evento `GLOBALS_UPDATED`
-- [ ] Envolver o `DocsContainer` com o `LocaleProvider` na renderização do `DocsThemeContainer`
-- [ ] Validar a compilação de todo o monorepo executando `pnpm build`
-- [ ] Iniciar o Storybook localmente, testar a toolbar de `Language` e certificar-se de que os argumentos das histórias e as seções condicionais do MDX são atualizados instantaneamente em tempo de execução
+- [x] Criar o arquivo `packages/docs/src/context/LocaleContext.tsx`
+- [x] Definir os tipos strict `Locale` e `LocaleContextType`
+- [x] Criar o React Context `LocaleContext`
+- [x] Implementar e exportar o componente `LocaleProvider` suportando controle interno e prop externa `locale`
+- [x] Implementar e exportar o hook customizado `useLocale` com validação de inicialização
+- [x] Criar o arquivo `packages/docs/src/components/Language.tsx`
+- [x] Implementar e exportar o componente `<Language>` usando `useLocale` para exibição condicional do `children`
+- [x] Definir o `displayName = 'Language'` no componente `<Language>`
+- [x] Criar o arquivo `packages/docs/src/i18n/translations.ts`
+- [x] Cadastrar os termos e sentenças em português das histórias de `Tag`, `Carousel`, `Dropdown` e `Modal` mapeados para inglês no dicionário
+- [x] Exportar `LocaleContext`, `LocaleProvider`, `useLocale` e `Language` a partir de `packages/docs/src/index.ts`
+- [x] Configurar a globalType `locale` em `packages/docs/.storybook/preview.tsx` com as opções `pt-BR` e `en-US` e ícone `globe`
+- [x] Implementar a função utilitária `translateValue` com recursão e suporte seguro a elementos React em `preview.tsx`
+- [x] Implementar a função utilitária `translateArgs` em `preview.tsx`
+- [x] Criar o decorator `withI18n` em `preview.tsx` integrando a tradução de args e envolvendo a história com o `LocaleProvider`
+- [x] Adicionar o decorator `withI18n` à lista global de `decorators` em `preview.tsx`
+- [x] Atualizar o `DocsThemeContainer` em `preview.tsx` para sincronizar o estado local de `locale` via evento `GLOBALS_UPDATED`
+- [x] Envolver o `DocsContainer` com o `LocaleProvider` na renderização do `DocsThemeContainer`
+- [x] Validar a compilação de todo o monorepo executando `pnpm build`
+- [x] Iniciar o Storybook localmente, testar a toolbar de `Language` e certificar-se de que os argumentos das histórias e as seções condicionais do MDX são atualizados instantaneamente em tempo de execução
