@@ -6,6 +6,22 @@ This is the **Design System**, a minimalist React component library based on a h
 
 ---
 
+## 🏛️ Architecture & Design Decisions
+
+Here is a quick summary of how it is designed and why:
+
+1. **Monorepo with Clear Boundaries**: Powered by Turborepo and pnpm workspaces. The repository splits code into distinct workspaces (`ds-core`, `ds-carousel`, `ds-docs`).
+2. **Strict Package Purity**: Any component with a dependency larger than ~10kb (like Embla Carousel, which is ~15kb) is isolated into its own package (`@rafacdomin/ds-carousel`) rather than bundled into the core package (`@rafacdomin/ds-core`). This ensures optimal bundle sizes for consumer applications.
+3. **No runtime CSS-in-JS or Tailwind**: We use Vanilla SCSS Modules coupled with CSS Custom Properties linked to design tokens. Themes (Light/Dark) are toggled instantly on HTML wrapper attributes (`data-theme`) without component re-renders.
+4. **Locale-Agnostic Production Code**: The components themselves do not bundle any translation files or runtimes. Accessibility labels (ARIA) are completely configurable via props (e.g. `removeAriaLabel`), while Storybook/docs manage localization dynamically via context and a translation dictionary.
+5. **Triple-Layer Testing Strategy**:
+   - **Unit & Behavior**: Vitest + React Testing Library (TDD flow, requiring test files before implementation).
+   - **Strict Accessibility**: WCAG 2.1 AA compliant, validated automatically using `jest-axe` in unit tests.
+   - **Visual Stability**: Dynamic Playwright runner executing locally or on BrowserStack (real browsers) across different viewports, viewports under both light/dark themes, using static Storybook snapshot baselines.
+6. **Multi-Pipeline CI/CD Strategy**: Automations are separated into independent, optimized GitHub Actions workflows: validation of formatting, linting, builds, and unit/visual tests on every Pull Request; manual trigger packaging releases targeting NPM with custom SemVer levels; and automatic build and deploy of the Storybook static sandbox to GitHub Pages on release.
+
+---
+
 ## 🚀 Technical Stack
 
 The project is structured using modern monorepo and automated testing practices:

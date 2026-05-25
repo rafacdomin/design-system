@@ -6,6 +6,22 @@ Este é o **Design System**, uma biblioteca de componentes React minimalista bas
 
 ---
 
+## 🏛️ Arquitetura & Decisões de Projeto
+
+Aqui está um resumo rápido de como ele é estruturado e as principais decisões:
+
+1. **Monorepo com Limites Claros**: Utiliza Turborepo e pnpm workspaces. O repositório divide o código em workspaces isolados (`ds-core`, `ds-carousel`, `ds-docs`).
+2. **Pureza de Pacotes Estrita**: Qualquer componente com uma dependência externa superior a ~10kb (como o Embla Carousel, que possui ~15kb) é isolado em seu próprio subpacote (`@rafacdomin/ds-carousel`) em vez de inflar o pacote principal (`@rafacdomin/ds-core`), otimizando o bundle size das aplicações consumidoras.
+3. **Sem CSS-in-JS de runtime ou Tailwind**: Adotamos SCSS Modules puro consumindo CSS Custom Properties mapeadas a partir dos tokens. A alternância de temas (Light/Dark) é feita instantaneamente por atributos HTML (`data-theme`) sem disparar re-renderizações na árvore React.
+4. **Código de Produção Agnóstico a Idioma**: Os componentes não incluem runtimes pesados ou dicionários locais de tradução. As strings de acessibilidade (ARIA) são parametrizáveis via props (ex: `removeAriaLabel`), enquanto o Storybook e as documentações MDX controlam o i18n em tempo de execução.
+5. **Estratégia de Testes em Três Camadas**:
+   - **Unidade & Comportamento**: Vitest + RTL seguindo fluxo estrito de TDD (testes criados antes do componente).
+   - **Acessibilidade Estrita**: Conformidade WCAG 2.1 AA garantida por testes de acessibilidade automatizados com `jest-axe`.
+   - **Regressão Visual**: Testes do Playwright (rodados localmente ou na nuvem via BrowserStack em navegadores reais) que validam capturas responsivas das stories em múltiplos breakpoints e em ambos os temas.
+6. **Estratégia de CI/CD Multi-Pipeline**: As automações são divididas em workflows do GitHub Actions separados e otimizados: validação de formatação, linter, compilação e testes (unitários/visuais) disparados automaticamente em cada Pull Request; compilação e publicação manual independente das bibliotecas no NPM (com controle de versão SemVer); e deploy automatizado do Storybook no GitHub Pages a cada release concluído.
+
+---
+
 ## 🚀 Stack Técnica
 
 O projeto é estruturado utilizando práticas modernas de monorepo e testes automatizados:
