@@ -2,6 +2,7 @@ import * as fs from 'fs'
 import * as path from 'path'
 import * as ts from 'typescript'
 import { z } from 'zod'
+import { findProjectRoot } from './utils.js'
 
 export const GetComponentExamplesSchema = z.object({
   componentName: z.string().min(1),
@@ -24,20 +25,6 @@ interface ArgVal {
   isString: boolean
   isBoolean: boolean
   isTrue: boolean
-}
-
-/**
- * Encontra a raiz do projeto monorepo
- */
-function findProjectRoot(): string {
-  let current = process.cwd()
-  while (current !== path.dirname(current)) {
-    if (fs.existsSync(path.join(current, 'pnpm-workspace.yaml'))) {
-      return current
-    }
-    current = path.dirname(current)
-  }
-  return process.cwd()
 }
 
 /**

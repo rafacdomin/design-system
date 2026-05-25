@@ -3,8 +3,7 @@ import * as fs from 'fs'
 import * as path from 'path'
 import { fileURLToPath } from 'url'
 
-const __filename = fileURLToPath(import.meta.url)
-const __dirname = path.dirname(__filename)
+const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
 // Dicionário estrito de mapeamento para whitelisting absoluto (CWE-22)
 export const DOCS_MAP: Record<
@@ -40,6 +39,30 @@ export const DOCS_MAP: Record<
     title: 'Workflow de Desenvolvimento',
     description:
       'Passo a passo do ciclo de desenvolvimento de componentes: Spec, Break, Plan e Execute.',
+  },
+  spec: {
+    filename: 'COMPONENT_SPEC.md',
+    title: 'Especificações dos Componentes',
+    description:
+      'Catálogo de especificações funcionais e requisitos de comportamento/estados para cada componente do design system.',
+  },
+  testing: {
+    filename: 'TESTING_STRATEGY.md',
+    title: 'Estratégia de Testes do Design System',
+    description:
+      'Práticas de TDD, testes unitários com Vitest/RTL e testes visuais/regressão de componentes.',
+  },
+  inspirations: {
+    filename: 'INSPIRATIONS.md',
+    title: 'Referências e Inspirações',
+    description:
+      'Catálogo de APIs e referências externas que guiaram as decisões de design e nomenclatura do design system.',
+  },
+  publishing: {
+    filename: 'PUBLISHING.md',
+    title: 'Publicação e CI/CD',
+    description:
+      'Guias e especificações sobre publicação de pacotes npm, versionamento semântico e pipelines CI/CD.',
   },
 }
 
@@ -130,7 +153,7 @@ export function registerResources(server: McpServer): void {
               },
             ],
           }
-        } catch (error) {
+        } catch (error: unknown) {
           const errorMsg =
             error instanceof Error ? error.message : String(error)
           console.error(`Erro ao ler recurso ${resourceUri}: ${errorMsg}`)

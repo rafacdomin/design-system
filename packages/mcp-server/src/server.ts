@@ -1,5 +1,7 @@
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js'
+import * as fs from 'fs'
 import * as path from 'path'
+import { fileURLToPath } from 'url'
 import { registerResources } from './resources/index.js'
 import {
   GetDesignTokensSchema,
@@ -17,14 +19,28 @@ import {
   findProjectRoot,
 } from './tools/index.js'
 
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = path.dirname(__filename)
+
 /**
  * Fábrica de criação do servidor MCP do Design System.
  * Agrupa todas as ferramentas e recursos cadastrados no servidor.
  */
 export function createServer(): McpServer {
+  const packageJsonPath = path.resolve(__dirname, '../package.json')
+  let version = '1.0.0'
+  try {
+    const pkg = JSON.parse(fs.readFileSync(packageJsonPath, 'utf-8'))
+    if (pkg && typeof pkg.version === 'string') {
+      version = pkg.version
+    }
+  } catch {
+    // fallback
+  }
+
   const server = new McpServer({
     name: 'design-system-mcp-server',
-    version: '1.0.0',
+    version,
   })
 
   // Registro de Recursos
@@ -127,7 +143,7 @@ export function createServer(): McpServer {
           target.path,
           `${target.name}.tsx`
         )
-        const api = parseComponentApi(absolutePath)
+        const api = await parseComponentApi(absolutePath)
         return {
           content: [
             {
@@ -162,7 +178,7 @@ export function createServer(): McpServer {
     },
     async (args) => {
       try {
-        const spec = parseComponentSpec(args.componentName)
+        const spec = await parseComponentSpec(args.componentName)
         if (!spec) {
           throw new Error(
             `Especificação do componente '${args.componentName}' não encontrada no COMPONENT_SPEC.md.`

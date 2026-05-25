@@ -71,6 +71,7 @@ describe('MCP Server Integration JSON-RPC Tests', () => {
   })
 
   afterEach(async () => {
+    client.destroy()
     await transport.close()
     await serverPromise
   })
@@ -139,5 +140,70 @@ describe('MCP Server Integration JSON-RPC Tests', () => {
       contents: Array<{ uri: string; text: string }>
     }
     expect(result.contents[0].text).toBe('# Accessibility Doc Content')
+  })
+
+  it('deve retornar erro ao chamar ferramenta inexistente', async () => {
+    const response = await client.sendRequest(
+      'tools/call',
+      {
+        name: 'ferramenta_inexistente',
+        arguments: {},
+      },
+      6
+    )
+    if (response.error) {
+      expect(response.error).toBeDefined()
+    } else {
+      const result = response.result as { isError?: boolean }
+      expect(result.isError).toBe(true)
+    }
+  })
+
+  it('deve retornar erro ao chamar metodo JSON-RPC inexistente', async () => {
+    const response = await client.sendRequest('non_existent_method', {}, 99)
+    expect(response.error).toBeDefined()
+    expect(response.error?.code).toBe(-32601) // Method not found
+  })
+
+  it('deve retornar erro de validacao ao passar argumentos invalidos para get_design_tokens', async () => {
+    const response = await client.sendRequest(
+      'tools/call',
+      {
+        name: 'get_design_tokens',
+        arguments: {
+          theme: 'invalid-theme',
+        },
+      },
+      7
+    )
+    if (response.error) {
+      expect(response.error).toBeDefined()
+    } else {
+      const result = response.result as { isError?: boolean }
+      expect(result.isError).toBe(true)
+    }
+  })
+
+  it('deve retornar erro ao tentar ler um recurso inexistente', async () => {
+    const response = await client.sendRequest(
+      'resources/read',
+      {
+        uri: 'design-system://docs/recurso_inexistente',
+      },
+      8
+    )
+    expect(response.error).toBeDefined()
+  })
+
+  it('deve falhar por timeout se o servidor nao responder', async () => {
+    const dummyInput = new PassThrough()
+    const dummyOutput = new PassThrough()
+    const offlineClient = new McpTestClient(dummyInput, dummyOutput)
+
+    await expect(
+      offlineClient.sendRequest('tools/list', {}, 999, 50)
+    ).rejects.toThrow('Request timed out after 50ms')
+
+    offlineClient.destroy()
   })
 })

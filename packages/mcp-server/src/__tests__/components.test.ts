@@ -163,11 +163,11 @@ describe('Components MCP Tools - Unit Tests', () => {
   })
 
   describe('parseComponentApi', () => {
-    it('should parse TypeScript AST and return properties with JSDoc comments', () => {
-      const mockReadFileSync = vi.mocked(fs.readFileSync)
-      mockReadFileSync.mockReturnValue(mockTsxContent)
+    it('should parse TypeScript AST and return properties with JSDoc comments', async () => {
+      const mockReadFile = vi.mocked(fs.promises.readFile)
+      mockReadFile.mockResolvedValue(mockTsxContent)
 
-      const result = parseComponentApi('dummy/Button.tsx')
+      const result = await parseComponentApi('dummy/Button.tsx')
 
       expect(result).toHaveLength(2)
       expect(result[0].name).toBe('ButtonProps')
@@ -198,14 +198,14 @@ describe('Components MCP Tools - Unit Tests', () => {
   })
 
   describe('parseComponentSpec', () => {
-    it('should slice COMPONENT_SPEC.md and return requested sections', () => {
+    it('should slice COMPONENT_SPEC.md and return requested sections', async () => {
       const mockExistsSync = vi.mocked(fs.existsSync)
-      const mockReadFileSync = vi.mocked(fs.readFileSync)
+      const mockReadFile = vi.mocked(fs.promises.readFile)
 
       mockExistsSync.mockReturnValue(true)
-      mockReadFileSync.mockReturnValue(mockSpecMarkdownContent)
+      mockReadFile.mockResolvedValue(mockSpecMarkdownContent)
 
-      const result = parseComponentSpec('Button')
+      const result = await parseComponentSpec('Button')
 
       expect(result).not.toBeNull()
       if (result) {
@@ -218,14 +218,14 @@ describe('Components MCP Tools - Unit Tests', () => {
       }
     })
 
-    it('should return null for non-existent component in spec', () => {
+    it('should return null for non-existent component in spec', async () => {
       const mockExistsSync = vi.mocked(fs.existsSync)
-      const mockReadFileSync = vi.mocked(fs.readFileSync)
+      const mockReadFile = vi.mocked(fs.promises.readFile)
 
       mockExistsSync.mockReturnValue(true)
-      mockReadFileSync.mockReturnValue(mockSpecMarkdownContent)
+      mockReadFile.mockResolvedValue(mockSpecMarkdownContent)
 
-      const result = parseComponentSpec('NonExistent')
+      const result = await parseComponentSpec('NonExistent')
       expect(result).toBeNull()
     })
   })
@@ -281,7 +281,7 @@ describe('Components MCP Tools - Integration Tests', () => {
             target.path,
             `${target.name}.tsx`
           )
-          const api = parseComponentApi(absolutePath)
+          const api = await parseComponentApi(absolutePath)
           return {
             content: [{ type: 'text', text: JSON.stringify(api) }],
           }
@@ -308,7 +308,7 @@ describe('Components MCP Tools - Integration Tests', () => {
       },
       async (args) => {
         try {
-          const spec = parseComponentSpec(args.componentName)
+          const spec = await parseComponentSpec(args.componentName)
           if (!spec) {
             throw new Error(
               `Especificação do componente '${args.componentName}' não encontrada.`
@@ -377,14 +377,12 @@ describe('Components MCP Tools - Integration Tests', () => {
     const mockReaddir = vi.mocked(fs.promises.readdir)
     const mockExistsSync = vi.mocked(fs.existsSync)
     const mockReadFile = vi.mocked(fs.promises.readFile)
-    const mockReadFileSync = vi.mocked(fs.readFileSync)
 
     mockReaddir.mockResolvedValue([
       { name: 'Button', isDirectory: () => true },
     ] as unknown as never)
     mockExistsSync.mockReturnValue(true)
-    mockReadFile.mockResolvedValue('')
-    mockReadFileSync.mockReturnValue(mockTsxContent)
+    mockReadFile.mockResolvedValue(mockTsxContent)
 
     const response = (await client.callTool({
       name: 'get_component_api',

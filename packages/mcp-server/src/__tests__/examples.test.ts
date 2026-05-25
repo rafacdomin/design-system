@@ -6,7 +6,8 @@ import { InMemoryTransport } from '@modelcontextprotocol/sdk/inMemory.js'
 import {
   getComponentExamples,
   GetComponentExamplesSchema,
-} from '../tools/examples'
+  ComponentExamplesResult,
+} from '../tools/examples.js'
 
 vi.mock('fs', () => {
   return {
@@ -229,7 +230,9 @@ describe('get_component_examples MCP Tool - Integration Tests', () => {
     })) as { content: Array<{ type: string; text?: string }> }
 
     expect(response.content).toHaveLength(1)
-    const result = JSON.parse(response.content[0].text as string)
+    const result: ComponentExamplesResult = JSON.parse(
+      response.content[0].text as string
+    ) as ComponentExamplesResult
     expect(result.componentName).toBe('Button')
     expect(result.examples).toBeDefined()
   })

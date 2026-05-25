@@ -245,7 +245,7 @@ export async function parseDesignTokens(
           /-\s+(--ds-font-size-([a-z0-9]+)):\s*([^\s(]+)(?:\s*\((.*?)\))?/
         )
         if (match) {
-          const [_, token, key, value, pixel] = match
+          const [, token, key, value, pixel] = match
           tokens.typography.fontSizes[key] = {
             token,
             value,
@@ -257,7 +257,7 @@ export async function parseDesignTokens(
           /-\s+(--ds-font-weight-([a-z0-9]+)):\s*([^\s(]+)/
         )
         if (match) {
-          const [_, token, key, value] = match
+          const [, token, key, value] = match
           tokens.typography.fontWeights[key] = { token, value }
         }
       } else if (currentSubSection === 'lineHeights') {
@@ -265,7 +265,7 @@ export async function parseDesignTokens(
           /-\s+(--ds-line-height-([a-z0-9]+)):\s*([^\s(]+)/
         )
         if (match) {
-          const [_, token, key, value] = match
+          const [, token, key, value] = match
           tokens.typography.lineHeights[key] = { token, value }
         }
       }
@@ -300,7 +300,7 @@ export async function parseDesignTokens(
           /-\s+(--ds-color-([a-z0-9-]+)):\s*(hsl\(.*?\)|#?[a-f0-9]+)(?:\s*\((.*?)\))?\s+no\s+Light\s+(?:e|and)\s+(hsl\(.*?\)|#?[a-f0-9]+)\s+no\s+Dark/i
         )
         if (match) {
-          const [_, token, key, light, desc, dark] = match
+          const [, token, key, light, desc, dark] = match
           tokens.colors.accent[key] = {
             token,
             light,
@@ -314,7 +314,7 @@ export async function parseDesignTokens(
         /-\s+(--ds-spacing-([0-9]+)):\s*([^\s(]+)(?:\s*\((.*?)\))?/
       )
       if (match) {
-        const [_, token, key, value, pixel] = match
+        const [, token, key, value, pixel] = match
         tokens.spacing[key] = {
           token,
           value,
@@ -327,7 +327,7 @@ export async function parseDesignTokens(
           /-\s+(--ds-border-radius-([a-z0-9]+)):\s*([^\s(]+)(?:\s*\((.*?)\))?/
         )
         if (match) {
-          const [_, token, key, value, desc] = match
+          const [, token, key, value, desc] = match
           tokens.borders.radius[key] = {
             token,
             value,
@@ -339,7 +339,7 @@ export async function parseDesignTokens(
           /-\s+(--ds-border-width-([a-z0-9]+)):\s*([^\s(]+)(?:\s*\((.*?)\))?/
         )
         if (match) {
-          const [_, token, key, value, desc] = match
+          const [, token, key, value, desc] = match
           tokens.borders.width[key] = {
             token,
             value,
@@ -350,13 +350,13 @@ export async function parseDesignTokens(
     } else if (currentSection === 'shadows') {
       const match = cleanLine.match(/-\s+(--ds-shadow-([a-z0-9]+)):\s*(.*)/)
       if (match) {
-        const [_, token, key, value] = match
+        const [, token, key, value] = match
         tokens.shadows[key] = { token, value }
       }
     } else if (currentSection === 'breakpoints') {
       const match = cleanLine.match(/-\s+(--ds-breakpoint-([a-z0-9]+)):\s*(.*)/)
       if (match) {
-        const [_, token, key, value] = match
+        const [, token, key, value] = match
         tokens.breakpoints[key] = { token, value }
       }
     }

@@ -450,6 +450,26 @@ describe('Design Tokens MCP Tool - Integration Tests', () => {
     })
   })
 
+  it('should filter design tokens by category and theme', async () => {
+    vi.mocked(fs.access).mockResolvedValue(undefined)
+    vi.mocked(fs.readFile).mockResolvedValue(mockMarkdownContent)
+
+    const response = (await client.callTool({
+      name: 'get_design_tokens',
+      arguments: {
+        category: 'colors',
+        theme: 'dark',
+      },
+    })) as { content: Array<{ type: string; text?: string }> }
+
+    expect(response.content).toHaveLength(1)
+    const parsedText = JSON.parse(response.content[0].text as string) as Record<
+      string,
+      Record<string, Record<string, unknown>>
+    >
+    expect(parsedText.colors.neutral['0'].value).toBe('#0a0a0a')
+  })
+
   it('should return error response when tool parsing fails', async () => {
     vi.mocked(fs.access).mockRejectedValue(new Error('File not found'))
 

@@ -2,6 +2,7 @@ import * as fs from 'fs'
 import * as path from 'path'
 import * as ts from 'typescript'
 import { z } from 'zod'
+import { findProjectRoot } from './utils.js'
 
 // Types safe from 'any'
 export interface ComponentMetadata {
@@ -41,20 +42,6 @@ export const GetComponentApiSchema = z.object({
 export const GetComponentSpecSchema = z.object({
   componentName: z.string().min(1),
 })
-
-/**
- * Encontra a raiz do projeto monorepo de forma resiliente
- */
-export function findProjectRoot(): string {
-  let current = process.cwd()
-  while (current !== path.dirname(current)) {
-    if (fs.existsSync(path.join(current, 'pnpm-workspace.yaml'))) {
-      return current
-    }
-    current = path.dirname(current)
-  }
-  return process.cwd()
-}
 
 /**
  * Varre as pastas de componentes e retorna seus metadados
@@ -141,8 +128,10 @@ function cleanComment(comment: string): string {
 /**
  * Analisa as interfaces Props de um componente usando TypeScript AST
  */
-export function parseComponentApi(tsxPath: string): InterfaceMetadata[] {
-  const content = fs.readFileSync(tsxPath, 'utf-8')
+export async function parseComponentApi(
+  tsxPath: string
+): Promise<InterfaceMetadata[]> {
+  const content = await fs.promises.readFile(tsxPath, 'utf-8')
   const sourceFile = ts.createSourceFile(
     tsxPath,
     content,
@@ -220,16 +209,16 @@ export function parseComponentApi(tsxPath: string): InterfaceMetadata[] {
 /**
  * Fatias as especificações do COMPONENT_SPEC.md para um componente
  */
-export function parseComponentSpec(
+export async function parseComponentSpec(
   componentName: string
-): ComponentSpecMetadata | null {
+): Promise<ComponentSpecMetadata | null> {
   const rootDir = findProjectRoot()
   const specPath = path.join(rootDir, 'references/COMPONENT_SPEC.md')
   if (!fs.existsSync(specPath)) {
     throw new Error('COMPONENT_SPEC.md não encontrado em references/')
   }
 
-  const content = fs.readFileSync(specPath, 'utf-8')
+  const content = await fs.promises.readFile(specPath, 'utf-8')
   // Divide pelas seções ## [0-9]+\. Componente
   const sections = content.split(/(?=^## \d+\.)/m)
 
@@ -238,8 +227,8 @@ export function parseComponentSpec(
     if (lines.length === 0) continue
     const heading = lines[0].trim()
 
-    // Match "## 1. Button" ou "## 4. Dropdown (Select)"
-    const match = heading.match(/^## \d+\.\s+([A-Za-z]+)/)
+    // Match "## 1. Button" ou "## 4. Dropdown (Select)" ou "## 5. Grid2"
+    const match = heading.match(/^## \d+\.\s+([A-Za-z0-9]+)/)
     if (!match) continue
 
     const parsedName = match[1]
