@@ -308,5 +308,28 @@ describe('Carousel Component', () => {
       expect(slide2).toHaveAttribute('aria-label', 'Slide 2 de 2')
       expect(slide2).toHaveAttribute('aria-hidden', 'true')
     })
+
+    it('should support custom slideAriaLabelFormat and dotAriaLabelFormat', () => {
+      mockSelectedScrollSnap.mockReturnValue(0)
+      mockScrollSnapList.mockReturnValue([0, 1])
+
+      renderWithTheme(
+        <Carousel
+          slideAriaLabelFormat="Slide {index} of {total}"
+          dotAriaLabelFormat="Go to slide {index}"
+        >
+          <div key="1">Slide 1</div>
+          <div key="2">Slide 2</div>
+        </Carousel>
+      )
+
+      const slide1 = screen.getByText('Slide 1').closest('[role="group"]')
+      expect(slide1).toHaveAttribute('aria-label', 'Slide 1 of 2')
+
+      const dot1 = screen.getByRole('button', { name: 'Go to slide 1' })
+      const dot2 = screen.getByRole('button', { name: 'Go to slide 2' })
+      expect(dot1).toBeInTheDocument()
+      expect(dot2).toBeInTheDocument()
+    })
   })
 })

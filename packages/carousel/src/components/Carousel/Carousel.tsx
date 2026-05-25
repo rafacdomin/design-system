@@ -24,6 +24,8 @@ export interface CarouselProps extends React.HTMLAttributes<HTMLDivElement> {
     | { mobile?: number; tablet?: number; desktop?: number }
   prevAriaLabel?: string
   nextAriaLabel?: string
+  slideAriaLabelFormat?: string
+  dotAriaLabelFormat?: string
 }
 
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
@@ -55,6 +57,8 @@ interface CarouselContextValue {
   contentId: string
   prevAriaLabel: string
   nextAriaLabel: string
+  slideAriaLabelFormat: string
+  dotAriaLabelFormat: string
 }
 
 const CarouselContext = createContext<CarouselContextValue | null>(null)
@@ -80,6 +84,8 @@ const CarouselComponent = React.forwardRef<HTMLDivElement, CarouselProps>(
       className,
       prevAriaLabel = 'Slide anterior',
       nextAriaLabel = 'Próximo slide',
+      slideAriaLabelFormat = 'Slide {index} de {total}',
+      dotAriaLabelFormat = 'Ir para slide {index}',
       ...props
     },
     ref
@@ -259,6 +265,8 @@ const CarouselComponent = React.forwardRef<HTMLDivElement, CarouselProps>(
       contentId,
       prevAriaLabel,
       nextAriaLabel,
+      slideAriaLabelFormat,
+      dotAriaLabelFormat,
     }
 
     return (
@@ -325,15 +333,18 @@ const CarouselItemComponent = React.forwardRef<
   HTMLDivElement,
   CarouselItemProps
 >(({ className, index, children, ...props }, ref) => {
-  const { slidesInView, totalSlides } = useCarousel()
+  const { slidesInView, totalSlides, slideAriaLabelFormat } = useCarousel()
   const isInView = slidesInView.includes(index)
+  const slideLabel = slideAriaLabelFormat
+    .replace('{index}', String(index + 1))
+    .replace('{total}', String(totalSlides))
   return (
     <div
       ref={ref}
       className={clsx(styles.slide, className)}
       role="group"
       aria-roledescription="slide"
-      aria-label={`Slide ${index + 1} de ${totalSlides}`}
+      aria-label={slideLabel}
       aria-hidden={!isInView ? 'true' : undefined}
       {...props}
     >
@@ -416,7 +427,13 @@ const CarouselDotsComponent = React.forwardRef<
   HTMLDivElement,
   CarouselDotsProps
 >(({ className, ...props }, ref) => {
-  const { scrollSnaps, selectedIndex, scrollTo, contentId } = useCarousel()
+  const {
+    scrollSnaps,
+    selectedIndex,
+    scrollTo,
+    contentId,
+    dotAriaLabelFormat,
+  } = useCarousel()
 
   if (scrollSnaps.length <= 1) return null
 
@@ -424,13 +441,17 @@ const CarouselDotsComponent = React.forwardRef<
     <div ref={ref} className={clsx(styles.dots, className)} {...props}>
       {scrollSnaps.map((_, index) => {
         const isActive = index === selectedIndex
+        const dotLabel = dotAriaLabelFormat.replace(
+          '{index}',
+          String(index + 1)
+        )
         return (
           <button
             key={index}
             type="button"
             className={clsx(styles.dot, isActive && styles.active)}
             onClick={() => scrollTo(index)}
-            aria-label={`Ir para slide ${index + 1}`}
+            aria-label={dotLabel}
             aria-current={isActive ? 'true' : undefined}
             aria-controls={contentId}
           />

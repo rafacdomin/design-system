@@ -39,6 +39,8 @@ export interface TagProps
   onClick?: (
     event: React.MouseEvent<HTMLButtonElement | HTMLSpanElement>
   ) => void
+  /** Rótulo de acessibilidade para o botão de remoção */
+  removeAriaLabel?: string
 }
 
 const TagComponent = React.forwardRef<HTMLSpanElement, TagProps>(
@@ -51,6 +53,7 @@ const TagComponent = React.forwardRef<HTMLSpanElement, TagProps>(
       onRemove,
       onClick,
       children,
+      removeAriaLabel,
       ...props
     },
     ref
@@ -59,7 +62,8 @@ const TagComponent = React.forwardRef<HTMLSpanElement, TagProps>(
     const hasRemove = !!onRemove
 
     const removeLabel =
-      typeof children === 'string' ? `Remover ${children}` : 'Remover'
+      removeAriaLabel ||
+      (typeof children === 'string' ? `Remover ${children}` : 'Remover')
 
     const CloseIcon = (
       <svg

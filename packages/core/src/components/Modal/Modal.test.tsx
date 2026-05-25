@@ -149,6 +149,23 @@ describe('Modal Component', () => {
     expect(screen.getByText('Corpo do Compound')).toBeInTheDocument()
   })
 
+  it('should support custom closeAriaLabel', async () => {
+    const user = userEvent.setup()
+    renderWithTheme(
+      <Modal
+        title="Teste Modal"
+        closeAriaLabel="Close Modal"
+        trigger={<button data-testid="trigger">Open</button>}
+      >
+        <div>Conteúdo</div>
+      </Modal>
+    )
+
+    await user.click(screen.getByTestId('trigger'))
+    const closeBtn = screen.getByRole('button', { name: /close modal/i })
+    expect(closeBtn).toBeInTheDocument()
+  })
+
   it('should pass accessibility compliance checks', async () => {
     const { container } = renderWithTheme(
       <Modal open={true} title="A11y Modal">

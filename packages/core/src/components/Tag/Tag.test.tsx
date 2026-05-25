@@ -94,6 +94,18 @@ describe('Tag Component', () => {
     expect(removeBtn).toBeInTheDocument()
   })
 
+  it('should support custom removeAriaLabel', () => {
+    const handleRemove = vi.fn()
+    renderWithTheme(
+      <Tag onRemove={handleRemove} removeAriaLabel="Remove Tag">
+        React
+      </Tag>
+    )
+
+    const removeBtn = screen.getByRole('button', { name: /remove tag/i })
+    expect(removeBtn).toBeInTheDocument()
+  })
+
   it('should trigger onRemove callback on click', async () => {
     const user = userEvent.setup()
     const handleRemove = vi.fn()

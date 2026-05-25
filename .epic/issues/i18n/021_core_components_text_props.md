@@ -2,7 +2,7 @@
 
 ## Status
 
-[x] Planejada [ ] Em desenvolvimento [ ] Concluída
+[ ] Planejada [ ] Em desenvolvimento [x] Concluída
 
 ## Objetivo
 
@@ -10,12 +10,12 @@ Tornar os componentes `@ds/core` e `@ds/carousel` locale-agnósticos, permitindo
 
 ## Critérios de Aceite
 
-- [ ] Modificar `Tag` para aceitar a prop opcional `removeAriaLabel: string`.
-- [ ] No `Tag`, a lógica de fallback se `removeAriaLabel` for omitido deve manter a regra atual (`"Remover " + children` se string, ou `"Remover"`).
-- [ ] Modificar `Carousel` para aceitar as props opcionais `slideAriaLabelFormat: string` e `dotAriaLabelFormat: string`.
-- [ ] No `Carousel`, interpolar `{index}` e `{total}` reativamente conforme o snap e slide ativo.
-- [ ] Cobertura de testes unitários ≥ 90% para os novos fluxos de renderização de ARIA.
-- [ ] Validar acessibilidade via axe (zero violações).
+- [x] Modificar `Tag` para aceitar a prop opcional `removeAriaLabel: string`.
+- [x] No `Tag`, a lógica de fallback se `removeAriaLabel` for omitido deve manter a regra atual (`"Remover " + children` se string, ou `"Remover"`).
+- [x] Modificar `Carousel` para aceitar as props opcionais `slideAriaLabelFormat: string` e `dotAriaLabelFormat: string`.
+- [x] No `Carousel`, interpolar `{index}` e `{total}` reativamente conforme o snap e slide ativo.
+- [x] Cobertura de testes unitários ≥ 90% para os novos fluxos de renderização de ARIA.
+- [x] Validar acessibilidade via axe (zero violações).
 
 ## Props
 
@@ -235,35 +235,35 @@ const CarouselDotsComponent = React.forwardRef<
 
 ### Fase 1: Alinhamento e Preparação TDD
 
-- [ ] Ler as especificações em [SPEC.md](file:///home/rafacdomin/projetos/design-system/SPEC.md) e as diretrizes de acessibilidade em [ACCESSIBILITY.md](file:///home/rafacdomin/projetos/design-system/references/ACCESSIBILITY.md).
-- [ ] Executar a suíte de testes existente (`pnpm test`) para garantir que os componentes `Tag` e `Carousel` estão íntegros antes de qualquer alteração.
+- [x] Ler as especificações em [SPEC.md](file:///home/rafacdomin/projetos/design-system/SPEC.md) e as diretrizes de acessibilidade em [ACCESSIBILITY.md](file:///home/rafacdomin/projetos/design-system/references/ACCESSIBILITY.md).
+- [x] Executar a suíte de testes existente (`pnpm test`) para garantir que os componentes `Tag` e `Carousel` estão íntegros antes de qualquer alteração.
 
 ### Fase 2: Componente Tag (`@ds/core`)
 
-- [ ] Adicionar a propriedade opcional `removeAriaLabel?: string` à interface `TagProps` no arquivo [Tag.tsx](file:///home/rafacdomin/projetos/design-system/packages/core/src/components/Tag/Tag.tsx).
-- [ ] Ajustar a inicialização da constante `removeLabel` para usar `removeAriaLabel` se fornecido; do contrário, usar o fallback padrão existente.
-- [ ] Verificar e garantir que o atributo `aria-label` do botão de fechamento em todas as ramificações de renderização do `TagComponent` (Caso 1 e Caso 3) receba o valor de `removeLabel`.
-- [ ] Adicionar teste unitário em [Tag.test.tsx](file:///home/rafacdomin/projetos/design-system/packages/core/src/components/Tag/Tag.test.tsx) validando a aplicação do `removeAriaLabel` customizado.
-- [ ] Adicionar teste unitário em [Tag.test.tsx](file:///home/rafacdomin/projetos/design-system/packages/core/src/components/Tag/Tag.test.tsx) validando que, se omitida a prop, o fallback nativo continua funcionando.
-- [ ] Executar o teste de acessibilidade `axe` em [Tag.test.tsx](file:///home/rafacdomin/projetos/design-system/packages/core/src/components/Tag/Tag.test.tsx) e garantir que não há violações introduzidas com a customização de ARIA.
+- [x] Adicionar a propriedade opcional `removeAriaLabel?: string` à interface `TagProps` no arquivo [Tag.tsx](file:///home/rafacdomin/projetos/design-system/packages/core/src/components/Tag/Tag.tsx).
+- [x] Ajustar a inicialização da constante `removeLabel` para usar `removeAriaLabel` se fornecido; do contrário, usar o fallback padrão existente.
+- [x] Verificar e garantir que o atributo `aria-label` do botão de fechamento em todas as ramificações de renderização do `TagComponent` (Caso 1 e Caso 3) receba o valor de `removeLabel`.
+- [x] Adicionar teste unitário em [Tag.test.tsx](file:///home/rafacdomin/projetos/design-system/packages/core/src/components/Tag/Tag.test.tsx) validando a aplicação do `removeAriaLabel` customizado.
+- [x] Adicionar teste unitário em [Tag.test.tsx](file:///home/rafacdomin/projetos/design-system/packages/core/src/components/Tag/Tag.test.tsx) validando que, se omitida a prop, o fallback nativo continua funcionando.
+- [x] Executar o teste de acessibilidade `axe` em [Tag.test.tsx](file:///home/rafacdomin/projetos/design-system/packages/core/src/components/Tag/Tag.test.tsx) e garantir que não há violações introduzidas com a customização de ARIA.
 
 ### Fase 3: Componente Carousel (`@ds/carousel`)
 
-- [ ] Adicionar as propriedades opcionais `slideAriaLabelFormat?: string` e `dotAriaLabelFormat?: string` à interface `CarouselProps` no arquivo [Carousel.tsx](file:///home/rafacdomin/projetos/design-system/packages/carousel/src/components/Carousel/Carousel.tsx).
-- [ ] Incluir os novos campos `slideAriaLabelFormat: string` e `dotAriaLabelFormat: string` à interface `CarouselContextValue`.
-- [ ] Definir os valores padrões das propriedades no destructuring de `CarouselComponent` (`slideAriaLabelFormat = 'Slide {index} de {total}'` e `dotAriaLabelFormat = 'Ir para slide {index}'`).
-- [ ] Atualizar o objeto `contextValue` para passar `slideAriaLabelFormat` e `dotAriaLabelFormat` ao `CarouselContext.Provider`.
-- [ ] Atualizar o componente interno `CarouselItemComponent` para recuperar `slideAriaLabelFormat` e `totalSlides` via hook `useCarousel()`.
-- [ ] Interpolar dinamicamente o valor de `slideAriaLabelFormat` no `CarouselItemComponent`, substituindo `{index}` por `index + 1` e `{total}` por `totalSlides`, atribuindo o resultado a `aria-label` do item.
-- [ ] Atualizar o componente interno `CarouselDotsComponent` para recuperar `dotAriaLabelFormat` via hook `useCarousel()`.
-- [ ] Interpolar dinamicamente o valor de `dotAriaLabelFormat` na geração de cada dot do `CarouselDotsComponent`, substituindo `{index}` por `index + 1` e atribuindo o resultado ao `aria-label` correspondente.
-- [ ] Adicionar testes unitários em [Carousel.test.tsx](file:///home/rafacdomin/projetos/design-system/packages/carousel/src/components/Carousel/Carousel.test.tsx) para verificar se os rótulos ARIA padrão dos slides e dos dots de paginação são renderizados corretamente.
-- [ ] Adicionar testes unitários em [Carousel.test.tsx](file:///home/rafacdomin/projetos/design-system/packages/carousel/src/components/Carousel/Carousel.test.tsx) para verificar a correta formatação dos rótulos ARIA ao passar props customizadas (`slideAriaLabelFormat` e `dotAriaLabelFormat`).
-- [ ] Executar o teste de acessibilidade `axe` em [Carousel.test.tsx](file:///home/rafacdomin/projetos/design-system/packages/carousel/src/components/Carousel/Carousel.test.tsx) validando zero violações de acessibilidade sob formatos de ARIA personalizados.
+- [x] Adicionar as propriedades opcionais `slideAriaLabelFormat?: string` e `dotAriaLabelFormat?: string` à interface `CarouselProps` no arquivo [Carousel.tsx](file:///home/rafacdomin/projetos/design-system/packages/carousel/src/components/Carousel/Carousel.tsx).
+- [x] Incluir os novos campos `slideAriaLabelFormat: string` and `dotAriaLabelFormat: string` à interface `CarouselContextValue`.
+- [x] Definir os valores padrões das propriedades no destructuring de `CarouselComponent` (`slideAriaLabelFormat = 'Slide {index} de {total}'` e `dotAriaLabelFormat = 'Ir para slide {index}'`).
+- [x] Atualizar o objeto `contextValue` para passar `slideAriaLabelFormat` e `dotAriaLabelFormat` ao `CarouselContext.Provider`.
+- [x] Atualizar o componente interno `CarouselItemComponent` para recuperar `slideAriaLabelFormat` e `totalSlides` via hook `useCarousel()`.
+- [x] Interpolar dinamicamente o valor de `slideAriaLabelFormat` no `CarouselItemComponent`, substituindo `{index}` por `index + 1` e `{total}` por `totalSlides`, atribuindo o resultado a `aria-label` do item.
+- [x] Atualizar o componente interno `CarouselDotsComponent` para recuperar `dotAriaLabelFormat` via hook `useCarousel()`.
+- [x] Interpolar dinamicamente o valor de `dotAriaLabelFormat` na geração de cada dot do `CarouselDotsComponent`, substituindo `{index}` por `index + 1` e atribuindo o resultado ao `aria-label` correspondente.
+- [x] Adicionar testes unitários em [Carousel.test.tsx](file:///home/rafacdomin/projetos/design-system/packages/carousel/src/components/Carousel/Carousel.test.tsx) para verificar se os rótulos ARIA padrão dos slides e dos dots de paginação são renderizados corretamente.
+- [x] Adicionar testes unitários em [Carousel.test.tsx](file:///home/rafacdomin/projetos/design-system/packages/carousel/src/components/Carousel/Carousel.test.tsx) para verificar a correta formatação dos rótulos ARIA ao passar props customizadas (`slideAriaLabelFormat` e `dotAriaLabelFormat`).
+- [x] Executar o teste de acessibilidade `axe` em [Carousel.test.tsx](file:///home/rafacdomin/projetos/design-system/packages/carousel/src/components/Carousel/Carousel.test.tsx) validando zero violações de acessibilidade sob formatos de ARIA personalizados.
 
 ### Fase 4: Integração, Qualidade e Builds
 
-- [ ] Executar verificação de tipos do TypeScript em todo o monorepo (`pnpm tsc` ou similar) e atestar zero erros e zero uso de `any` no código implementado.
-- [ ] Executar o linter (`pnpm lint`) e o formatador (`pnpm format`) para garantir conformidade estilística.
-- [ ] Rodar a suíte completa de testes unitários com cobertura (`pnpm test` ou `pnpm test:cov`) garantindo cobertura de testes de 100% nas novas linhas de lógica do `Tag` e `Carousel`.
-- [ ] Executar o build geral do monorepo (`pnpm build`) para garantir compatibilidade da compilação e empacotamento.
+- [x] Executar verificação de tipos do TypeScript em todo o monorepo (`pnpm tsc` ou similar) e atestar zero erros e zero uso de `any` no código implementado.
+- [x] Executar o linter (`pnpm lint`) e o formatador (`pnpm format`) para garantir conformidade estilística.
+- [x] Rodar a suíte completa de testes unitários com cobertura (`pnpm test` ou `pnpm test:cov`) garantindo cobertura de testes de 100% nas novas linhas de lógica do `Tag` e `Carousel`.
+- [x] Executar o build geral do monorepo (`pnpm build`) para garantir compatibilidade da compilação e empacotamento.
