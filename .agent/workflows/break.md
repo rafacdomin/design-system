@@ -41,4 +41,4 @@ O que será entregue ao final desta issue.
 
 ## Estimativa P / M / G
 
-Crie também `.epic/EPIC_DESIGN_SYSTEM.md` com a lista de todas as issues e ordem de execução.
+Crie também `.epic/${EPIC_NAME}$.md` com a lista de todas as issues e ordem de execução.
