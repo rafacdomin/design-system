@@ -10,7 +10,7 @@
   font-family: var(--ds-font-family-sans);
   font-weight: var(--ds-font-weight-medium);
   border-radius: var(--ds-border-radius-md);
-  border: 1px solid transparent;
+  border: var(--ds-border-width-sm) solid transparent;
   cursor: pointer;
   transition:
     background-color 0.2s ease,
@@ -90,19 +90,19 @@
 
 // Sizes
 .sm {
-  height: 2rem; // 32px
+  height: var(--ds-spacing-8); // 32px
   padding: 0 var(--ds-spacing-3);
   font-size: var(--ds-font-size-xs);
 }
 
 .md {
-  height: 2.5rem; // 40px
+  height: var(--ds-spacing-10); // 40px
   padding: 0 var(--ds-spacing-4);
   font-size: var(--ds-font-size-sm);
 }
 
 .lg {
-  height: 3rem; // 48px
+  height: var(--ds-spacing-12); // 48px
   padding: 0 var(--ds-spacing-6);
   font-size: var(--ds-font-size-md);
 }
