@@ -48,22 +48,82 @@ Os textos internos de acessibilidade e legendas com fallback nativo em portuguê
 
 Toda a complexidade de i18n reside no pacote de documentação:
 
-1. **LocaleContext / LocaleProvider**:
-   - Mantém e compartilha o estado do locale ativo (`locale`, `setLocale`).
-2. **Componente `<Language>`**:
-   - Utilitário exclusivo do pacote de documentação para envelopar blocos MDX.
-   - Props: `locale: 'pt-BR' | 'en-US'`.
-   - Exemplo:
-     ```mdx
-     <Language locale="pt-BR"># Introdução</Language>
-     <Language locale="en-US"># Introduction</Language>
-     ```
-3. **Decorator `withI18n`**:
-   - Assina os estados globais do Storybook.
-   - Aplica tradução automatizada sobre `args` mapeados (como `label`, `placeholder`, `error`, `helperText`, `title`, `description`, `children` se string) usando um dicionário estruturado.
-   - Envolve as stories com o `LocaleProvider` local.
-4. **Dicionário Centralizado de Traduções**:
-   - Contém o mapeamento das strings utilizadas em todas as histórias de componentes de português para inglês.
+### 4.1 Release Core (`.github/workflows/release-core.yml`)
+
+Responsável por validar e publicar o pacote `@ds/core`.
+
+- **Gatilhos (Triggers):**
+  - **Apenas disparo manual (`workflow_dispatch`).**
+  - **Inputs do Workflow:**
+    - `version_increment` (Choice: `patch`, `minor`, `major`, padrão: `patch`) - Define o tipo de incremento SemVer que será aplicado ao pacote.
+- **Etapas da Pipeline:**
+  1. **Install:** Checkout do código, configuração do Node.js (versão 22.20.0), cache de dependências e `pnpm install --frozen-lockfile`.
+  2. **Test:** Execução dos testes unitários e de acessibilidade via `pnpm --filter @ds/core test` e `pnpm --filter @ds/core lint`.
+  3. **Visual Regression Test:** Build estática do Storybook e execução dos testes do Playwright (`pnpm --filter @ds/docs test:visual`, que roda no Browserstack se as credenciais estiverem configuradas nos segredos do repositório, ou localmente caso contrário).
+  4. **Bump Version:** Incrementa a versão do pacote no `package.json` de acordo com a seleção (ex: `pnpm --filter @ds/core version ${{ github.event.inputs.version_increment }} --no-git-tag-version`).
+  5. **Build:** Compilação dos componentes do `@ds/core` para distribuição pública (ESM/CJS).
+  6. **Publication:** Publicação no NPM (`pnpm --filter @ds/core publish --no-git-checks --access public`) autenticada por meio da variável `NPM_TOKEN`.
+  7. **Commit & Push:** Realiza commit e push automático do novo incremento de versão de volta para o repositório.
+  8. **Notification:** Envio de payload via webhook informando o status final da execução.
+
+### 4.2 Release Carousel (`.github/workflows/release-carousel.yml`)
+
+Responsável por validar e publicar o pacote `@ds/carousel`.
+
+- **Gatilhos (Triggers):**
+  - **Apenas disparo manual (`workflow_dispatch`).**
+  - **Inputs do Workflow:**
+    - `version_increment` (Choice: `patch`, `minor`, `major`, padrão: `patch`) - Define o tipo de incremento SemVer que será aplicado ao pacote.
+- **Etapas da Pipeline:**
+  1. **Install:** Instalação das dependências com cache.
+  2. **Test:** Execução de testes unitários do `@ds/carousel` e linter.
+  3. **Visual Regression Test:** Execução dos testes visuais do Playwright para os stories do carrossel.
+  4. **Bump Version:** Incrementa a versão do pacote no `package.json` de acordo com a seleção (ex: `pnpm --filter @ds/carousel version ${{ github.event.inputs.version_increment }} --no-git-tag-version`).
+  5. **Build:** Compilação da build de distribuição do `@ds/carousel`.
+  6. **Publication:** Publicação no NPM usando o segredo `NPM_TOKEN`.
+  7. **Commit & Push:** Realiza commit e push automático do novo incremento de versão de volta para o repositório.
+  8. **Notification:** Notificação de status final.
+
+### 4.3 Deploy Storybook (`.github/workflows/deploy-storybook.yml`)
+
+Responsável pelo build e publicação da documentação interativa.
+
+- **Gatilhos (Triggers):**
+  - Conclusão bem-sucedida dos workflows "Release Core Package" ou "Release Carousel Package" (via evento `workflow_run`).
+  - Disparo manual (`workflow_dispatch`).
+- **Permissões GitHub Requeridas:**
+  - `pages: write` e `id-token: write` para deploy nativo no GitHub Pages.
+- **Etapas da Pipeline:**
+  1. **Install:** Setup inicial do Node.js, pnpm e dependências.
+  2. **Build:** Geração da build estática de todo o monorepo (`pnpm build`) para garantir links de dependência, seguida por `pnpm --filter @ds/docs build-storybook` para compilar o Storybook estático na pasta `packages/docs/storybook-static/`.
+  3. **Publication:** Upload do artefato e publicação no GitHub Pages através dos actions oficiais:
+     - `actions/configure-pages@v5`
+     - `actions/upload-pages-artifact@v3` (apontando para `packages/docs/storybook-static`)
+     - `actions/deploy-pages@v4` (que retorna a URL do deploy na variável `${{ steps.deployment.outputs.page_url }}`).
+  4. **Notification:** Notificação de sucesso incluindo a URL direta da documentação publicada.
+
+### 4.4 Verificação de Pull Request (`.github/workflows/pr.yml`)
+
+Responsável por garantir a integridade do código e evitar regressões antes de mesclar alterações nas branches principais.
+
+- **Gatilhos (Triggers):**
+  - Disparado automaticamente na criação ou atualização de Pull Requests que tenham como destino as branches `main` ou `master`.
+  - Disparo manual (`workflow_dispatch`).
+- **Permissões GitHub Requeridas:**
+  - `contents: read`
+- **Etapas da Pipeline (Executadas em jobs paralelos):**
+  - **Job `lint-and-build` (Lint & Build):**
+    1. Checkout do código e instalação do Node.js (versão 22.20.0) e pnpm (v11.2.2).
+    2. Instalação das dependências com `--frozen-lockfile`.
+    3. Execução do linter (`pnpm lint`) e checagem de formatação do Prettier (`pnpm format:check`).
+    4. Compilação de todos os pacotes do monorepo (`pnpm build`).
+  - **Job `unit-tests` (Unit Tests):**
+    1. Instalação do ambiente e dependências.
+    2. Execução dos testes unitários e de acessibilidade de todos os pacotes (`pnpm test`).
+  - **Job `visual-tests` (Visual Regression):**
+    1. Instalação do ambiente e dependências.
+    2. Verificação da presença de credenciais do BrowserStack (`BROWSERSTACK_USERNAME` e `BROWSERSTACK_ACCESS_KEY`).
+    3. Se presentes, realiza a compilação do Storybook e executa a suíte de testes de regressão visual do Playwright (`pnpm --filter @ds/docs test:visual`).
 
 ---
 

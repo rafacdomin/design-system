@@ -109,10 +109,13 @@ pnpm test:visual
 
 ### 7. Continuous Integration & Publishing
 
-The repository is configured with GitHub Actions pipelines for checks and deliveries.
-The workflows added in this project are triggered manually through `workflow_dispatch`, and the Storybook deployment runs via `workflow_run` and/or manual execution rather than automatically on pushes to `main` or release tags.
+The repository is configured with GitHub Actions pipelines for quality verification and package delivery:
 
-For detailed steps on workflow configurations, package builds, and manual execution triggers, refer to the [Publishing & CI/CD Guide (PUBLISHING.md)](https://github.com/rafacdomin/design-system/blob/main/PUBLISHING.md).
+- **Pull Request Verification (`pr.yml`):** Automatically triggered on every Pull Request targeting `main` or `master`. It runs linting, formatting checks (`pnpm format:check`), compilation builds, unit tests, and optional visual regression tests. All checks must pass successfully before a Pull Request can be merged.
+- **Package Releases:** Triggered manually through `workflow_dispatch` on the GitHub Actions dashboard.
+- **Storybook Deployment:** Runs automatically upon successful package releases (`workflow_run`) or via manual trigger.
+
+For detailed steps on workflow configurations, package builds, and execution triggers, refer to the [Publishing & CI/CD Guide (PUBLISHING.md)](https://github.com/rafacdomin/design-system/blob/main/PUBLISHING.md).
 
 ---
 

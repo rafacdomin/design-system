@@ -137,6 +137,7 @@ Garantimos a confiabilidade dos componentes através de três camadas de testes 
 
 Adotamos um design de **Multi-Pipelines** no GitHub Actions para testar, compilar e publicar pacotes e documentações de forma independente:
 
+- **Verificação de PR:** Validação automatizada de formatação de código, regras de linter, compilação de pacotes e testes de unidade/acessibilidade em cada Pull Request com destino às branches `main` ou `master` (com execução de regressão visual opcional se as credenciais do BrowserStack forem fornecidas).
 - **Publicação de Pacotes:** Publicação manual de `@ds/core` e `@ds/carousel` no registro NPM via execuções manuais no GitHub Actions (com parâmetros para escolha de SemVer: `major`, `minor`, `patch`).
 - **Deploy do Storybook:** Build e deploy automático do Storybook estático no GitHub Pages após publicações bem-sucedidas das bibliotecas ou disparo manual.
 - **Notificações:** Envio automatizado do status dos deploys (sucesso/falha) para canais do Discord, Slack ou Microsoft Teams via webhooks configurados com `curl`.
@@ -155,6 +156,7 @@ Comandos executáveis a partir do diretório raiz:
 | `pnpm build`              | Compila todos os pacotes e gera a build estática do Storybook                    |
 | `pnpm lint`               | Roda as verificações de código do ESLint em todos os workspaces                  |
 | `pnpm format`             | Formata todo o código do repositório utilizando Prettier                         |
+| `pnpm format:check`       | Verifica a formatação do código utilizando Prettier sem modificar os arquivos    |
 | `pnpm test`               | Executa todos os testes de unidade e acessibilidade com Vitest                   |
 | `pnpm test:visual`        | Executa a suíte de testes de regressão visual localmente contra a build estática |
 | `pnpm test:visual:update` | Atualiza as imagens de referência (snapshots) locais dos testes visuais          |

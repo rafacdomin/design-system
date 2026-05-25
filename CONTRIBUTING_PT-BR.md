@@ -109,10 +109,13 @@ pnpm test:visual
 
 ### 7. Integração Contínua & Publicação
 
-O repositório utiliza pipelines do GitHub Actions para verificações e entregas.
-Neste contexto, os workflows disponíveis neste PR são acionados manualmente via `workflow_dispatch`. O deploy do Storybook ocorre por encadeamento de workflow (`workflow_run`) e/ou acionamento manual, conforme a configuração vigente.
+O repositório está configurado com pipelines do GitHub Actions para verificação de qualidade e entrega de pacotes:
 
-Para o passo a passo detalhado sobre configurações de workflows, gatilhos atuais, geração de builds de pacotes e disparos de deploy, consulte o [Guia de Publicação & CI/CD (PUBLISHING.md)](https://github.com/rafacdomin/design-system/blob/main/PUBLISHING.md).
+- **Verificação de Pull Request (`pr.yml`):** Disparado automaticamente em qualquer Pull Request destinado às branches `main` ou `master`. Executa o linter, checagem de formatação (`pnpm format:check`), compilação dos pacotes, testes de unidade e testes de regressão visual opcionais. Todos os checks devem passar com sucesso antes que o Pull Request possa ser mesclado.
+- **Publicação de Pacotes:** Acionamento manual via painel do GitHub Actions (`workflow_dispatch`).
+- **Deploy do Storybook:** Executado automaticamente após a conclusão com sucesso de um release de pacote (`workflow_run`) ou via acionamento manual.
+
+Para o passo a passo detalhado sobre configurações de workflows, geração de builds de pacotes e disparos de deploy, consulte o [Guia de Publicação & CI/CD (PUBLISHING.md)](https://github.com/rafacdomin/design-system/blob/main/PUBLISHING.md).
 
 ---
 

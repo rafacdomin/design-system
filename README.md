@@ -137,6 +137,7 @@ We guarantee component reliability through three layers of automated testing:
 
 We adopt a **Multi-Pipeline** design on GitHub Actions to test, build, and publish packages and documentation independently:
 
+- **PR Verification:** Automated validation of code formatting, linting rules, package building, and unit/accessibility tests runs on every Pull Request targeting the `main` or `master` branches (with optional visual regression tests if BrowserStack credentials are provided).
 - **Package Releases:** Manual publishing of `@ds/core` and `@ds/carousel` to the NPM registry via workflow execution on GitHub Actions (with choice inputs for SemVer: `major`, `minor`, `patch`).
 - **Storybook Deployment:** The static Storybook documentation builds and deploys to GitHub Pages automatically upon successful library releases or manual dispatch.
 - **Notifications:** Simple webhooks built with `curl` report workflow status results to Discord, Slack, or Microsoft Teams.
@@ -155,6 +156,7 @@ Executable commands from the root directory:
 | `pnpm build`              | Compiles all packages and generates the Storybook static build         |
 | `pnpm lint`               | Runs ESLint checks across all workspaces                               |
 | `pnpm format`             | Formats all repository code using Prettier                             |
+| `pnpm format:check`       | Verifies code formatting using Prettier without modifying files        |
 | `pnpm test`               | Runs all unit and accessibility tests with Vitest                      |
 | `pnpm test:visual`        | Runs the visual regression test suite locally against the static build |
 | `pnpm test:visual:update` | Updates the local reference images (snapshots) for visual tests        |

@@ -1,6 +1,6 @@
 # Publishing and CI/CD Guide
 
-This document describes in detail the Continuous Integration and Continuous Delivery (CI/CD) architecture adopted in this design system, the NPM publishing workflow for the `@ds/core` and `@ds/carousel` packages, the Storybook deployment to GitHub Pages, the integrated visual regression testing, and the messaging notifications setup.
+This document describes in detail the Continuous Integration and Continuous Delivery (CI/CD) architecture adopted in this design system, the automatic Pull Request verification workflow, the NPM publishing workflow for the `@ds/core` and `@ds/carousel` packages, the Storybook deployment to GitHub Pages, the integrated visual regression testing, and the messaging notifications setup.
 
 ---
 
@@ -57,6 +57,13 @@ graph TD
      2. Builds the static Storybook site (`storybook-static`).
      3. Deploys to GitHub Pages using official GitHub actions.
      4. Sends notifications with a direct link to the published documentation environment.
+
+4. **Pull Request Verification (`pr.yml`):**
+   - **Automatic Trigger:** Automatically triggered on any Pull Request targeting the `main` or `master` branches, as well as on manual trigger (`workflow_dispatch`).
+   - **Flow (Executes parallel jobs):**
+     - **Job `lint-and-build`:** Sets up Node.js 22.20.0 and pnpm 11.2.2, installs dependencies, checks linting rules (`eslint`), checks code formatting using Prettier, and compiles all packages in the monorepo.
+     - **Job `unit-tests`:** Installs dependencies and executes unit and accessibility tests (`vitest`).
+     - **Job `visual-tests`:** Verifies if BrowserStack credentials are present in secrets. If available, builds the monorepo and executes Playwright visual regression tests (`pnpm --filter @ds/docs test:visual`) to check for visual changes.
 
 ---
 

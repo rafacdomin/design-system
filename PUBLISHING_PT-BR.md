@@ -1,6 +1,6 @@
 # Guia de Publicação e CI/CD
 
-Este documento descreve detalhadamente a arquitetura de Integração e Entrega Contínua (CI/CD) adotada neste design system, o fluxo de publicação dos pacotes `@ds/core` e `@ds/carousel` no NPM, o deploy do Storybook no GitHub Pages, os testes integrados de regressão visual e a configuração de notificações.
+Este documento descreve detalhadamente a arquitetura de Integração e Entrega Contínua (CI/CD) adotada neste design system, o workflow automático de verificação de Pull Requests, o fluxo de publicação dos pacotes `@ds/core` e `@ds/carousel` no NPM, o deploy do Storybook no GitHub Pages, os testes integrados de regressão visual e a configuração de notificações.
 
 ---
 
@@ -57,6 +57,13 @@ graph TD
      2. Geração estática do Storybook (`storybook-static`).
      3. Deploy para o GitHub Pages utilizando as actions oficiais.
      4. Notificações com link direto para o ambiente publicado.
+
+4. **Verificação de Pull Request (`pr.yml`):**
+   - **Gatilho Automático:** Disparado automaticamente em qualquer Pull Request destinado às branches `main` ou `master`, bem como por disparo manual (`workflow_dispatch`).
+   - **Fluxo (Executa jobs paralelos):**
+     - **Job `lint-and-build`:** Prepara o ambiente com Node.js 22.20.0 e pnpm 11.2.2, instala as dependências, valida as regras de lint (`eslint`), checa a formatação de código com Prettier e compila todos os pacotes do monorepo.
+     - **Job `unit-tests`:** Instala dependências e roda a suíte completa de testes unitários e de acessibilidade (`vitest`).
+     - **Job `visual-tests`:** Verifica se as credenciais do BrowserStack estão presentes. Se disponíveis, compila o Storybook e roda os testes de regressão visual do Playwright (`pnpm --filter @ds/docs test:visual`) para validar eventuais alterações visuais.
 
 ---
 
