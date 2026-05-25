@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react'
 import { useState, ComponentProps } from 'react'
 import { Dropdown } from '@ds/core'
+import { useLocale } from '../context/LocaleContext'
 
 const meta: Meta<typeof Dropdown> = {
   title: 'Components/Dropdown',
@@ -82,6 +83,7 @@ export const WithError: Story = {
 
 const ControlledDropdown = (args: ComponentProps<typeof Dropdown>) => {
   const [val, setVal] = useState('react')
+  const { locale } = useLocale()
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
       <Dropdown {...args} value={val} onChange={setVal}>
@@ -93,7 +95,10 @@ const ControlledDropdown = (args: ComponentProps<typeof Dropdown>) => {
         </Dropdown.Item>
       </Dropdown>
       <p style={{ fontSize: '14px', color: 'var(--ds-color-neutral-700)' }}>
-        Valor selecionado no estado pai: <strong>{val}</strong>
+        {locale === 'en-US'
+          ? 'Selected value in parent state:'
+          : 'Valor selecionado no estado pai:'}{' '}
+        <strong>{val}</strong>
       </p>
     </div>
   )

@@ -93,7 +93,7 @@ const ModalContentComponent = React.forwardRef<
           ref={ref}
           className={clsx(styles.content, styles[size], className)}
           data-theme={theme}
-          aria-describedby={description ? undefined : undefined}
+          {...(description ? {} : { 'aria-describedby': undefined })}
           {...props}
         >
           <div className={styles.header}>
@@ -166,7 +166,7 @@ const ModalComponent = React.forwardRef<HTMLDivElement, ModalProps>(
               ref={ref}
               className={clsx(styles.content, styles[size])}
               data-theme={theme}
-              aria-describedby={description ? undefined : undefined}
+              {...(description ? {} : { 'aria-describedby': undefined })}
             >
               <div className={styles.header}>
                 <Dialog.Title className={styles.title}>{title}</Dialog.Title>

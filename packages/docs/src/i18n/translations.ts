@@ -57,6 +57,7 @@ export const translations: Record<string, string> = {
   'Este modal tem seu estado `open` gerenciado inteiramente pelo componente pai.':
     'This modal has its `open` state entirely managed by the parent component.',
   'Fechar Via Código': 'Close Via Code',
+  Fechar: 'Close',
 
   // Tag Component
   Remover: 'Remove',
@@ -81,6 +82,11 @@ export const translations: Record<string, string> = {
   'Tag clicada!': 'Tag clicked!',
 
   // Carousel Component
+  'Slide anterior': 'Previous slide',
+  'Próximo slide': 'Next slide',
+  'Slide {index} de {total}': 'Slide {index} of {total}',
+  'Ir para slide {index}': 'Go to slide {index}',
+  'Projeto ': 'Project ',
   'Exibe setas de navegação nas laterais':
     'Displays navigation arrows on the sides',
   'Exibe dots de paginação no rodapé': 'Displays pagination dots in the footer',
