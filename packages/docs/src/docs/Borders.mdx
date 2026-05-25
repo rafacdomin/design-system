@@ -1,9 +1,12 @@
 import { Meta } from '@storybook/blocks'
 import { DocsThemeWrapper } from '../components/DocsThemeWrapper'
+import { Language } from '../components/Language'
 
 <Meta title="Tokens/Borders" />
 
 <DocsThemeWrapper>
+  <Language locale="pt-BR">
+
 # Bordas e Arredondamento
 
 Os tokens de borda controlam o arredondamento de cantos (`border-radius`) e a espessura de bordas (`border-width`) de componentes. O design system adota uma estética angular e moderna com raios de borda discretos para construir uma interface geométrica e premium.
@@ -13,6 +16,21 @@ Os tokens de borda controlam o arredondamento de cantos (`border-radius`) e a es
 ## 📐 Raio de Borda (Border Radius)
 
 Usado para suavizar os cantos de botões, inputs, cards e contêineres.
+
+  </Language>
+  <Language locale="en-US">
+
+# Borders and Radius
+
+Border tokens control component corner rounding (`border-radius`) and border width (`border-width`). The design system adopts an angular and modern aesthetic with discrete border radii to build a geometric and premium interface.
+
+---
+
+## 📐 Border Radius
+
+Used to soften the corners of buttons, inputs, cards, and containers.
+
+  </Language>
 
 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: '20px', margin: '24px 0' }}>
   <div style={{ background: 'var(--ds-color-neutral-50)', border: '1px solid var(--ds-color-neutral-200)', borderRadius: '8px', padding: '16px', textAlign: 'center', color: 'var(--ds-color-neutral-1000)' }}>
@@ -24,7 +42,10 @@ Usado para suavizar os cantos de botões, inputs, cards e contêineres.
       margin: '0 auto 12px auto'
     }} />
     <strong>--ds-border-radius-sm</strong>
-    <div style={{ fontSize: '12px', color: 'var(--ds-color-neutral-500)', marginTop: '4px' }}>2px (Angular / Compacto)</div>
+    <div style={{ fontSize: '12px', color: 'var(--ds-color-neutral-500)', marginTop: '4px' }}>
+      <Language locale="pt-BR">2px (Angular / Compacto)</Language>
+      <Language locale="en-US">2px (Angular / Compact)</Language>
+    </div>
   </div>
 
 <div
@@ -54,7 +75,8 @@ Usado para suavizar os cantos de botões, inputs, cards e contêineres.
       marginTop: '4px',
     }}
   >
-    4px (Padrão: Botões e Inputs)
+    <Language locale="pt-BR">4px (Padrão: Botões e Inputs)</Language>
+    <Language locale="en-US">4px (Default: Buttons and Inputs)</Language>
   </div>
 </div>
 
@@ -85,7 +107,8 @@ Usado para suavizar os cantos de botões, inputs, cards e contêineres.
       marginTop: '4px',
     }}
   >
-    8px (Containers: Cards, Modais)
+    <Language locale="pt-BR">8px (Containers: Cards, Modais)</Language>
+    <Language locale="en-US">8px (Containers: Cards, Modals)</Language>
   </div>
 </div>
 
@@ -98,21 +121,38 @@ Usado para suavizar os cantos de botões, inputs, cards e contêineres.
       margin: '0 auto 12px auto'
     }} />
     <strong>--ds-border-radius-full</strong>
-    <div style={{ fontSize: '12px', color: 'var(--ds-color-neutral-500)', marginTop: '4px' }}>9999px (Pílula / Avatares)</div>
+    <div style={{ fontSize: '12px', color: 'var(--ds-color-neutral-500)', marginTop: '4px' }}>
+      <Language locale="pt-BR">9999px (Pílula / Avatares)</Language>
+      <Language locale="en-US">9999px (Pill / Avatars)</Language>
+    </div>
   </div>
 </div>
 
 ---
 
+<Language locale="pt-BR">
+
 ## ➖ Espessura de Borda (Border Width)
 
 Controla o traço de bordas de divisores, contêineres e contornos interativos.
 
-<div style={{ display: 'flex', flexDirection: 'column', gap: '16px', margin: '24px 0', background: 'var(--ds-color-neutral-50)', padding: '24px', borderRadius: '8px', border: '1px solid var(--ds-color-neutral-200)', color: 'var(--ds-color-neutral-1000)' }}>
+</Language>
+<Language locale="en-US">
+
+## ➖ Border Width
+
+Controls the border line of dividers, containers, and interactive outlines.
+
+</Language>
+
+<div style={{ display: 'flex', flexDirection: 'column', gap: '16px', margin: '24px 0', background: 'var(--ds-color-neutral-55)', padding: '24px', borderRadius: '8px', border: '1px solid var(--ds-color-neutral-200)', color: 'var(--ds-color-neutral-1000)' }}>
   <div style={{ display: 'flex', alignItems: 'center', gap: '24px' }}>
     <div style={{ width: '220px', flexShrink: 0 }}>
       <strong>--ds-border-width-sm</strong>
-      <div style={{ fontSize: '12px', color: 'var(--ds-color-neutral-500)' }}>1px (Borda sutil / Padrão de Inputs e Dividers)</div>
+      <div style={{ fontSize: '12px', color: 'var(--ds-color-neutral-500)' }}>
+        <Language locale="pt-BR">1px (Borda sutil / Padrão de Inputs e Dividers)</Language>
+        <Language locale="en-US">1px (Subtle border / Default for Inputs and Dividers)</Language>
+      </div>
     </div>
     <div style={{
       flexGrow: 1,
@@ -126,7 +166,10 @@ Controla o traço de bordas de divisores, contêineres e contornos interativos.
   <div style={{ display: 'flex', alignItems: 'center', gap: '24px' }}>
     <div style={{ width: '220px', flexShrink: 0 }}>
       <strong>--ds-border-width-md</strong>
-      <div style={{ fontSize: '12px', color: 'var(--ds-color-neutral-500)' }}>2px (Foco, botões proeminentes ou destaque)</div>
+      <div style={{ fontSize: '12px', color: 'var(--ds-color-neutral-500)' }}>
+        <Language locale="pt-BR">2px (Foco, botões proeminentes ou destaque)</Language>
+        <Language locale="en-US">2px (Focus, prominent buttons, or highlight)</Language>
+      </div>
     </div>
     <div style={{
       flexGrow: 1,

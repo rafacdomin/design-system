@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react'
 import { Carousel } from '@ds/carousel'
 import { Card } from '@ds/core'
+import { useLocale } from '../context/LocaleContext'
 
 const meta: Meta<typeof Carousel> = {
   title: 'Components/Carousel',
@@ -32,6 +33,12 @@ const meta: Meta<typeof Carousel> = {
       description:
         'Quantidade de slides exibidos simultaneamente. Pode ser um número ou objeto com chaves mobile, tablet e desktop.',
     },
+  },
+  args: {
+    prevAriaLabel: 'Slide anterior',
+    nextAriaLabel: 'Próximo slide',
+    slideAriaLabelFormat: 'Slide {index} de {total}',
+    dotAriaLabelFormat: 'Ir para slide {index}',
   },
 }
 
@@ -212,9 +219,9 @@ export const WithoutControls: Story = {
   },
 }
 
-export const CustomLayout: Story = {
-  tags: ['!dev'],
-  render: (args) => (
+const CustomLayoutStory = (args: ComponentProps<typeof Carousel>) => {
+  const { locale } = useLocale()
+  return (
     <div
       style={{
         border: '2px dashed var(--ds-color-neutral-300)',
@@ -229,7 +236,9 @@ export const CustomLayout: Story = {
           color: 'var(--ds-color-neutral-800)',
         }}
       >
-        Layout Customizado (Uso Interno Compound Component)
+        {locale === 'en-US'
+          ? 'Customized Layout (Compound Component Internal Use)'
+          : 'Layout Customizado (Uso Interno Compound Component)'}
       </h4>
       <Carousel {...args} showArrows={false} showDots={false}>
         {createProjectSlides()}
@@ -245,7 +254,9 @@ export const CustomLayout: Story = {
         <span
           style={{ fontSize: '14px', color: 'var(--ds-color-neutral-600)' }}
         >
-          Use as setas do teclado para navegar
+          {locale === 'en-US'
+            ? 'Use keyboard arrows to navigate'
+            : 'Use as setas do teclado para navegar'}
         </span>
         <div style={{ display: 'flex', gap: '8px' }}>
           <p
@@ -255,12 +266,19 @@ export const CustomLayout: Story = {
               color: 'var(--ds-color-neutral-500)',
             }}
           >
-            Foque no carrossel acima para testar a navegação.
+            {locale === 'en-US'
+              ? 'Focus on the carousel above to test navigation.'
+              : 'Foque no carrossel acima para testar a navegação.'}
           </p>
         </div>
       </div>
     </div>
-  ),
+  )
+}
+
+export const CustomLayout: Story = {
+  tags: ['!dev'],
+  render: (args) => <CustomLayoutStory {...args} />,
   args: {
     loop: true,
   },

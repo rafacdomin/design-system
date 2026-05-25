@@ -109,6 +109,7 @@ export const Removable: Story = {
   tags: ['!dev'],
   args: {
     children: 'Removable Tag',
+    removeAriaLabel: 'Remover Tag',
     onRemove: () => alert('Remover clicado!'),
   },
 }
@@ -119,6 +120,7 @@ export const InteractiveRemovable: Story = {
     variant: 'interactive',
     color: 'primary',
     children: 'Interactive & Removable',
+    removeAriaLabel: 'Remover Tag',
     onClick: () => alert('Tag clicada!'),
     onRemove: () => alert('Remover clicado!'),
   },

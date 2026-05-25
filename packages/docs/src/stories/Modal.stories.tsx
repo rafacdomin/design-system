@@ -1,6 +1,20 @@
 import type { Meta, StoryObj } from '@storybook/react'
 import { useState, ComponentProps } from 'react'
 import { Modal, Button } from '@ds/core'
+import { useLocale } from '../context/LocaleContext'
+
+const ModalStory = (args: ComponentProps<typeof Modal>) => {
+  const { locale } = useLocale()
+  return (
+    <Modal {...args}>
+      <p style={{ fontSize: '14px', lineHeight: 1.5, margin: 0 }}>
+        {locale === 'en-US'
+          ? 'This is the internal content of the accessible and responsive modal from the design system.'
+          : 'Este é o conteúdo interno do modal acessível e responsivo do design system.'}
+      </p>
+    </Modal>
+  )
+}
 
 const meta: Meta<typeof Modal> = {
   title: 'Components/Modal',
@@ -12,14 +26,7 @@ const meta: Meta<typeof Modal> = {
       options: ['sm', 'md', 'lg'],
     },
   },
-  render: (args) => (
-    <Modal {...args}>
-      <p style={{ fontSize: '14px', lineHeight: 1.5, margin: 0 }}>
-        Este é o conteúdo interno do modal acessível e responsivo do design
-        system.
-      </p>
-    </Modal>
-  ),
+  render: (args) => <ModalStory {...args} />,
 }
 
 export default meta
@@ -65,25 +72,31 @@ export const NoDescription: Story = {
 
 const ControlledModalDemo = (args: ComponentProps<typeof Modal>) => {
   const [isOpen, setIsOpen] = useState(false)
+  const { locale } = useLocale()
   return (
     <div>
-      <Button onClick={() => setIsOpen(true)}>Abrir Modal Controlado</Button>
+      <Button onClick={() => setIsOpen(true)}>
+        {locale === 'en-US'
+          ? 'Open Controlled Modal'
+          : 'Abrir Modal Controlado'}
+      </Button>
       <Modal
         {...args}
         open={isOpen}
         onOpenChange={setIsOpen}
-        title="Estado Controlado"
+        title={locale === 'en-US' ? 'Controlled State' : 'Estado Controlado'}
       >
         <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
           <p style={{ fontSize: '14px', margin: 0 }}>
-            Este modal tem seu estado `open` gerenciado inteiramente pelo
-            componente pai.
+            {locale === 'en-US'
+              ? 'This modal has its `open` state entirely managed by the parent component.'
+              : 'Este modal tem seu estado `open` gerenciado inteiramente pelo componente pai.'}
           </p>
           <Button
             onClick={() => setIsOpen(false)}
             style={{ alignSelf: 'flex-end' }}
           >
-            Fechar Via Código
+            {locale === 'en-US' ? 'Close Via Code' : 'Fechar Via Código'}
           </Button>
         </div>
       </Modal>

@@ -1,9 +1,12 @@
 import { Meta } from '@storybook/blocks'
 import { DocsThemeWrapper } from '../components/DocsThemeWrapper'
+import { Language } from '../components/Language'
 
 <Meta title="Tokens/Shadows" />
 
 <DocsThemeWrapper>
+  <Language locale="pt-BR">
+
 # Sombras e Elevação
 
 O design system utiliza sombras discretas baseadas em tons pretos translúcidos para gerar profundidade visual, separação de camadas e sensação de elevação física na interface.
@@ -13,6 +16,21 @@ O design system utiliza sombras discretas baseadas em tons pretos translúcidos 
 ## 🔲 Escala de Sombras (Shadow Scale)
 
 As sombras são aplicadas em cards, modais, dropdowns e menus flutuantes para destacar elementos sobrepostos ao conteúdo principal.
+
+  </Language>
+  <Language locale="en-US">
+
+# Shadows and Elevation
+
+The design system uses discrete shadows based on translucent black tones to generate visual depth, layer separation, and a sense of physical elevation in the interface.
+
+---
+
+## 🔲 Shadow Scale
+
+Shadows are applied to cards, modals, dropdowns, and floating menus to highlight elements overlaying the main content.
+
+  </Language>
 
 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(250px, 1fr))', gap: '24px', margin: '24px 0', padding: '32px', background: 'var(--ds-color-neutral-50)', borderRadius: '12px', border: '1px solid var(--ds-color-neutral-200)' }}>
   <div style={{
@@ -25,8 +43,14 @@ As sombras são aplicadas em cards, modais, dropdowns e menus flutuantes para de
     textAlign: 'center'
   }}>
     <strong style={{ display: 'block', fontSize: '15px' }}>--ds-shadow-sm</strong>
-    <span style={{ display: 'block', fontSize: '11px', color: 'var(--ds-color-neutral-500)', marginTop: '4px' }}>Elevação sutil</span>
-    <span style={{ display: 'block', fontSize: '12px', color: 'var(--ds-color-neutral-700)', marginTop: '12px' }}>Indicado para pequenos botões, badges ou cards integrados.</span>
+    <span style={{ display: 'block', fontSize: '11px', color: 'var(--ds-color-neutral-500)', marginTop: '4px' }}>
+      <Language locale="pt-BR">Elevação sutil</Language>
+      <Language locale="en-US">Subtle elevation</Language>
+    </span>
+    <span style={{ display: 'block', fontSize: '12px', color: 'var(--ds-color-neutral-700)', marginTop: '12px' }}>
+      <Language locale="pt-BR">Indicado para pequenos botões, badges ou cards integrados.</Language>
+      <Language locale="en-US">Recommended for small buttons, badges, or integrated cards.</Language>
+    </span>
   </div>
 
 <div
@@ -49,7 +73,8 @@ As sombras são aplicadas em cards, modais, dropdowns e menus flutuantes para de
       marginTop: '4px',
     }}
   >
-    Elevação média
+    <Language locale="pt-BR">Elevação média</Language>
+    <Language locale="en-US">Medium elevation</Language>
   </span>
   <span
     style={{
@@ -59,7 +84,12 @@ As sombras são aplicadas em cards, modais, dropdowns e menus flutuantes para de
       marginTop: '12px',
     }}
   >
-    Indicado para cards interativos, tooltips e dropdown menus.
+    <Language locale="pt-BR">
+      Indicado para cards interativos, tooltips e dropdown menus.
+    </Language>
+    <Language locale="en-US">
+      Recommended for interactive cards, tooltips, and dropdown menus.
+    </Language>
   </span>
 </div>
 
@@ -73,8 +103,14 @@ As sombras são aplicadas em cards, modais, dropdowns e menus flutuantes para de
     textAlign: 'center'
   }}>
     <strong style={{ display: 'block', fontSize: '15px' }}>--ds-shadow-lg</strong>
-    <span style={{ display: 'block', fontSize: '11px', color: 'var(--ds-color-neutral-500)', marginTop: '4px' }}>Elevação proeminente</span>
-    <span style={{ display: 'block', fontSize: '12px', color: 'var(--ds-color-neutral-700)', marginTop: '12px' }}>Indicado para janelas modais, diálogos e popovers superiores.</span>
+    <span style={{ display: 'block', fontSize: '11px', color: 'var(--ds-color-neutral-500)', marginTop: '4px' }}>
+      <Language locale="pt-BR">Elevação proeminente</Language>
+      <Language locale="en-US">Prominent elevation</Language>
+    </span>
+    <span style={{ display: 'block', fontSize: '12px', color: 'var(--ds-color-neutral-700)', marginTop: '12px' }}>
+      <Language locale="pt-BR">Indicado para janelas modais, diálogos e popovers superiores.</Language>
+      <Language locale="en-US">Recommended for modal windows, dialogs, and top popovers.</Language>
+    </span>
   </div>
 </div>
 </DocsThemeWrapper>

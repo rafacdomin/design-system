@@ -1,9 +1,12 @@
 import { Meta } from '@storybook/blocks'
 import { DocsThemeWrapper } from '../components/DocsThemeWrapper'
+import { Language } from '../components/Language'
 
 <Meta title="Tokens/Colors" />
 
 <DocsThemeWrapper>
+  <Language locale="pt-BR">
+
 # Cores
 
 A paleta de cores do design system é focada em uma escala monocromática premium de alto contraste, utilizando tons cinza neutro para suavizar e dar profundidade à interface, além de manter a acessibilidade visual e conformidade com WCAG 2.1 AA.
@@ -16,11 +19,31 @@ Os valores de cor mudam dinamicamente dependendo do tema ativo (`light` ou `dark
 
 Esta escala é usada para fundos, containers, divisores, bordas e níveis hierárquicos de texto.
 
+  </Language>
+  <Language locale="en-US">
+
+# Colors
+
+The design system's color palette is focused on a premium high-contrast monochromatic scale, using neutral gray tones to soften and add depth to the interface, while maintaining visual accessibility and compliance with WCAG 2.1 AA.
+
+Color values change dynamically depending on the active theme (`light` or `dark`). The documentation below adapts in real time when you change the theme in the top menu of Storybook.
+
+---
+
+## 🖤 Neutral Scale
+
+This scale is used for backgrounds, containers, dividers, borders, and hierarchical text levels.
+
+  </Language>
+
 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: '16px', margin: '24px 0' }}>
   <div style={{ border: '1px solid var(--ds-color-neutral-200)', borderRadius: '8px', padding: '16px', background: 'var(--ds-color-neutral-0)', color: 'var(--ds-color-neutral-1000)' }}>
     <div style={{ height: '80px', borderRadius: '4px', background: 'var(--ds-color-neutral-0)', border: '1px solid var(--ds-color-neutral-200)', marginBottom: '12px' }} />
     <strong style={{ display: 'block', fontFamily: 'var(--ds-font-family-heading)', fontSize: '14px' }}>--ds-color-neutral-0</strong>
-    <span style={{ fontSize: '12px', color: 'var(--ds-color-neutral-500)' }}>Fundo principal da página</span>
+    <span style={{ fontSize: '12px', color: 'var(--ds-color-neutral-500)' }}>
+      <Language locale="pt-BR">Fundo principal da página</Language>
+      <Language locale="en-US">Main page background</Language>
+    </span>
   </div>
 
 <div
@@ -51,7 +74,10 @@ Esta escala é usada para fundos, containers, divisores, bordas e níveis hierá
     --ds-color-neutral-50
   </strong>
   <span style={{ fontSize: '12px', color: 'var(--ds-color-neutral-500)' }}>
-    Fundo secundário (ex: cards, painéis)
+    <Language locale="pt-BR">Fundo secundário (ex: cards, painéis)</Language>
+    <Language locale="en-US">
+      Secondary background (e.g., cards, panels)
+    </Language>
   </span>
 </div>
 
@@ -83,7 +109,12 @@ Esta escala é usada para fundos, containers, divisores, bordas e níveis hierá
     --ds-color-neutral-100
   </strong>
   <span style={{ fontSize: '12px', color: 'var(--ds-color-neutral-500)' }}>
-    Hover de fundos secundários, bordas muito sutis
+    <Language locale="pt-BR">
+      Hover de fundos secundários, bordas muito sutis
+    </Language>
+    <Language locale="en-US">
+      Hover for secondary backgrounds, very subtle borders
+    </Language>
   </span>
 </div>
 
@@ -114,7 +145,8 @@ Esta escala é usada para fundos, containers, divisores, bordas e níveis hierá
     --ds-color-neutral-200
   </strong>
   <span style={{ fontSize: '12px', color: 'var(--ds-color-neutral-500)' }}>
-    Bordas de input e divisores horizontais
+    <Language locale="pt-BR">Bordas de input e divisores horizontais</Language>
+    <Language locale="en-US">Input borders and horizontal dividers</Language>
   </span>
 </div>
 
@@ -145,7 +177,12 @@ Esta escala é usada para fundos, containers, divisores, bordas e níveis hierá
     --ds-color-neutral-300
   </strong>
   <span style={{ fontSize: '12px', color: 'var(--ds-color-neutral-500)' }}>
-    Bordas em foco, estado desabilitado (fundo)
+    <Language locale="pt-BR">
+      Bordas em foco, estado desabilitado (fundo)
+    </Language>
+    <Language locale="en-US">
+      Focused borders, disabled state (background)
+    </Language>
   </span>
 </div>
 
@@ -176,7 +213,8 @@ Esta escala é usada para fundos, containers, divisores, bordas e níveis hierá
     --ds-color-neutral-400
   </strong>
   <span style={{ fontSize: '12px', color: 'var(--ds-color-neutral-500)' }}>
-    Texto de placeholder, bordas ativas
+    <Language locale="pt-BR">Texto de placeholder, bordas ativas</Language>
+    <Language locale="en-US">Placeholder text, active borders</Language>
   </span>
 </div>
 
@@ -207,7 +245,10 @@ Esta escala é usada para fundos, containers, divisores, bordas e níveis hierá
     --ds-color-neutral-500
   </strong>
   <span style={{ fontSize: '12px', color: 'var(--ds-color-neutral-500)' }}>
-    Texto secundário / auxiliar / desabilitado
+    <Language locale="pt-BR">
+      Texto secundário / auxiliar / desabilitado
+    </Language>
+    <Language locale="en-US">Secondary / helper / disabled text</Language>
   </span>
 </div>
 
@@ -238,7 +279,8 @@ Esta escala é usada para fundos, containers, divisores, bordas e níveis hierá
     --ds-color-neutral-600
   </strong>
   <span style={{ fontSize: '12px', color: 'var(--ds-color-neutral-500)' }}>
-    Hover em textos secundários
+    <Language locale="pt-BR">Hover em textos secundários</Language>
+    <Language locale="en-US">Hover on secondary text</Language>
   </span>
 </div>
 
@@ -269,7 +311,8 @@ Esta escala é usada para fundos, containers, divisores, bordas e níveis hierá
     --ds-color-neutral-700
   </strong>
   <span style={{ fontSize: '12px', color: 'var(--ds-color-neutral-500)' }}>
-    Texto de leitura regular / body text
+    <Language locale="pt-BR">Texto de leitura regular / body text</Language>
+    <Language locale="en-US">Regular reading text / body text</Language>
   </span>
 </div>
 
@@ -300,7 +343,8 @@ Esta escala é usada para fundos, containers, divisores, bordas e níveis hierá
     --ds-color-neutral-800
   </strong>
   <span style={{ fontSize: '12px', color: 'var(--ds-color-neutral-500)' }}>
-    Títulos e textos de destaque médio
+    <Language locale="pt-BR">Títulos e textos de destaque médio</Language>
+    <Language locale="en-US">Headings and medium emphasis text</Language>
   </span>
 </div>
 
@@ -331,34 +375,55 @@ Esta escala é usada para fundos, containers, divisores, bordas e níveis hierá
     --ds-color-neutral-900
   </strong>
   <span style={{ fontSize: '12px', color: 'var(--ds-color-neutral-500)' }}>
-    Texto principal / Títulos proeminentes
+    <Language locale="pt-BR">Texto principal / Títulos proeminentes</Language>
+    <Language locale="en-US">Primary text / Prominent headings</Language>
   </span>
 </div>
 
   <div style={{ border: '1px solid var(--ds-color-neutral-200)', borderRadius: '8px', padding: '16px', background: 'var(--ds-color-neutral-0)', color: 'var(--ds-color-neutral-1000)' }}>
     <div style={{ height: '80px', borderRadius: '4px', background: 'var(--ds-color-neutral-1000)', border: '1px solid var(--ds-color-neutral-800)', marginBottom: '12px' }} />
     <strong style={{ display: 'block', fontFamily: 'var(--ds-font-family-heading)', fontSize: '14px' }}>--ds-color-neutral-1000</strong>
-    <span style={{ fontSize: '12px', color: 'var(--ds-color-neutral-500)' }}>Fundo invertido (ex: botões primários solid)</span>
+    <span style={{ fontSize: '12px', color: 'var(--ds-color-neutral-500)' }}>
+      <Language locale="pt-BR">Fundo invertido (ex: botões primários solid)</Language>
+      <Language locale="en-US">Inverted background (e.g., solid primary buttons)</Language>
+    </span>
   </div>
 </div>
 
 ---
 
+<Language locale="pt-BR">
+
 ## 🎨 Cores de Acento e Suporte (Accent & Feedback)
 
 Estas cores servem para chamar a atenção para estados interativos cruciais ou ações de feedback específicas.
+
+</Language>
+<Language locale="en-US">
+
+## 🎨 Accent & Support Colors
+
+These colors serve to draw attention to crucial interactive states or specific feedback actions.
+
+</Language>
 
 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: '16px', margin: '24px 0' }}>
   <div style={{ border: '1px solid var(--ds-color-neutral-200)', borderRadius: '8px', padding: '16px', background: 'var(--ds-color-neutral-0)', color: 'var(--ds-color-neutral-1000)' }}>
     <div style={{ height: '80px', borderRadius: '4px', background: 'var(--ds-color-focus-ring)', border: '1px solid var(--ds-color-neutral-500)', marginBottom: '12px' }} />
     <strong style={{ display: 'block', fontFamily: 'var(--ds-font-family-heading)', fontSize: '14px' }}>--ds-color-focus-ring</strong>
-    <span style={{ fontSize: '12px', color: 'var(--ds-color-neutral-500)' }}>Indicador de foco (focus ring) de alta visibilidade</span>
+    <span style={{ fontSize: '12px', color: 'var(--ds-color-neutral-500)' }}>
+      <Language locale="pt-BR">Indicador de foco (focus ring) de alta visibilidade</Language>
+      <Language locale="en-US">High-visibility focus ring indicator</Language>
+    </span>
   </div>
 
   <div style={{ border: '1px solid var(--ds-color-neutral-200)', borderRadius: '8px', padding: '16px', background: 'var(--ds-color-neutral-0)', color: 'var(--ds-color-neutral-1000)' }}>
     <div style={{ height: '80px', borderRadius: '4px', background: 'var(--ds-color-danger)', marginBottom: '12px' }} />
     <strong style={{ display: 'block', fontFamily: 'var(--ds-font-family-heading)', fontSize: '14px' }}>--ds-color-danger</strong>
-    <span style={{ fontSize: '12px', color: 'var(--ds-color-neutral-500)' }}>Ações destrutivas, mensagens de erro e estados críticos</span>
+    <span style={{ fontSize: '12px', color: 'var(--ds-color-neutral-500)' }}>
+      <Language locale="pt-BR">Ações destrutivas, mensagens de erro e estados críticos</Language>
+      <Language locale="en-US">Destructive actions, error messages, and critical states</Language>
+    </span>
   </div>
 </div>
 </DocsThemeWrapper>
