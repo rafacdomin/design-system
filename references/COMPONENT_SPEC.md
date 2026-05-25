@@ -38,17 +38,24 @@ Campo de entrada de texto de linha única.
 ### 2.1 Props
 
 ```typescript
+export interface InputIconProps {
+  /** Conteúdo do ícone */
+  children: React.ReactNode
+  /** Classe CSS adicional */
+  className?: string
+}
+
 export interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   /** Rótulo visual do campo */
   label?: string
-  /** Mensagem de erro ou feedback */
+  /** Mensagem de erro que altera o estado do campo e é exibida no rodapé */
   error?: string
-  /** Texto de ajuda auxiliar abaixo do campo */
+  /** Texto de ajuda auxiliar exibido abaixo do input */
   helperText?: string
-  /** Elemento posicionado no início do input (ex: ícone) */
-  startIcon?: React.ReactNode
-  /** Elemento posicionado no fim do input (ex: botão de limpar) */
-  endIcon?: React.ReactNode
+  /** Modo do label (estático acima ou flutuante dentro do campo) */
+  labelMode?: 'static' | 'floating'
+  /** Ícones adicionais do input (Input.StartIcon ou Input.EndIcon) */
+  children?: React.ReactNode
 }
 ```
 
@@ -56,6 +63,7 @@ export interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> 
 
 - **Disabled:** Fundo cinza suave (`--ds-color-neutral-100`), texto em `--ds-color-neutral-400`.
 - **Error:** Bordas e textos auxiliares em `--ds-color-danger`.
+- **Compound Pattern:** Ícones adicionais no início e no fim do input devem ser passados como filhos usando os subcomponentes `<Input.StartIcon>` e `<Input.EndIcon>`. Eles são acoplados via `Object.assign`.
 - **Acessibilidade:** Label associado ao input via `htmlFor`/`id`. Uso de `aria-invalid="true"` e `aria-describedby` apontando para o erro quando aplicável.
 
 ---
@@ -90,27 +98,46 @@ Menu de seleção única. Baseado no primitivo `@radix-ui/react-select`.
 ### 4.1 Props
 
 ```typescript
-export interface DropdownOption {
-  label: string
-  value: string
+export interface DropdownProps {
+  /** Rótulo opcional acima do campo */
+  label?: string
+  /** Texto placeholder exibido quando nenhuma opção é selecionada */
+  placeholder?: string
+  /** Valor selecionado para componente controlado */
+  value?: string
+  /** Valor selecionado inicial para componente não controlado */
+  defaultValue?: string
+  /** Callback acionado ao alterar o valor */
+  onChange?: (value: string) => void
+  /** Mensagem de erro de validação */
+  error?: string
+  /** Mensagem auxiliar exibida abaixo do campo */
+  helperText?: string
+  /** Desabilita as interações quando verdadeiro */
   disabled?: boolean
+  /** Classe CSS adicional */
+  className?: string
+  /** Identificador HTML único */
+  id?: string
+  /** Itens do dropdown (opções) usando Dropdown.Item */
+  children: React.ReactNode
 }
 
-export interface DropdownProps {
-  label?: string
-  placeholder?: string
-  options: DropdownOption[]
-  value?: string
-  defaultValue?: string
-  onChange?: (value: string) => void
-  error?: string
+export interface DropdownItemProps {
+  /** Valor correspondente à opção */
+  value: string
+  /** Se a opção está desabilitada */
   disabled?: boolean
+  /** Conteúdo do item/opção */
+  children: React.ReactNode
+  /** Classe CSS adicional */
   className?: string
 }
 ```
 
 ### 4.2 Comportamentos e Estados
 
+- **Compound Pattern:** O componente de menu de seleção utiliza a estrutura composta via `Object.assign`. As opções devem ser passadas como filhos de `<Dropdown>` usando o subcomponente `<Dropdown.Item>`.
 - **Acessibilidade:** Suporte total a WAI-ARIA pelo Radix Select. Navegação pelas opções via setas (`ArrowUp`/`ArrowDown`), seleção por `Enter`/`Espaço`, fechamento por `Escape`.
 
 ---
@@ -123,25 +150,48 @@ Janela sobreposta bloqueante. Baseada no `@radix-ui/react-dialog`.
 
 ```typescript
 export interface ModalProps {
-  /** Controla a visibilidade do modal */
+  /** Controle manual de abertura (modo controlado) */
   open?: boolean
+  /** Estado padrão de abertura (modo não controlado) */
   defaultOpen?: boolean
+  /** Callback invocado na alteração do estado de abertura */
   onOpenChange?: (open: boolean) => void
-  /** Título do modal (obrigatório para acessibilidade) */
-  title: string
-  /** Descrição do modal */
+  /** Título do modal (opcional na composição manual, mas obrigatório para acessibilidade) */
+  title?: string
+  /** Descrição auxiliar do modal */
   description?: string
-  /** Conteúdo interno */
-  children: React.ReactNode
-  /** Elemento gatilho (opcional) */
+  /** Elemento clicável que dispara a abertura do modal (opcional no modo simplificado) */
   trigger?: React.ReactNode
-  /** Tamanho do container */
+  /** Tamanho da largura do modal */
   size?: 'sm' | 'md' | 'lg'
+  /** Conteúdo interno da janela do modal */
+  children: React.ReactNode
+}
+
+export interface ModalTriggerProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  children: React.ReactNode
+  asChild?: boolean
+}
+
+export interface ModalCloseProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  children: React.ReactNode
+  asChild?: boolean
+}
+
+export interface ModalContentProps extends React.HTMLAttributes<HTMLDivElement> {
+  /** Título do cabeçalho (obrigatório) */
+  title: string
+  /** Descrição do cabeçalho */
+  description?: string
+  /** Tamanho da largura do modal */
+  size?: 'sm' | 'md' | 'lg'
+  children: React.ReactNode
 }
 ```
 
 ### 5.2 Comportamentos e Estados
 
+- **Comportamento e Modos:** Suporta dois modos de renderização. O modo unificado simples (quando `title` ou `trigger` são passados como props no `<Modal>`) e o modo flexível composto utilizando os subcomponentes `<Modal.Trigger>`, `<Modal.Close>` e `<Modal.Content>` (definidos via `Object.assign`).
 - **Acessibilidade:** Foco automaticamente retido dentro do modal (focus trap). Fechamento via clique no overlay, botão fechar (X) ou tecla `Escape`.
 
 ---
@@ -152,15 +202,16 @@ Container flexível para agrupamento de conteúdos (como informações de projet
 
 ### 6.1 Props
 
-```typescript
+````typescript
 export interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
   /** Variante visual de elevação */
   variant?: 'flat' | 'bordered' | 'elevated'
   /** Se verdadeiro, adiciona efeito de hover de elevação e cursor pointer */
   interactive?: boolean
+  /** Se verdadeiro, delega a renderização para o elemento filho direto */
   asChild?: boolean
 }
-```
+```,StartLine:153,TargetContent:
 
 ### 6.2 Comportamentos e Estados
 
@@ -176,15 +227,24 @@ Label indicador de atributos ou tags de tecnologia (ex: "React").
 ### 7.1 Props
 
 ```typescript
-export interface TagProps extends React.HTMLAttributes<HTMLSpanElement> {
-  /** Estilo visual */
+export interface TagProps
+  extends Omit<React.HTMLAttributes<HTMLSpanElement>, 'onClick' | 'color'> {
+  /** Variante estética */
   variant?: 'neutral' | 'outline' | 'interactive'
   /** Tamanho da tag */
   size?: 'sm' | 'md'
-  /** Ação ao clicar na tag (ex: remover ou filtrar) */
+  /** Variante de cor estética */
+  color?: 'neutral' | 'primary' | 'secondary' | 'danger'
+  /** Callback acionado ao clicar no botão de remoção */
   onRemove?: () => void
+  /** Callback acionado ao clicar na tag interativa */
+  onClick?: (
+    event: React.MouseEvent<HTMLButtonElement | HTMLSpanElement>
+  ) => void
+  /** Rótulo de acessibilidade para o botão de remoção */
+  removeAriaLabel?: string
 }
-```
+```,StartLine:176,TargetContent:
 
 ### 7.2 Comportamentos e Estados
 
@@ -200,16 +260,18 @@ Foto de perfil com fallback para texto (iniciais).
 
 ```typescript
 export interface AvatarProps extends React.HTMLAttributes<HTMLDivElement> {
-  /** URL da imagem */
+  /** URL da imagem do avatar */
   src?: string
-  /** Texto alternativo para a imagem */
-  alt: string
-  /** Iniciais para fallback (ex: "RD") */
-  fallback: string
+  /** Descrição acessível da imagem (opcional se 'name' for fornecido) */
+  alt?: string
+  /** Iniciais para fallback (opcional se 'name' for fornecido) */
+  fallback?: string
+  /** Nome completo para gerar iniciais e alt automaticamente */
+  name?: string
   /** Tamanho do avatar */
   size?: 'sm' | 'md' | 'lg'
 }
-```
+```,StartLine:199,TargetContent:
 
 ### 8.2 Comportamentos e Estados
 
@@ -245,6 +307,14 @@ export interface CarouselProps extends React.HTMLAttributes<HTMLDivElement> {
   slidesPerView?:
     | number
     | { mobile?: number; tablet?: number; desktop?: number }
+  /** Rótulo descritivo acessível do botão anterior */
+  prevAriaLabel?: string
+  /** Rótulo descritivo acessível do botão seguinte */
+  nextAriaLabel?: string
+  /** Formato do leitor de tela para o grupo de slide (ex: "Slide {index} de {total}") */
+  slideAriaLabelFormat?: string
+  /** Formato do leitor de tela para o indicador de paginação (ex: "Ir para slide {index}") */
+  dotAriaLabelFormat?: string
 }
 
 export interface CarouselContentProps extends React.HTMLAttributes<HTMLDivElement> {}
@@ -257,7 +327,7 @@ export interface CarouselItemProps extends React.HTMLAttributes<HTMLDivElement> 
 export interface CarouselPreviousProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {}
 export interface CarouselNextProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {}
 export interface CarouselDotsProps extends React.HTMLAttributes<HTMLDivElement> {}
-```
+````
 
 #### Arquitetura Compound
 
