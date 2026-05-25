@@ -2,7 +2,7 @@
 
 ## Status
 
-[ ] Planejada [ ] Em desenvolvimento [ ] Concluída
+[ ] Planejada [ ] Em desenvolvimento [x] Concluída
 
 ## Objetivo
 
@@ -10,14 +10,14 @@ Traduzir todo o conteúdo explicativo dos tokens de design e guias introdutório
 
 ## Critérios de Aceite
 
-- [ ] Integrar o componente `<Language>` importado do pacote `@ds/docs` nas páginas MDX.
-- [ ] Traduzir `Introduction.mdx` (Guia de Instalação, Theming e Acessibilidade).
-- [ ] Traduzir `Colors.mdx` (Documentação de tokens de cores).
-- [ ] Traduzir `Typography.mdx` (Fontes, pesos, tamanhos e alturas de linha).
-- [ ] Traduzir `Spacing.mdx` (Espaçamentos internos e margens).
-- [ ] Traduzir `Borders.mdx` (Raio de arredondamento e espessura de borda).
-- [ ] Traduzir `Shadows.mdx` (Elevações e sombras projetadas).
-- [ ] Garantir que ao alternar o idioma na toolbar do Storybook, toda a documentação da página aberta mude instantaneamente sem erros de renderização.
+- [x] Integrar o componente `<Language>` importado do pacote `@ds/docs` nas páginas MDX.
+- [x] Traduzir `Introduction.mdx` (Guia de Instalação, Theming e Acessibilidade).
+- [x] Traduzir `Colors.mdx` (Documentação de tokens de cores).
+- [x] Traduzir `Typography.mdx` (Fontes, pesos, tamanhos e alturas de linha).
+- [x] Traduzir `Spacing.mdx` (Espaçamentos internos e margens).
+- [x] Traduzir `Borders.mdx` (Raio de arredondamento e espessura de borda).
+- [x] Traduzir `Shadows.mdx` (Elevações e sombras projetadas).
+- [x] Garantir que ao alternar o idioma na toolbar do Storybook, toda a documentação da página aberta mude instantaneamente sem erros de renderização.
 
 ## Arquivos a Modificar
 
@@ -105,7 +105,7 @@ import { Language } from '../components/Language'
 
 # Bordas e Arredondamento
 
-Os tokens de borda controlam o arredondamento de cantos (`border-radius`) e a espessura de bordas...
+Os tokens de borda controlam o arredondamento de cantos (`border-radius`) e a espessura de borda...
 
   </Language>
   <Language locale="en-US">
@@ -136,51 +136,51 @@ Optamos por manter as versões de múltiplos idiomas dentro de um único arquivo
 
 ### Fase 1: Alinhamento e Preparação
 
-- [ ] Validar a conclusão da issue #022 e certificar-se de que o componente `Language` e a infraestrutura de i18n (`LocaleProvider` e `withI18n`) estejam implementados e estáveis.
-- [ ] Confirmar o caminho de importação correto para o componente `Language` em ambientes MDX.
+- [x] Validar a conclusão da issue #022 e certificar-se de que o componente `Language` e a infraestrutura de i18n (`LocaleProvider` e `withI18n`) estejam implementados e estáveis.
+- [x] Confirmar o caminho de importação correto para o componente `Language` em ambientes MDX.
 
 ### Fase 2: Adaptação das Páginas de Tokens e Guias
 
-- [ ] **`Introduction.mdx`**:
-  - [ ] Importar o componente `Language`.
-  - [ ] Envolver a descrição inicial do design system nas tags `<Language>` para `pt-BR` e `en-US`.
-  - [ ] Traduzir a seção de instalação e importação de estilos para `en-US`.
-  - [ ] Traduzir os tópicos do guia de Theming (ThemeProvider, useTheme, HOC `withTheme`) e suas explicações de código.
-  - [ ] Traduzir a seção de conformidade com acessibilidade (WCAG 2.1 AA) e navegação via teclado.
-- [ ] **`Colors.mdx`**:
-  - [ ] Importar o componente `Language`.
-  - [ ] Traduzir a introdução do sistema de cores monocromático de alto contraste.
-  - [ ] Traduzir as strings de descrição de cada card de cor neutra, semântica e suporte para `en-US` mantendo o `pt-BR`.
-- [ ] **`Typography.mdx`**:
-  - [ ] Importar o componente `Language`.
-  - [ ] Traduzir a explicação conceitual sobre o sistema tipográfico Outfit/Inter e legibilidade de tela.
-  - [ ] Traduzir as strings de explicação dos pesos, alturas de linha e tamanhos de fonte.
-- [ ] **`Spacing.mdx`**:
-  - [ ] Importar o componente `Language`.
-  - [ ] Traduzir a explicação sobre a proporção geométrica baseada em múltiplos de 4px e escala `rem`.
-  - [ ] Traduzir as descrições textuais correspondentes aos tokens de espaçamento na tabela descritiva.
-- [ ] **`Borders.mdx`**:
-  - [ ] Importar o componente `Language`.
-  - [ ] Traduzir os textos sobre a estética geométrica e angular de arredondamento de cantos.
-  - [ ] Traduzir as descrições dos tokens de `border-radius` e `border-width`.
-- [ ] **`Shadows.mdx`**:
-  - [ ] Importar o componente `Language`.
-  - [ ] Traduzir as descrições conceituais de elevação e o uso de sombras monocromáticas premium.
-  - [ ] Traduzir os detalhes dos níveis de elevação (sm, md, lg).
+- [x] **`Introduction.mdx`**:
+  - [x] Importar o componente `Language`.
+  - [x] Envolver a descrição inicial do design system nas tags `<Language>` para `pt-BR` e `en-US`.
+  - [x] Traduzir a seção de instalação e importação de estilos para `en-US`.
+  - [x] Traduzir os tópicos do guia de Theming (ThemeProvider, useTheme, HOC `withTheme`) e suas explicações de código.
+  - [x] Traduzir a seção de conformidade com acessibilidade (WCAG 2.1 AA) e navegação via teclado.
+- [x] **`Colors.mdx`**:
+  - [x] Importar o componente `Language`.
+  - [x] Traduzir a introdução do sistema de cores monocromático de alto contraste.
+  - [x] Traduzir as strings de descrição de cada card de cor neutra, semântica e suporte para `en-US` mantendo o `pt-BR`.
+- [x] **`Typography.mdx`**:
+  - [x] Importar o componente `Language`.
+  - [x] Traduzir a explicação conceitual sobre o sistema tipográfico Outfit/Inter e legibilidade de tela.
+  - [x] Traduzir as strings de explicação dos pesos, alturas de linha e tamanhos de fonte.
+- [x] **`Spacing.mdx`**:
+  - [x] Importar o componente `Language`.
+  - [x] Traduzir a explicação sobre a proporção geométrica baseada em múltiplos de 4px e escala `rem`.
+  - [x] Traduzir as descrições textuais correspondentes aos tokens de espaçamento na tabela descritiva.
+- [x] **`Borders.mdx`**:
+  - [x] Importar o componente `Language`.
+  - [x] Traduzir os textos sobre a estética geométrica e angular de arredondamento de cantos.
+  - [x] Traduzir as descrições dos tokens de `border-radius` e `border-width`.
+- [x] **`Shadows.mdx`**:
+  - [x] Importar o componente `Language`.
+  - [x] Traduzir as descrições conceituais de elevação e o uso de sombras monocromáticas premium.
+  - [x] Traduzir os detalhes dos níveis de elevação (sm, md, lg).
 
 ### Fase 3: Revisão de Formatação e Sintaxe MDX
 
-- [ ] Validar a presença de linhas em branco antes e depois de cada bloco `<Language>` para garantir a correta renderização do Markdown.
-- [ ] Certificar-se de que nenhum texto em Markdown sob as tags `<Language>` esteja com indentação de margem esquerda.
-- [ ] Executar o formatador de código (Prettier) em todos os arquivos modificados para padronizar o estilo.
+- [x] Validar a presença de linhas em branco antes e depois de cada bloco `<Language>` para garantir a correta renderização do Markdown.
+- [x] Certificar-se de que nenhum texto em Markdown sob as tags `<Language>` esteja com indentação de margem esquerda.
+- [x] Executar o formatador de código (Prettier) em todos os arquivos modificados para padronizar o estilo.
 
 ### Fase 4: Garantia de Qualidade e Testes
 
-- [ ] Rodar o servidor local do Storybook (`pnpm --filter @ds/docs storybook` ou comando equivalente do monorepo).
-- [ ] Testar dinamicamente a alternância de idioma por meio da toolbar global do Storybook em todas as 6 documentações MDX.
-- [ ] Verificar se há logs de aviso de hidratação ou erros do React no console do navegador ao alternar os idiomas.
-- [ ] Validar a acessibilidade das páginas MDX in both languages usando o addon `@storybook/addon-a11y`.
-- [ ] Executar a suite de testes visuais e de regressão (ex: Playwright/Browserstack) para atestar que os layouts não quebraram com a injeção do componente `<Language>`.
+- [x] Rodar o servidor local do Storybook (`pnpm --filter @ds/docs storybook` ou comando equivalente do monorepo).
+- [x] Testar dinamicamente a alternância de idioma por meio da toolbar global do Storybook em todas as 6 documentações MDX.
+- [x] Verificar se há logs de aviso de hidratação ou erros do React no console do navegador ao alternar os idiomas.
+- [x] Validar a acessibilidade das páginas MDX em ambos os idiomas usando o addon `@storybook/addon-a11y`.
+- [x] Executar a suite de testes visuais e de regressão (ex: Playwright/Browserstack) para atestar que os layouts não quebraram com a injeção do componente `<Language>`.
 
 ## Estimativa
 

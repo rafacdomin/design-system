@@ -1,9 +1,12 @@
 import { Meta } from '@storybook/blocks'
 import { DocsThemeWrapper } from '../components/DocsThemeWrapper'
+import { Language } from '../components/Language'
 
 <Meta title="Getting Started/Introduction" />
 
 <DocsThemeWrapper>
+<Language locale="pt-BR">
+
 # Mini Design System
 
 Bem-vindo ao **Mini Design System**, um sistema de design de portfólio minimalista, baseado em uma estética monocromática premium de alto contraste, e desenvolvido sob diretrizes rígidas de acessibilidade (WCAG 2.1 AA) e performance.
@@ -141,4 +144,145 @@ Todos os componentes são estruturados seguindo rigorosos padrões de acessibili
 - **Focus Indicator**: Indicador de foco de alto contraste (`--ds-color-focus-ring`) para navegação visível.
 - **Validação por Teste Automático**: Validados programaticamente com `jest-axe` contra violações comuns de acessibilidade.
 
+</Language>
+<Language locale="en-US">
+
+# Mini Design System
+
+Welcome to the **Mini Design System**, a minimalist portfolio design system built on a premium high-contrast monochromatic aesthetic, and developed under strict accessibility (WCAG 2.1 AA) and performance guidelines.
+
+Our component architecture is built on top of **React 18**, **TypeScript 5**, and **SCSS Modules**, offering an extremely clean user experience, free of heavy dependencies, and adaptable to light and dark themes in real time.
+
+---
+
+## 🚀 Installation
+
+To start using the design system in your application, add the core package and the global style file:
+
+```bash
+# Installing the core package via pnpm, npm, or yarn
+pnpm add @ds/core
+```
+
+### Importing Styles
+
+Add the import of global style tokens and themes at your application's entry point (e.g., `main.tsx` or `_app.tsx`):
+
+```tsx
+import '@ds/core/dist/index.css'
+```
+
+---
+
+## 🎨 Theme Architecture (Theming)
+
+The design system supports theme switching natively through custom CSS properties (`CSS Custom Properties`) injected into the DOM.
+
+### 1. ThemeProvider
+
+Wrap your application with the `ThemeProvider` to provide the theme context. The provider injects the `data-theme` attribute into the automatic container div.
+
+```tsx
+import React from 'react'
+import { ThemeProvider } from '@ds/core'
+
+export function App() {
+  return (
+    <ThemeProvider defaultTheme="light">
+      <main>{/* Application content */}</main>
+    </ThemeProvider>
+  )
+}
+```
+
+### 2. useTheme
+
+You can use the `useTheme` hook in any component under the `ThemeProvider` to get the current theme and change it programmatically.
+
+```tsx
+import React from 'react'
+import { useTheme } from '@ds/core'
+
+export function ThemeSelector() {
+  const { theme, setTheme } = useTheme()
+
+  return (
+    <button
+      onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}
+      style={{
+        padding: '8px 16px',
+        cursor: 'pointer',
+        background: 'var(--ds-color-neutral-1000)',
+        color: 'var(--ds-color-neutral-0)',
+        border: 'none',
+        borderRadius: 'var(--ds-border-radius-md)',
+      }}
+    >
+      Switch to {theme === 'light' ? 'Dark 🌙' : 'Light ☀️'} theme
+    </button>
+  )
+}
+```
+
+### 3. HOC `withTheme`
+
+All internal components of the design system are wrapped by the High-Order Component (HOC) `withTheme`. It ensures that the theme is propagated reactively to the component's DOM.
+
+If you are developing custom components in your application and want them to consume and react perfectly to the design system's theme, use `withTheme`:
+
+```tsx
+import React from 'react'
+import { withTheme } from '@ds/core'
+
+interface CustomBoxProps {
+  title: string
+  children: React.ReactNode
+}
+
+// The HOC preserves references (refs) using React.forwardRef
+const CustomBoxBase = React.forwardRef<HTMLDivElement, CustomBoxProps>(
+  (props, ref) => {
+    return (
+      <div ref={ref} className="custom-box">
+        <h3>{props.title}</h3>
+        <div>{props.children}</div>
+      </div>
+    )
+  }
+)
+
+CustomBoxBase.displayName = 'CustomBoxBase'
+
+// Wrapped component
+export const CustomBox = withTheme<HTMLDivElement, CustomBoxProps>(
+  CustomBoxBase
+)
+```
+
+#### In the style file (SCSS or CSS):
+
+```css
+/* The HOC withTheme automatically injects the [data-theme] attribute into the root element of the component.
+   You can define reactive colors using only the tokens */
+.custom-box {
+  background: var(--ds-color-neutral-50);
+  border: var(--ds-border-width-sm) solid var(--ds-color-neutral-200);
+  color: var(--ds-color-neutral-1000);
+  padding: var(--ds-spacing-4);
+  border-radius: var(--ds-border-radius-md);
+}
+```
+
+---
+
+## ♿ Accessibility (WCAG 2.1 AA)
+
+All components are structured following strict accessibility standards:
+
+- **Keyboard Navigation**: Full support for tab focus and specific keys from the WAI-ARIA standard.
+- **Screen Readers**: Correct use of roles, labels (`aria-label`, `aria-describedby`), and states (`aria-expanded`, `aria-hidden`).
+- **Focus Indicator**: High-contrast focus indicator (`--ds-color-focus-ring`) for visible navigation.
+- **Automated Test Validation**: Programmatically validated with `jest-axe` against common accessibility violations.
+
+</Language>
 </DocsThemeWrapper>

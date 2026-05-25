@@ -1,9 +1,12 @@
 import { Meta } from '@storybook/blocks'
 import { DocsThemeWrapper } from '../components/DocsThemeWrapper'
+import { Language } from '../components/Language'
 
 <Meta title="Tokens/Typography" />
 
 <DocsThemeWrapper>
+  <Language locale="pt-BR">
+
 # Tipografia
 
 O design system utiliza uma escala tipográfica modular focada em excelente legibilidade de tela e contraste visual. Usamos `Inter` para o texto corrido e elementos de interface, e `Poppins` para cabeçalhos e headings.
@@ -12,15 +15,27 @@ O design system utiliza uma escala tipográfica modular focada em excelente legi
 
 ## 🔤 Famílias de Fontes (Font Families)
 
+  </Language>
+  <Language locale="en-US">
+
+# Typography
+
+The design system uses a modular typographic scale focused on excellent screen readability and visual contrast. We use `Inter` for body text and UI elements, and `Poppins` for titles and headings.
+
+---
+
+## 🔤 Font Families
+
+  </Language>
+
+  <Language locale="pt-BR">
+
 <div style={{ display: 'flex', flexDirection: 'column', gap: '1px', margin: '24px 0', background: 'var(--ds-color-neutral-200)', borderRadius: '8px', overflow: 'hidden', border: '1px solid var(--ds-color-neutral-200)' }}>
-  {/* Header */}
   <div style={{ display: 'grid', gridTemplateColumns: '1.5fr 2fr 3fr', gap: '16px', padding: '12px 16px', background: 'var(--ds-color-neutral-50)', fontWeight: 'bold', color: 'var(--ds-color-neutral-1000)', fontFamily: 'var(--ds-font-family-sans)' }}>
     <div>Token</div>
     <div>Família de Fontes</div>
     <div>Descrição</div>
   </div>
-
-{/* Row 1 */}
 
 <div
   style={{
@@ -51,8 +66,6 @@ O design system utiliza uma escala tipográfica modular focada em excelente legi
   </div>
 </div>
 
-{/* Row 2 */}
-
   <div style={{ display: 'grid', gridTemplateColumns: '1.5fr 2fr 3fr', gap: '16px', padding: '16px', background: 'var(--ds-color-neutral-0)', color: 'var(--ds-color-neutral-1000)', alignItems: 'center', fontFamily: 'var(--ds-font-family-sans)', fontSize: '14px' }}>
     <div><code>--ds-font-family-heading</code></div>
     <div style={{ color: 'var(--ds-color-neutral-700)', fontFamily: 'var(--ds-font-family-sans)' }}>'Poppins', 'Inter', sans-serif</div>
@@ -60,14 +73,63 @@ O design system utiliza uma escala tipográfica modular focada em excelente legi
   </div>
 </div>
 
+  </Language>
+  <Language locale="en-US">
+
+<div style={{ display: 'flex', flexDirection: 'column', gap: '1px', margin: '24px 0', background: 'var(--ds-color-neutral-200)', borderRadius: '8px', overflow: 'hidden', border: '1px solid var(--ds-color-neutral-200)' }}>
+  <div style={{ display: 'grid', gridTemplateColumns: '1.5fr 2fr 3fr', gap: '16px', padding: '12px 16px', background: 'var(--ds-color-neutral-50)', fontWeight: 'bold', color: 'var(--ds-color-neutral-1000)', fontFamily: 'var(--ds-font-family-sans)' }}>
+    <div>Token</div>
+    <div>Font Family</div>
+    <div>Description</div>
+  </div>
+
+<div
+  style={{
+    display: 'grid',
+    gridTemplateColumns: '1.5fr 2fr 3fr',
+    gap: '16px',
+    padding: '16px',
+    background: 'var(--ds-color-neutral-0)',
+    color: 'var(--ds-color-neutral-1000)',
+    alignItems: 'center',
+    fontFamily: 'var(--ds-font-family-sans)',
+    fontSize: '14px',
+  }}
+>
+  <div>
+    <code>--ds-font-family-sans</code>
+  </div>
+  <div
+    style={{
+      color: 'var(--ds-color-neutral-700)',
+      fontFamily: 'var(--ds-font-family-sans)',
+    }}
+  >
+    'Inter', -apple-system, sans-serif
+  </div>
+  <div style={{ color: 'var(--ds-color-neutral-700)' }}>
+    Default interface, buttons, forms, and regular reading
+  </div>
+</div>
+
+  <div style={{ display: 'grid', gridTemplateColumns: '1.5fr 2fr 3fr', gap: '16px', padding: '16px', background: 'var(--ds-color-neutral-0)', color: 'var(--ds-color-neutral-1000)', alignItems: 'center', fontFamily: 'var(--ds-font-family-sans)', fontSize: '14px' }}>
+    <div><code>--ds-font-family-heading</code></div>
+    <div style={{ color: 'var(--ds-color-neutral-700)', fontFamily: 'var(--ds-font-family-sans)' }}>'Poppins', 'Inter', sans-serif</div>
+    <div style={{ color: 'var(--ds-color-neutral-700)' }}>Titles, section headings, and visual highlights</div>
+  </div>
+</div>
+
+  </Language>
+
 ---
+
+  <Language locale="pt-BR">
 
 ## 📏 Tamanhos de Fonte (Font Sizes)
 
 A escala tipográfica é baseada em `rem`, onde `1rem = 16px` por padrão.
 
 <div style={{ display: 'flex', flexDirection: 'column', gap: '1px', margin: '24px 0', background: 'var(--ds-color-neutral-200)', borderRadius: '8px', overflow: 'hidden', border: '1px solid var(--ds-color-neutral-200)' }}>
-  {/* Header */}
   <div style={{ display: 'grid', gridTemplateColumns: '1.5fr 1fr 1fr 2.5fr', gap: '16px', padding: '12px 16px', background: 'var(--ds-color-neutral-50)', fontWeight: 'bold', color: 'var(--ds-color-neutral-1000)', fontFamily: 'var(--ds-font-family-sans)' }}>
     <div>Token</div>
     <div>Valor (rem)</div>
@@ -86,22 +148,59 @@ A escala tipográfica é baseada em `rem`, onde `1rem = 16px` por padrão.
 { token: '--ds-font-size-4xl', rem: '2.25rem', px: '36px', desc: 'Títulos grandes e de destaque principal (Hero)' },
 ].map((item) => (
 
-<div key={item.token} style={{ display: 'grid', gridTemplateColumns: '1.5fr 1fr 1fr 2.5fr', gap: '16px', padding: '16px', background: 'var(--ds-color-neutral-0)', color: 'var(--ds-color-neutral-1000)', alignItems: 'center', fontFamily: 'var(--ds-font-family-sans)', fontSize: '14px' }}>
-<div><code>{item.token}</code></div>
-<div style={{ color: 'var(--ds-color-neutral-700)' }}>{item.rem}</div>
-<div style={{ color: 'var(--ds-color-neutral-700)' }}>{item.px}</div>
-<div style={{ color: 'var(--ds-color-neutral-700)' }}>{item.desc}</div>
-</div>
+  <div key={item.token} style={{ display: 'grid', gridTemplateColumns: '1.5fr 1fr 1fr 2.5fr', gap: '16px', padding: '16px', background: 'var(--ds-color-neutral-0)', color: 'var(--ds-color-neutral-1000)', alignItems: 'center', fontFamily: 'var(--ds-font-family-sans)', fontSize: '14px' }}>
+    <div><code>{item.token}</code></div>
+    <div style={{ color: 'var(--ds-color-neutral-700)' }}>{item.rem}</div>
+    <div style={{ color: 'var(--ds-color-neutral-700)' }}>{item.px}</div>
+    <div style={{ color: 'var(--ds-color-neutral-700)' }}>{item.desc}</div>
+  </div>
 ))}
-
 </div>
+
+  </Language>
+  <Language locale="en-US">
+
+## 📏 Font Sizes
+
+The typographic scale is based on `rem`, where `1rem = 16px` by default.
+
+<div style={{ display: 'flex', flexDirection: 'column', gap: '1px', margin: '24px 0', background: 'var(--ds-color-neutral-200)', borderRadius: '8px', overflow: 'hidden', border: '1px solid var(--ds-color-neutral-200)' }}>
+  <div style={{ display: 'grid', gridTemplateColumns: '1.5fr 1fr 1fr 2.5fr', gap: '16px', padding: '12px 16px', background: 'var(--ds-color-neutral-50)', fontWeight: 'bold', color: 'var(--ds-color-neutral-1000)', fontFamily: 'var(--ds-font-family-sans)' }}>
+    <div>Token</div>
+    <div>Value (rem)</div>
+    <div>Value (px)</div>
+    <div>Description</div>
+  </div>
+
+{[
+{ token: '--ds-font-size-xs', rem: '0.75rem', px: '12px', desc: 'Small footer text, tags, and captions' },
+{ token: '--ds-font-size-sm', rem: '0.875rem', px: '14px', desc: 'Secondary texts, placeholders, and dense components' },
+{ token: '--ds-font-size-md', rem: '1rem', px: '16px', desc: 'Base size for main body text and paragraphs' },
+{ token: '--ds-font-size-lg', rem: '1.125rem', px: '18px', desc: 'Highlight text, secondary subheadings' },
+{ token: '--ds-font-size-xl', rem: '1.25rem', px: '20px', desc: 'Main subheadings' },
+{ token: '--ds-font-size-2xl', rem: '1.5rem', px: '24px', desc: 'Small headings / secondary headers' },
+{ token: '--ds-font-size-3xl', rem: '1.875rem', px: '30px', desc: 'Medium section headings' },
+{ token: '--ds-font-size-4xl', rem: '2.25rem', px: '36px', desc: 'Large headings and primary visual highlight (Hero)' },
+].map((item) => (
+
+  <div key={item.token} style={{ display: 'grid', gridTemplateColumns: '1.5fr 1fr 1fr 2.5fr', gap: '16px', padding: '16px', background: 'var(--ds-color-neutral-0)', color: 'var(--ds-color-neutral-1000)', alignItems: 'center', fontFamily: 'var(--ds-font-family-sans)', fontSize: '14px' }}>
+    <div><code>{item.token}</code></div>
+    <div style={{ color: 'var(--ds-color-neutral-700)' }}>{item.rem}</div>
+    <div style={{ color: 'var(--ds-color-neutral-700)' }}>{item.px}</div>
+    <div style={{ color: 'var(--ds-color-neutral-700)' }}>{item.desc}</div>
+  </div>
+))}
+</div>
+
+  </Language>
 
 ---
+
+  <Language locale="pt-BR">
 
 ## 🏋️ Pesos de Fonte (Font Weights)
 
 <div style={{ display: 'flex', flexDirection: 'column', gap: '1px', margin: '24px 0', background: 'var(--ds-color-neutral-200)', borderRadius: '8px', overflow: 'hidden', border: '1px solid var(--ds-color-neutral-200)' }}>
-  {/* Header */}
   <div style={{ display: 'grid', gridTemplateColumns: '1.5fr 1fr 3.5fr', gap: '16px', padding: '12px 16px', background: 'var(--ds-color-neutral-50)', fontWeight: 'bold', color: 'var(--ds-color-neutral-1000)', fontFamily: 'var(--ds-font-family-sans)' }}>
     <div>Token</div>
     <div>Valor</div>
@@ -115,21 +214,50 @@ A escala tipográfica é baseada em `rem`, onde `1rem = 16px` por padrão.
 { token: '--ds-font-weight-bold', val: '700', desc: 'Títulos principais e forte ênfase visual' },
 ].map((item) => (
 
-<div key={item.token} style={{ display: 'grid', gridTemplateColumns: '1.5fr 1fr 3.5fr', gap: '16px', padding: '16px', background: 'var(--ds-color-neutral-0)', color: 'var(--ds-color-neutral-1000)', alignItems: 'center', fontFamily: 'var(--ds-font-family-sans)', fontSize: '14px' }}>
-<div><code>{item.token}</code></div>
-<div style={{ color: 'var(--ds-color-neutral-700)' }}>{item.val}</div>
-<div style={{ color: 'var(--ds-color-neutral-700)' }}>{item.desc}</div>
-</div>
+  <div key={item.token} style={{ display: 'grid', gridTemplateColumns: '1.5fr 1fr 3.5fr', gap: '16px', padding: '16px', background: 'var(--ds-color-neutral-0)', color: 'var(--ds-color-neutral-1000)', alignItems: 'center', fontFamily: 'var(--ds-font-family-sans)', fontSize: '14px' }}>
+    <div><code>{item.token}</code></div>
+    <div style={{ color: 'var(--ds-color-neutral-700)' }}>{item.val}</div>
+    <div style={{ color: 'var(--ds-color-neutral-700)' }}>{item.desc}</div>
+  </div>
 ))}
-
 </div>
+
+  </Language>
+  <Language locale="en-US">
+
+## 🏋️ Font Weights
+
+<div style={{ display: 'flex', flexDirection: 'column', gap: '1px', margin: '24px 0', background: 'var(--ds-color-neutral-200)', borderRadius: '8px', overflow: 'hidden', border: '1px solid var(--ds-color-neutral-200)' }}>
+  <div style={{ display: 'grid', gridTemplateColumns: '1.5fr 1fr 3.5fr', gap: '16px', padding: '12px 16px', background: 'var(--ds-color-neutral-50)', fontWeight: 'bold', color: 'var(--ds-color-neutral-1000)', fontFamily: 'var(--ds-font-family-sans)' }}>
+    <div>Token</div>
+    <div>Value</div>
+    <div>Description</div>
+  </div>
+
+{[
+{ token: '--ds-font-weight-regular', val: '400', desc: 'Standard weight for body text and paragraphs' },
+{ token: '--ds-font-weight-medium', val: '500', desc: 'Medium weight, used in links, buttons, and labels' },
+{ token: '--ds-font-weight-semibold', val: '600', desc: 'Subheadings and medium emphasis' },
+{ token: '--ds-font-weight-bold', val: '700', desc: 'Main headings and strong visual emphasis' },
+].map((item) => (
+
+  <div key={item.token} style={{ display: 'grid', gridTemplateColumns: '1.5fr 1fr 3.5fr', gap: '16px', padding: '16px', background: 'var(--ds-color-neutral-0)', color: 'var(--ds-color-neutral-1000)', alignItems: 'center', fontFamily: 'var(--ds-font-family-sans)', fontSize: '14px' }}>
+    <div><code>{item.token}</code></div>
+    <div style={{ color: 'var(--ds-color-neutral-700)' }}>{item.val}</div>
+    <div style={{ color: 'var(--ds-color-neutral-700)' }}>{item.desc}</div>
+  </div>
+))}
+</div>
+
+  </Language>
 
 ---
+
+  <Language locale="pt-BR">
 
 ## ↕️ Alturas de Linha (Line Heights)
 
 <div style={{ display: 'flex', flexDirection: 'column', gap: '1px', margin: '24px 0', background: 'var(--ds-color-neutral-200)', borderRadius: '8px', overflow: 'hidden', border: '1px solid var(--ds-color-neutral-200)' }}>
-  {/* Header */}
   <div style={{ display: 'grid', gridTemplateColumns: '1.5fr 1fr 3.5fr', gap: '16px', padding: '12px 16px', background: 'var(--ds-color-neutral-50)', fontWeight: 'bold', color: 'var(--ds-color-neutral-1000)', fontFamily: 'var(--ds-font-family-sans)' }}>
     <div>Token</div>
     <div>Valor</div>
@@ -137,19 +265,48 @@ A escala tipográfica é baseada em `rem`, onde `1rem = 16px` por padrão.
   </div>
 
 {[
-{ token: '--ds-line-height-none', val: '1', desc: 'Botões, inputs e elements de linha única para evitar quebras de alinhamento vertical' },
+{ token: '--ds-line-height-none', val: '1', desc: 'Botões, inputs e elementos de linha única para evitar quebras de alinhamento vertical' },
 { token: '--ds-line-height-tight', val: '1.25', desc: 'Ideal para headings e títulos grandes de múltiplas linhas' },
 { token: '--ds-line-height-snug', val: '1.375', desc: 'Subtítulos ou textos destacados pequenos' },
 { token: '--ds-line-height-normal', val: '1.5', desc: 'Padrão para corpo de texto corrido (otimiza a legibilidade de parágrafos)' },
 { token: '--ds-line-height-loose', val: '2', desc: 'Leituras especiais de alto espaçamento ou grids estruturados' },
 ].map((item) => (
 
-<div key={item.token} style={{ display: 'grid', gridTemplateColumns: '1.5fr 1fr 3.5fr', gap: '16px', padding: '16px', background: 'var(--ds-color-neutral-0)', color: 'var(--ds-color-neutral-1000)', alignItems: 'center', fontFamily: 'var(--ds-font-family-sans)', fontSize: '14px' }}>
-<div><code>{item.token}</code></div>
-<div style={{ color: 'var(--ds-color-neutral-700)' }}>{item.val}</div>
-<div style={{ color: 'var(--ds-color-neutral-700)' }}>{item.desc}</div>
-</div>
+  <div key={item.token} style={{ display: 'grid', gridTemplateColumns: '1.5fr 1fr 3.5fr', gap: '16px', padding: '16px', background: 'var(--ds-color-neutral-0)', color: 'var(--ds-color-neutral-1000)', alignItems: 'center', fontFamily: 'var(--ds-font-family-sans)', fontSize: '14px' }}>
+    <div><code>{item.token}</code></div>
+    <div style={{ color: 'var(--ds-color-neutral-700)' }}>{item.val}</div>
+    <div style={{ color: 'var(--ds-color-neutral-700)' }}>{item.desc}</div>
+  </div>
 ))}
-
 </div>
+
+  </Language>
+  <Language locale="en-US">
+
+## ↕️ Line Heights
+
+<div style={{ display: 'flex', flexDirection: 'column', gap: '1px', margin: '24px 0', background: 'var(--ds-color-neutral-200)', borderRadius: '8px', overflow: 'hidden', border: '1px solid var(--ds-color-neutral-200)' }}>
+  <div style={{ display: 'grid', gridTemplateColumns: '1.5fr 1fr 3.5fr', gap: '16px', padding: '12px 16px', background: 'var(--ds-color-neutral-50)', fontWeight: 'bold', color: 'var(--ds-color-neutral-1000)', fontFamily: 'var(--ds-font-family-sans)' }}>
+    <div>Token</div>
+    <div>Value</div>
+    <div>Description / Application</div>
+  </div>
+
+{[
+{ token: '--ds-line-height-none', val: '1', desc: 'Buttons, inputs, and single-line elements to prevent vertical alignment breaks' },
+{ token: '--ds-line-height-tight', val: '1.25', desc: 'Ideal for headings and large multi-line titles' },
+{ token: '--ds-line-height-snug', val: '1.375', desc: 'Subheadings or small highlighted texts' },
+{ token: '--ds-line-height-normal', val: '1.5', desc: 'Default for running body text (optimizes paragraph readability)' },
+{ token: '--ds-line-height-loose', val: '2', desc: 'Special high-spacing readings or structured grids' },
+].map((item) => (
+
+  <div key={item.token} style={{ display: 'grid', gridTemplateColumns: '1.5fr 1fr 3.5fr', gap: '16px', padding: '16px', background: 'var(--ds-color-neutral-0)', color: 'var(--ds-color-neutral-1000)', alignItems: 'center', fontFamily: 'var(--ds-font-family-sans)', fontSize: '14px' }}>
+    <div><code>{item.token}</code></div>
+    <div style={{ color: 'var(--ds-color-neutral-700)' }}>{item.val}</div>
+    <div style={{ color: 'var(--ds-color-neutral-700)' }}>{item.desc}</div>
+  </div>
+))}
+</div>
+
+  </Language>
 </DocsThemeWrapper>
