@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react'
-import { Textarea } from '@ds/core'
+import { Textarea } from '@rafacdomin/ds-core'
 
 const meta: Meta<typeof Textarea> = {
   title: 'Components/Textarea',

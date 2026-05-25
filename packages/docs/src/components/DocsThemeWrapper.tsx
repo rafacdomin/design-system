@@ -1,5 +1,5 @@
 import React from 'react'
-import { useTheme } from '@ds/core'
+import { useTheme } from '@rafacdomin/ds-core'
 
 interface DocsThemeWrapperProps {
   children: React.ReactNode

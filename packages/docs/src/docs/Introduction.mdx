@@ -21,7 +21,7 @@ Para começar a utilizar o design system em sua aplicação, adicione o pacote c
 
 ```bash
 # Instalando o pacote principal via pnpm, npm ou yarn
-pnpm add @ds/core
+pnpm add @rafacdomin/ds-core
 ```
 
 ### Importando os Estilos
@@ -29,7 +29,7 @@ pnpm add @ds/core
 Adicione a importação dos tokens globais de estilo e temas no ponto de entrada da sua aplicação (ex: `main.tsx` ou `_app.tsx`):
 
 ```tsx
-import '@ds/core/dist/index.css'
+import '@rafacdomin/ds-core/dist/index.css'
 ```
 
 ---
@@ -44,7 +44,7 @@ Envolva a sua aplicação com o `ThemeProvider` para prover o contexto do tema. 
 
 ```tsx
 import React from 'react'
-import { ThemeProvider } from '@ds/core'
+import { ThemeProvider } from '@rafacdomin/ds-core'
 
 export function App() {
   return (
@@ -61,7 +61,7 @@ Você pode utilizar o hook `useTheme` em qualquer componente sob o `ThemeProvide
 
 ```tsx
 import React from 'react'
-import { useTheme } from '@ds/core'
+import { useTheme } from '@rafacdomin/ds-core'
 
 export function ThemeSelector() {
   const { theme, setTheme } = useTheme()
@@ -92,7 +92,7 @@ Se você estiver desenvolvendo componentes customizados na sua aplicação e des
 
 ```tsx
 import React from 'react'
-import { withTheme } from '@ds/core'
+import { withTheme } from '@rafacdomin/ds-core'
 
 interface CustomBoxProps {
   title: string
@@ -161,7 +161,7 @@ To start using the design system in your application, add the core package and t
 
 ```bash
 # Installing the core package via pnpm, npm, or yarn
-pnpm add @ds/core
+pnpm add @rafacdomin/ds-core
 ```
 
 ### Importing Styles
@@ -169,7 +169,7 @@ pnpm add @ds/core
 Add the import of global style tokens and themes at your application's entry point (e.g., `main.tsx` or `_app.tsx`):
 
 ```tsx
-import '@ds/core/dist/index.css'
+import '@rafacdomin/ds-core/dist/index.css'
 ```
 
 ---
@@ -184,7 +184,7 @@ Wrap your application with the `ThemeProvider` to provide the theme context. The
 
 ```tsx
 import React from 'react'
-import { ThemeProvider } from '@ds/core'
+import { ThemeProvider } from '@rafacdomin/ds-core'
 
 export function App() {
   return (
@@ -201,7 +201,7 @@ You can use the `useTheme` hook in any component under the `ThemeProvider` to ge
 
 ```tsx
 import React from 'react'
-import { useTheme } from '@ds/core'
+import { useTheme } from '@rafacdomin/ds-core'
 
 export function ThemeSelector() {
   const { theme, setTheme } = useTheme()
@@ -232,7 +232,7 @@ If you are developing custom components in your application and want them to con
 
 ```tsx
 import React from 'react'
-import { withTheme } from '@ds/core'
+import { withTheme } from '@rafacdomin/ds-core'
 
 interface CustomBoxProps {
   title: string

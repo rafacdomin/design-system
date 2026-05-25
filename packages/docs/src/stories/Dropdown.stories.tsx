@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react'
 import { useState, ComponentProps } from 'react'
-import { Dropdown } from '@ds/core'
+import { Dropdown } from '@rafacdomin/ds-core'
 import { useLocale } from '../context/LocaleContext'
 
 const meta: Meta<typeof Dropdown> = {

@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react'
-import { Tag } from '@ds/core'
+import { Tag } from '@rafacdomin/ds-core'
 
 const meta: Meta<typeof Tag> = {
   title: 'Components/Tag',

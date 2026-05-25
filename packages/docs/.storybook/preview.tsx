@@ -1,12 +1,12 @@
 import type { Preview } from '@storybook/react'
 import React from 'react'
-import { ThemeProvider, useTheme, Theme } from '@ds/core'
+import { ThemeProvider, useTheme, Theme } from '@rafacdomin/ds-core'
 import { DocsContainer } from '@storybook/blocks'
 import { addons } from '@storybook/preview-api'
 import { GLOBALS_UPDATED } from '@storybook/core-events'
 import { LocaleProvider, Locale, translations } from '../src'
-import '@ds/core/dist/index.css'
-import '@ds/carousel/dist/index.css'
+import '@rafacdomin/ds-core/dist/index.css'
+import '@rafacdomin/ds-carousel/dist/index.css'
 
 const ThemeSync = ({
   theme,

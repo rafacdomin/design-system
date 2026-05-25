@@ -1,5 +1,5 @@
 {
-  "name": "@ds/core",
+  "name": "@rafacdomin/ds-core",
   "version": "1.0.0",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",

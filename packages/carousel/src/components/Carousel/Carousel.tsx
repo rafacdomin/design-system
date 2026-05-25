@@ -8,7 +8,7 @@ import React, {
 } from 'react'
 import useEmblaCarousel from 'embla-carousel-react'
 import type { EmblaCarouselType, EmblaOptionsType } from 'embla-carousel'
-import { withTheme } from '@ds/core'
+import { withTheme } from '@rafacdomin/ds-core'
 import { clsx } from 'clsx'
 import styles from './Carousel.module.scss'
 

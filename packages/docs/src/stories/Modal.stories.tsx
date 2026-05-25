@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react'
 import { useState, ComponentProps } from 'react'
-import { Modal, Button } from '@ds/core'
+import { Modal, Button } from '@rafacdomin/ds-core'
 import { useLocale } from '../context/LocaleContext'
 
 const ModalStory = (args: ComponentProps<typeof Modal>) => {

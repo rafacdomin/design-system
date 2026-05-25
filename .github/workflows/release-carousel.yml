@@ -40,19 +40,19 @@ jobs:
         run: pnpm install --frozen-lockfile
 
       - name: Build Dependencies
-        run: pnpm turbo run build --filter=@ds/carousel^...
+        run: pnpm turbo run build --filter=@rafacdomin/ds-carousel^...
 
       - name: Lint Code
-        run: pnpm --filter @ds/carousel lint
+        run: pnpm --filter @rafacdomin/ds-carousel lint
 
       - name: Run Unit & Accessibility Tests
-        run: pnpm --filter @ds/carousel test
+        run: pnpm --filter @rafacdomin/ds-carousel test
 
       - name: Bump Version
-        run: pnpm --filter @ds/carousel version ${{ github.event.inputs.version_increment }} --no-git-tag-version
+        run: pnpm --filter @rafacdomin/ds-carousel version ${{ github.event.inputs.version_increment }} --no-git-tag-version
 
       - name: Build Carousel Package
-        run: pnpm turbo run build --filter=@ds/carousel
+        run: pnpm turbo run build --filter=@rafacdomin/ds-carousel
 
       - name: Check BrowserStack Credentials
         id: check-secrets
@@ -66,14 +66,14 @@ jobs:
 
       - name: Build Storybook for Visual Testing
         if: steps.check-secrets.outputs.has_secrets == 'true'
-        run: pnpm --filter @ds/docs build-storybook
+        run: pnpm --filter @rafacdomin/ds-docs build-storybook
 
       - name: Run Visual Regression Tests (Playwright)
         if: steps.check-secrets.outputs.has_secrets == 'true'
         env:
           BROWSERSTACK_USERNAME: ${{ secrets.BROWSERSTACK_USERNAME }}
           BROWSERSTACK_ACCESS_KEY: ${{ secrets.BROWSERSTACK_ACCESS_KEY }}
-        run: pnpm --filter @ds/docs test:visual
+        run: pnpm --filter @rafacdomin/ds-docs test:visual
 
       - name: Publish to NPM
         id: publish_step
@@ -81,7 +81,7 @@ jobs:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: |
           if [ -n "$NODE_AUTH_TOKEN" ]; then
-            pnpm --filter @ds/carousel publish --no-git-checks --access public
+            pnpm --filter @rafacdomin/ds-carousel publish --no-git-checks --access public
             echo "published=true" >> "$GITHUB_OUTPUT"
           else
             echo "Aviso: NPM_TOKEN não está configurado. Pulando publicação real no NPM."
@@ -95,7 +95,7 @@ jobs:
           git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
           VERSION=$(node -p "require('./packages/carousel/package.json').version")
           git add packages/carousel/package.json
-          git commit -m "chore(release): bump @ds/carousel version to $VERSION [skip ci]"
+          git commit -m "chore(release): bump @rafacdomin/ds-carousel version to $VERSION [skip ci]"
           git push origin HEAD:${{ github.ref_name }}
 
       - name: Notify Success
@@ -105,15 +105,15 @@ jobs:
           PUBLISHED="${{ steps.publish_step.outputs.published }}"
 
           if [ "$PUBLISHED" = "true" ]; then
-            MSG="🚀 **@ds/carousel** publicado com sucesso no NPM! Versão: \`$PACKAGE_VERSION\`"
-            SLACK_MSG="🚀 *@ds/carousel* publicado com sucesso no NPM! Versão: \`$PACKAGE_VERSION\`"
-            TEAMS_TITLE="🚀 @ds/carousel Publicado com Sucesso!"
-            TEAMS_TEXT="O pacote \`@ds/carousel\` foi publicado no NPM com a versão **$PACKAGE_VERSION**."
+            MSG="🚀 **@rafacdomin/ds-carousel** publicado com sucesso no NPM! Versão: \`$PACKAGE_VERSION\`"
+            SLACK_MSG="🚀 *@rafacdomin/ds-carousel* publicado com sucesso no NPM! Versão: \`$PACKAGE_VERSION\`"
+            TEAMS_TITLE="🚀 @rafacdomin/ds-carousel Publicado com Sucesso!"
+            TEAMS_TEXT="O pacote \`@rafacdomin/ds-carousel\` foi publicado no NPM com a versão **$PACKAGE_VERSION**."
           else
-            MSG="✅ Pipeline **@ds/carousel** concluída (Dry-run). Versão: \`$PACKAGE_VERSION\`"
-            SLACK_MSG="✅ Pipeline *@ds/carousel* concluída (Dry-run). Versão: \`$PACKAGE_VERSION\`"
-            TEAMS_TITLE="✅ @ds/carousel Compilado (Dry-run)"
-            TEAMS_TEXT="O pacote \`@ds/carousel\` foi compilado com sucesso com a versão **$PACKAGE_VERSION** (publicação pulada)."
+            MSG="✅ Pipeline **@rafacdomin/ds-carousel** concluída (Dry-run). Versão: \`$PACKAGE_VERSION\`"
+            SLACK_MSG="✅ Pipeline *@rafacdomin/ds-carousel* concluída (Dry-run). Versão: \`$PACKAGE_VERSION\`"
+            TEAMS_TITLE="✅ @rafacdomin/ds-carousel Compilado (Dry-run)"
+            TEAMS_TEXT="O pacote \`@rafacdomin/ds-carousel\` foi compilado com sucesso com a versão **$PACKAGE_VERSION** (publicação pulada)."
           fi
 
           if [ -n "${{ secrets.DISCORD_WEBHOOK_URL }}" ]; then
@@ -144,10 +144,10 @@ jobs:
         if: failure()
         run: |
           if [ -n "${{ secrets.DISCORD_WEBHOOK_URL }}" ]; then
-            curl -H "Content-Type: application/json" -X POST -d '{"content": "❌ Falha no pipeline do pacote **@ds/carousel**."}' "${{ secrets.DISCORD_WEBHOOK_URL }}" || true
+            curl -H "Content-Type: application/json" -X POST -d '{"content": "❌ Falha no pipeline do pacote **@rafacdomin/ds-carousel**."}' "${{ secrets.DISCORD_WEBHOOK_URL }}" || true
           fi
           if [ -n "${{ secrets.SLACK_WEBHOOK_URL }}" ]; then
-            curl -X POST -H 'Content-type: application/json' --data '{"text": "❌ Falha no pipeline do pacote *@ds/carousel*."}' "${{ secrets.SLACK_WEBHOOK_URL }}" || true
+            curl -X POST -H 'Content-type: application/json' --data '{"text": "❌ Falha no pipeline do pacote *@rafacdomin/ds-carousel*."}' "${{ secrets.SLACK_WEBHOOK_URL }}" || true
           fi
           if [ -n "${{ secrets.TEAMS_WEBHOOK_URL }}" ]; then
             curl -H "Content-Type: application/json" -d '{
@@ -157,8 +157,8 @@ jobs:
                 "content": {
                   "type": "AdaptiveCard",
                   "body": [
-                    {"type": "TextBlock", "text": "❌ Falha na Pipeline @ds/carousel", "weight": "bolder", "size": "medium", "color": "attention"},
-                    {"type": "TextBlock", "text": "Houve uma falha ao tentar executar ou publicar o pacote `@ds/carousel`."}
+                    {"type": "TextBlock", "text": "❌ Falha na Pipeline @rafacdomin/ds-carousel", "weight": "bolder", "size": "medium", "color": "attention"},
+                    {"type": "TextBlock", "text": "Houve uma falha ao tentar executar ou publicar o pacote `@rafacdomin/ds-carousel`."}
                   ],
                   "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
                   "version": "1.2"

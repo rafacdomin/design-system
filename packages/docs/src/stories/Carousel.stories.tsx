@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react'
-import { Carousel } from '@ds/carousel'
-import { Card } from '@ds/core'
+import { Carousel } from '@rafacdomin/ds-carousel'
+import { Card } from '@rafacdomin/ds-core'
 import { useLocale } from '../context/LocaleContext'
 
 const meta: Meta<typeof Carousel> = {

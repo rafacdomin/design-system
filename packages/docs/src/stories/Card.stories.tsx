@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react'
-import { Card, CardProps } from '@ds/core'
+import { Card, CardProps } from '@rafacdomin/ds-core'
 
 const meta: Meta<typeof Card> = {
   title: 'Components/Card',

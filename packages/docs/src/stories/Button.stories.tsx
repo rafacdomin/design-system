@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react'
-import { Button, ButtonProps } from '@ds/core'
+import { Button, ButtonProps } from '@rafacdomin/ds-core'
 
 const meta: Meta<typeof Button> = {
   title: 'Components/Button',

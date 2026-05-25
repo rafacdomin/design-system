@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react'
-import { Input } from '@ds/core'
+import { Input } from '@rafacdomin/ds-core'
 
 const meta: Meta<typeof Input> = {
   title: 'Components/Input',

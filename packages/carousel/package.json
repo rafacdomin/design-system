@@ -1,5 +1,5 @@
 {
-  "name": "@ds/carousel",
+  "name": "@rafacdomin/ds-carousel",
   "version": "1.0.0",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
@@ -18,7 +18,7 @@
     "test:watch": "vitest"
   },
   "dependencies": {
-    "@ds/core": "workspace:*",
+    "@rafacdomin/ds-core": "workspace:*",
     "clsx": "^2.1.1",
     "embla-carousel": "^8.6.0",
     "embla-carousel-react": "^8.6.0"

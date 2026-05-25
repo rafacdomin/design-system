@@ -3,7 +3,7 @@ import { render, screen, fireEvent, act } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { axe } from 'jest-axe'
 import { Carousel } from './Carousel'
-import { ThemeProvider } from '@ds/core'
+import { ThemeProvider } from '@rafacdomin/ds-core'
 import { type EmblaCarouselType } from 'embla-carousel'
 import { vi } from 'vitest'
 
