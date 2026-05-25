@@ -20,6 +20,8 @@ export interface ModalProps {
   trigger?: React.ReactNode
   /** Tamanho da largura do modal */
   size?: 'sm' | 'md' | 'lg'
+  /** Rótulo ARIA para o botão de fechar (acessibilidade i18n) */
+  closeAriaLabel?: string
   /** Conteúdo interno da janela do modal */
   children: React.ReactNode
 }
@@ -38,6 +40,7 @@ export interface ModalContentProps extends React.HTMLAttributes<HTMLDivElement> 
   title: string
   description?: string
   size?: 'sm' | 'md' | 'lg'
+  closeAriaLabel?: string
   children: React.ReactNode
 }
 
@@ -69,49 +72,65 @@ ModalCloseComponent.displayName = 'Modal.Close'
 const ModalContentComponent = React.forwardRef<
   HTMLDivElement,
   ModalContentProps
->(({ title, description, size = 'md', children, className, ...props }, ref) => {
-  const { theme } = useTheme()
-  return (
-    <Dialog.Portal>
-      <Dialog.Overlay className={styles.overlay} data-theme={theme} />
-      <Dialog.Content
-        ref={ref}
-        className={clsx(styles.content, styles[size], className)}
-        data-theme={theme}
-        aria-describedby={description ? undefined : undefined}
-        {...props}
-      >
-        <div className={styles.header}>
-          <Dialog.Title className={styles.title}>{title}</Dialog.Title>
-          {description && (
-            <Dialog.Description className={styles.description}>
-              {description}
-            </Dialog.Description>
-          )}
-          <Dialog.Close className={styles.closeButton} aria-label="Fechar">
-            <svg
-              width="12"
-              height="12"
-              viewBox="0 0 12 12"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-              aria-hidden="true"
+>(
+  (
+    {
+      title,
+      description,
+      size = 'md',
+      closeAriaLabel = 'Fechar',
+      children,
+      className,
+      ...props
+    },
+    ref
+  ) => {
+    const { theme } = useTheme()
+    return (
+      <Dialog.Portal>
+        <Dialog.Overlay className={styles.overlay} data-theme={theme} />
+        <Dialog.Content
+          ref={ref}
+          className={clsx(styles.content, styles[size], className)}
+          data-theme={theme}
+          aria-describedby={description ? undefined : undefined}
+          {...props}
+        >
+          <div className={styles.header}>
+            <Dialog.Title className={styles.title}>{title}</Dialog.Title>
+            {description && (
+              <Dialog.Description className={styles.description}>
+                {description}
+              </Dialog.Description>
+            )}
+            <Dialog.Close
+              className={styles.closeButton}
+              aria-label={closeAriaLabel}
             >
-              <path
-                d="M2.5 2.5L9.5 9.5M9.5 2.5L2.5 9.5"
-                stroke="currentColor"
-                strokeWidth="1.5"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
-          </Dialog.Close>
-        </div>
-        <div className={styles.body}>{children}</div>
-      </Dialog.Content>
-    </Dialog.Portal>
-  )
-})
+              <svg
+                width="12"
+                height="12"
+                viewBox="0 0 12 12"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+                aria-hidden="true"
+              >
+                <path
+                  d="M2.5 2.5L9.5 9.5M9.5 2.5L2.5 9.5"
+                  stroke="currentColor"
+                  strokeWidth="1.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            </Dialog.Close>
+          </div>
+          <div className={styles.body}>{children}</div>
+        </Dialog.Content>
+      </Dialog.Portal>
+    )
+  }
+)
 ModalContentComponent.displayName = 'Modal.Content'
 
 // Main Component
@@ -125,6 +144,7 @@ const ModalComponent = React.forwardRef<HTMLDivElement, ModalProps>(
       description,
       trigger,
       size = 'md',
+      closeAriaLabel = 'Fechar',
       children,
     },
     ref
@@ -157,7 +177,7 @@ const ModalComponent = React.forwardRef<HTMLDivElement, ModalProps>(
                 )}
                 <Dialog.Close
                   className={styles.closeButton}
-                  aria-label="Fechar"
+                  aria-label={closeAriaLabel}
                 >
                   <svg
                     width="12"
