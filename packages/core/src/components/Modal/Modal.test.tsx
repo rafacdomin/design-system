@@ -10,25 +10,6 @@ const renderWithTheme = (ui: React.ReactElement) => {
   return render(<ThemeProvider>{ui}</ThemeProvider>)
 }
 
-beforeAll(() => {
-  // Mock ResizeObserver
-  globalThis.ResizeObserver = class ResizeObserver {
-    observe() {}
-    unobserve() {}
-    disconnect() {}
-  }
-
-  // Mock PointerEvent for JSDOM / Radix Dialog
-  if (!globalThis.PointerEvent) {
-    class MockPointerEvent extends MouseEvent {
-      constructor(type: string, props: PointerEventInit = {}) {
-        super(type, props)
-      }
-    }
-    globalThis.PointerEvent = MockPointerEvent as unknown as typeof PointerEvent
-  }
-})
-
 describe('Modal Component', () => {
   it('should not render anything in DOM initially when closed', () => {
     renderWithTheme(

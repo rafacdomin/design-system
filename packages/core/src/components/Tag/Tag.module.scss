@@ -116,13 +116,13 @@
 }
 
 .sm {
-  height: 1.5rem; // 24px
+  height: var(--ds-spacing-6); // 24px
   padding: 0 var(--ds-spacing-2);
   font-size: var(--ds-font-size-xs);
 }
 
 .md {
-  height: 2rem; // 32px
+  height: var(--ds-spacing-8); // 32px
   padding: 0 var(--ds-spacing-3);
   font-size: var(--ds-font-size-sm);
 }
@@ -164,11 +164,11 @@
   box-sizing: border-box;
 
   &.sm {
-    height: 1.5rem;
+    height: var(--ds-spacing-6);
   }
 
   &.md {
-    height: 2rem;
+    height: var(--ds-spacing-8);
   }
 
   .mainButton {
@@ -180,7 +180,7 @@
     height: 100%;
     margin-left: 0;
     padding: 0 var(--ds-spacing-2);
-    border-left: 1px solid var(--tag-separator);
+    border-left: var(--ds-border-width-sm) solid var(--tag-separator);
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
     background-color: var(--tag-bg);

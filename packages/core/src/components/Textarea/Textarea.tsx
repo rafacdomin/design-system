@@ -53,12 +53,18 @@ const TextareaComponent = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
       [ref]
     )
 
-    // Lógica para ajustar a altura com base no scrollHeight
+    // Lógica para ajustar a altura com base no scrollHeight e bordas
     const adjustHeight = React.useCallback(() => {
       if (!autoResize || !internalRef.current) return
       const textarea = internalRef.current
       textarea.style.height = 'auto'
-      textarea.style.height = `${textarea.scrollHeight}px`
+
+      const style = window.getComputedStyle(textarea)
+      const borderHeight =
+        (parseInt(style.borderTopWidth, 10) || 0) +
+        (parseInt(style.borderBottomWidth, 10) || 0)
+
+      textarea.style.height = `${textarea.scrollHeight + borderHeight}px`
     }, [autoResize])
 
     // Ajusta a altura no mount, e sempre que o value (controlado) for alterado

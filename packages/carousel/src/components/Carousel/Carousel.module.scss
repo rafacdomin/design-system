@@ -77,10 +77,10 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 2.25rem;
-  height: 2.25rem;
+  width: calc(var(--ds-spacing-5) + var(--ds-spacing-4));
+  height: calc(var(--ds-spacing-5) + var(--ds-spacing-4));
   border-radius: var(--ds-border-radius-full);
-  border: 1px solid var(--ds-color-neutral-300);
+  border: var(--ds-border-width-sm) solid var(--ds-color-neutral-300);
   background-color: var(--ds-color-neutral-0);
   color: var(--ds-color-neutral-1000);
   cursor: pointer;
@@ -124,8 +124,8 @@
 }
 
 .dot {
-  width: 8px;
-  height: 8px;
+  width: var(--ds-spacing-2);
+  height: var(--ds-spacing-2);
   border-radius: var(--ds-border-radius-full);
   border: none;
   padding: 0;

@@ -22,6 +22,8 @@ export interface CarouselProps extends React.HTMLAttributes<HTMLDivElement> {
   slidesPerView?:
     | number
     | { mobile?: number; tablet?: number; desktop?: number }
+  prevAriaLabel?: string
+  nextAriaLabel?: string
 }
 
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
@@ -51,6 +53,8 @@ interface CarouselContextValue {
   scrollNext: () => void
   scrollTo: (index: number) => void
   contentId: string
+  prevAriaLabel: string
+  nextAriaLabel: string
 }
 
 const CarouselContext = createContext<CarouselContextValue | null>(null)
@@ -74,6 +78,8 @@ const CarouselComponent = React.forwardRef<HTMLDivElement, CarouselProps>(
       loop = false,
       slidesPerView,
       className,
+      prevAriaLabel = 'Slide anterior',
+      nextAriaLabel = 'Próximo slide',
       ...props
     },
     ref
@@ -251,6 +257,8 @@ const CarouselComponent = React.forwardRef<HTMLDivElement, CarouselProps>(
       scrollNext,
       scrollTo,
       contentId,
+      prevAriaLabel,
+      nextAriaLabel,
     }
 
     return (
@@ -340,7 +348,7 @@ const CarouselPreviousComponent = React.forwardRef<
   HTMLButtonElement,
   CarouselPreviousProps
 >(({ className, ...props }, ref) => {
-  const { scrollPrev, canScrollPrev, contentId } = useCarousel()
+  const { scrollPrev, canScrollPrev, contentId, prevAriaLabel } = useCarousel()
   return (
     <button
       ref={ref}
@@ -348,7 +356,7 @@ const CarouselPreviousComponent = React.forwardRef<
       className={clsx(styles.buttonPrev, className)}
       disabled={!canScrollPrev}
       onClick={scrollPrev}
-      aria-label="Slide anterior"
+      aria-label={props['aria-label'] || prevAriaLabel}
       aria-controls={contentId}
       {...props}
     >
@@ -374,7 +382,7 @@ const CarouselNextComponent = React.forwardRef<
   HTMLButtonElement,
   CarouselNextProps
 >(({ className, ...props }, ref) => {
-  const { scrollNext, canScrollNext, contentId } = useCarousel()
+  const { scrollNext, canScrollNext, contentId, nextAriaLabel } = useCarousel()
   return (
     <button
       ref={ref}
@@ -382,7 +390,7 @@ const CarouselNextComponent = React.forwardRef<
       className={clsx(styles.buttonNext, className)}
       disabled={!canScrollNext}
       onClick={scrollNext}
-      aria-label="Próximo slide"
+      aria-label={props['aria-label'] || nextAriaLabel}
       aria-controls={contentId}
       {...props}
     >
