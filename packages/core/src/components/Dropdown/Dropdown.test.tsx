@@ -20,31 +20,6 @@ const renderWithTheme = (ui: React.ReactElement) => {
   return render(<ThemeProvider>{ui}</ThemeProvider>)
 }
 
-beforeAll(() => {
-  // Mock ResizeObserver
-  globalThis.ResizeObserver = class ResizeObserver {
-    observe() {}
-    unobserve() {}
-    disconnect() {}
-  }
-
-  // Mock PointerEvent (required by Radix UI Select in jsdom)
-  if (!globalThis.PointerEvent) {
-    class MockPointerEvent extends MouseEvent {
-      constructor(type: string, props: PointerEventInit = {}) {
-        super(type, props)
-      }
-    }
-    globalThis.PointerEvent = MockPointerEvent as unknown as typeof PointerEvent
-  }
-
-  // Mock scrollIntoView and PointerCapture methods
-  window.HTMLElement.prototype.scrollIntoView = vi.fn()
-  window.HTMLElement.prototype.hasPointerCapture = vi.fn()
-  window.HTMLElement.prototype.setPointerCapture = vi.fn()
-  window.HTMLElement.prototype.releasePointerCapture = vi.fn()
-})
-
 describe('Dropdown Component', () => {
   it('should render the dropdown with placeholder', () => {
     renderWithTheme(
